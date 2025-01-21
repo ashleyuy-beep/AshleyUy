@@ -57,6 +57,7 @@ img {
     right: 2em;
     display: flex;
     gap: 1em;
+    z-index: 9999;
 }
 
 .nav .nav-item p {
@@ -66,13 +67,17 @@ img {
     transition: color 0.3s;
 }
 
+.nav .nav-item a {
+    color: black;
+}
+
 .nav .nav-item p:hover {
     color: #555;
 }
 
 .gallery {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 2em;
     padding: 3em;
 }
@@ -103,12 +108,13 @@ img {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s, visibility 0.3s;
+    flex-direction: column; /* Stack image and caption vertically */
 }
 
 .modal img {
     max-width: 95%;
     max-height: 90%;
-    object-fit: contain; /* Ensure the full image is visible */
+    object-fit: contain;
 }
 
 .modal .caption {
@@ -139,7 +145,7 @@ footer {
     bottom: 1em;
     right: 1em;
     font-size: 0.8rem;
-    color: #808080; /* Grey color */
+    color: #808080;
 }
 
 footer a {
@@ -152,16 +158,9 @@ footer a:hover {
     text-decoration: underline;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
+/* Responsive Design */
 @media (max-width: 768px) {
+    /* Logo */
     .site-logo {
         top: 1em;
         left: 1em;
@@ -171,6 +170,7 @@ footer a:hover {
         font-size: 28px;
     }
 
+    /* Navigation */
     .nav {
         top: 1em;
         right: 1em;
@@ -181,9 +181,36 @@ footer a:hover {
         font-size: 14px;
     }
 
+    /* Gallery */
     .gallery {
         grid-template-columns: repeat(2, 1fr);
         gap: 1em;
         padding: 2em;
+    }
+
+    /* Modal */
+    .modal img {
+        max-width: 90%;
+        max-height: 70%;
+    }
+
+    .modal .caption {
+        font-size: 0.9rem;
+        padding: 0 1em;
+        margin-top: 0.5em; /* Add space between the image and caption */
+    }
+
+    /* Footer */
+    footer {
+        font-size: 0.7rem;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
