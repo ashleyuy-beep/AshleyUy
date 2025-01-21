@@ -18,13 +18,6 @@ img {
   object-fit: cover;
 }
 
-.container {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
-
 .hero-content {
   position: relative;
   width: 100%;
@@ -57,9 +50,8 @@ img {
   right: 2em;
   display: flex;
   gap: 1em;
-  z-index: 9999; /* Ensure it's on top */
+  z-index: 9999;
 }
-
 
 .nav .nav-item p {
   font-size: 16px;
@@ -69,11 +61,11 @@ img {
 }
 
 .nav .nav-item a {
-  color: black; /* Ensures text color is black */
+  color: black;
 }
 
 .nav .nav-item p:hover {
-  color: #555; /* Hover effect */
+  color: #555;
 }
 
 .revealers {
@@ -233,16 +225,27 @@ img {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .site-logo h1 {
-    font-size: 28px;
-    padding: em;
+  /* Logo */
+  .site-logo {
+      top: 1em;
+      left: 1em;
   }
 
-  .nav {
-    width: 50%;
-    padding: 3em;
-    justify-content: center;
+  .site-logo h1 {
+      font-size: 28px;
   }
+
+  /* Navigation */
+  .nav {
+      top: 1em;
+      right: 1em;
+      gap: 1em;
+  }
+
+  .nav .nav-item p {
+      font-size: 14px;
+  }
+
 
   .team-img {
     width: 60%;
