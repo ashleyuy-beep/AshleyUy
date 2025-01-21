@@ -44,7 +44,6 @@ const images = [
   'images/Commercial/IMG_8563.JPG',
   'images/Commercial/IMG_8569.JPG',
   'images/Commercial/IMG_8585.JPG',
-  
 ];
 
 // Populate gallery
@@ -59,18 +58,21 @@ images.forEach((src, index) => {
     modalImage.src = src;
     modalCaption.textContent = `Image ${index + 1} of ${images.length}`;
     modal.classList.add('show');
+    document.body.classList.add('modal-open'); // Disable scrolling when modal is open
   });
 });
 
 // Close modal
 closeModal.addEventListener('click', () => {
   modal.classList.remove('show');
+  document.body.classList.remove('modal-open'); // Re-enable scrolling when modal is closed
 });
 
 // Close modal on outside click
 modal.addEventListener('click', (e) => {
   if (e.target === modal) {
     modal.classList.remove('show');
+    document.body.classList.remove('modal-open'); // Re-enable scrolling when modal is closed
   }
 });
 
