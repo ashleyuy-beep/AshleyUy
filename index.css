@@ -1,3 +1,4 @@
+/* Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -20,6 +21,7 @@ img {
   object-fit: cover;
 }
 
+/* Hero Section */
 .hero-content {
   position: relative;
   width: 100%;
@@ -27,6 +29,7 @@ img {
   overflow: hidden;
 }
 
+/* Logo */
 .site-logo {
   position: absolute;
   top: 2em;
@@ -47,6 +50,7 @@ img {
   font-size: 2rem;
 }
 
+/* Navigation */
 .nav {
   position: absolute;
   top: 2em;
@@ -71,6 +75,7 @@ img {
   color: #555;
 }
 
+/* Revealers */
 .revealers {
   position: fixed;
   top: 0;
@@ -89,6 +94,7 @@ img {
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
+/* Images */
 .images {
   position: absolute;
   top: 50%;
@@ -117,37 +123,24 @@ img {
   opacity: 1;
 }
 
+/* Remove stacked images */
 .images.stacked-container {
-  position: fixed;
-  left: 2em;
-  bottom: 2em;
-  width: auto;
-  height: auto;
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: flex-start;
-  gap: 1em;
-  transform: none;
-  will-change: transform;
+  display: none; /* Hides the left-side stacked images */
 }
 
 .img.stacked {
-  position: relative;
-  width: 150px;
-  height: 100px;
-  transform: none;
-  top: auto;
-  left: auto;
-  opacity: 1;
-  will-change: transform;
+  display: none; /* Ensures individual stacked images are hidden */
 }
 
+
+/* Team Image */
 .team-img {
   position: absolute;
-  right: 2em;
-  bottom: 2em;
-  width: 40%;
-  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%; /* Adjusted size */
+  height: auto;
   clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
 }
 
@@ -155,6 +148,7 @@ img {
   filter: saturate(0);
 }
 
+/* Site Info */
 .site-info {
   position: absolute;
   bottom: 2em;
@@ -203,6 +197,7 @@ img {
   line-height: 1.25;
 }
 
+/* Animations */
 .word,
 .nav-item,
 .line {
@@ -230,27 +225,24 @@ img {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  /* Logo */
   .site-logo {
-      top: 1em;
-      left: 1em;
+    top: 1em;
+    left: 1em;
   }
 
   .site-logo h1 {
-      font-size: 28px;
+    font-size: 28px;
   }
 
-  /* Navigation */
   .nav {
-      top: 1em;
-      right: 1em;
-      gap: 1em;
+    top: 1em;
+    right: 1em;
+    gap: 1em;
   }
 
   .nav .nav-item p {
-      font-size: 14px;
+    font-size: 14px;
   }
-
 
   .team-img {
     width: 50%;
