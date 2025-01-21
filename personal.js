@@ -47,18 +47,30 @@ images.forEach((src, index) => {
     modalImage.src = src;
     modalCaption.textContent = `Image ${index + 1} of ${images.length}`;
     modal.classList.add('show');
+    document.body.classList.add('modal-open'); // Disable scrolling when modal is open
+    setTimeout(() => {
+        modal.style.opacity = '1'; // Fade in modal
+    }, 200); // Delay for smoother effect
   });
 });
 
 // Close modal
 closeModal.addEventListener('click', () => {
-  modal.classList.remove('show');
+  modal.style.opacity = '0'; // Fade out modal
+  setTimeout(() => {
+    modal.classList.remove('show');
+    document.body.classList.remove('modal-open'); // Re-enable scrolling when modal is closed
+  }, 300); // Delay before hiding modal
 });
 
 // Close modal on outside click
 modal.addEventListener('click', (e) => {
   if (e.target === modal) {
-    modal.classList.remove('show');
+    modal.style.opacity = '0'; // Fade out modal
+    setTimeout(() => {
+        modal.classList.remove('show');
+        document.body.classList.remove('modal-open'); // Re-enable scrolling when modal is closed
+    }, 300); // Delay before hiding modal
   }
 });
 
@@ -66,4 +78,9 @@ modal.addEventListener('click', (e) => {
 window.addEventListener('load', () => {
   const container = document.querySelector('.container');
   container.classList.add('animate');
+  
+  // Add a slight delay before fading in content
+  setTimeout(() => {
+    container.style.opacity = '1';
+  }, 100); // Delay before fading in content
 });
