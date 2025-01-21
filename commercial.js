@@ -1,0 +1,75 @@
+// JavaScript for Gallery and Modal Functionality
+
+const gallery = document.querySelector('.gallery');
+const modal = document.querySelector('.modal');
+const modalImage = document.getElementById('modal-image');
+const modalCaption = document.getElementById('modal-caption');
+const closeModal = document.querySelector('.close');
+
+// Dummy images for gallery
+const images = [
+  'images/Commercial/LAYOVERPASSPORT copy/LAYOVER1.jpg',
+  'images/Commercial/LAYOVERPASSPORT copy/LAYOVER2.jpg',
+  'images/Commercial/LAYOVERPASSPORT copy/LAYOVER3.jpg',
+  'images/Commercial/LAYOVERPASSPORT copy/LAYOVER4.jpg',
+  'images/Commercial/LAYOVERPASSPORT copy/LAYOVER5.jpg',
+  'images/Commercial/LAYOVERPASSPORT copy/LAYOVER6.jpg',
+  'images/Commercial/LAYOVERPASSPORT copy/LAYOVER7.jpg',
+  'images/Commercial/LAYOVERPASSPORT copy/LAYOVER8.jpg',
+  'images/Commercial/LAYOVERPASSPORT copy/LAYOVER9.jpg',
+  'images/Commercial/LAYOVERPASSPORT copy/LAYOVER10.jpg',
+  'images/Commercial/passport-frontback aligned copy/black back 1 .jpg',
+  'images/Commercial/passport-frontback aligned copy/dark brown back 1 .jpg',
+  'images/Commercial/passport-frontback aligned copy/dark green back.jpg',
+  'images/Commercial/passport-frontback aligned copy/light brown back 1.jpg',
+  'images/Commercial/passport-frontback aligned copy/grey back 1.jpg',
+  'images/Commercial/passport-frontback aligned copy/white back.jpg',
+  'images/Commercial/passport-frontback aligned copy/avo green back.jpg',
+  'images/Commercial/passport-frontback aligned copy/orange back 1.jpg',
+  'images/Commercial/passport-frontback aligned copy/light blue back .jpg',
+  'images/Commercial/passport-frontback aligned copy/yellow front .jpg',
+  'images/Commercial/IMG_9475.JPG',
+  'images/Commercial/DSCF0232.JPG',
+  'images/Commercial/DSCF0239.JPG',
+  'images/Commercial/DSCF0253.JPG',
+  'images/Commercial/FOUND.JPG',
+  'images/Commercial/IMG_0010.JPG',
+  'images/Commercial/IMG_9983.JPG',
+  'images/Commercial/IMG_0017.JPG',
+  'images/Commercial/IMG_0024.JPG',
+  'images/Commercial/IMG_0026.JPG',
+  'images/Commercial/IMG_0032.JPG',
+  'images/Commercial/IMG_8332.JPG',
+  'images/Commercial/IMG_8420.JPG',
+  'images/Commercial/IMG_8563.JPG',
+  'images/Commercial/IMG_8569.JPG',
+  'images/Commercial/IMG_8585.JPG',
+  
+];
+
+// Populate gallery
+images.forEach((src, index) => {
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = `Image ${index + 1}`;
+  img.dataset.index = index + 1;
+  gallery.appendChild(img);
+
+  img.addEventListener('click', () => {
+    modalImage.src = src;
+    modalCaption.textContent = `Image ${index + 1} of ${images.length}`;
+    modal.classList.add('show');
+  });
+});
+
+// Close modal
+closeModal.addEventListener('click', () => {
+  modal.classList.remove('show');
+});
+
+// Close modal on outside click
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    modal.classList.remove('show');
+  }
+});

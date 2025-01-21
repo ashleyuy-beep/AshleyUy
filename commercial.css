@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-family: "Helvetica Neue Thin", sans-serif;
+    background-color: #fff;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.site-logo {
+    position: absolute;
+    top: 2em;
+    left: 2em;
+    display: flex;
+    gap: 1em;
+}
+
+.site-logo h1 {
+    color: #000;
+    font-size: 2vw;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.site-logo h1 sup {
+    position: absolute;
+    font-size: 2rem;
+}
+
+.nav {
+    position: absolute;
+    top: 2em;
+    right: 2em;
+    display: flex;
+    gap: 1em;
+}
+
+.nav .nav-item p {
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.nav .nav-item p:hover {
+    color: #555;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2em;
+    padding: 3em;
+}
+
+.gallery img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.modal img {
+    max-width: 90%;
+    max-height: 80%;
+}
+
+.modal .caption {
+    color: #fff;
+    margin-top: 1em;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.modal .close {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-logo {
+        top: 1em;
+        left: 1em;
+    }
+
+    .site-logo h1 {
+        font-size: 28px;
+    }
+
+    .nav {
+        top: 1em;
+        right: 1em;
+        gap: 1em;
+    }
+
+    .nav .nav-item p {
+        font-size: 14px;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1em;
+        padding: 2em;
+    }
+}
