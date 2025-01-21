@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ashley Uy | Personal | </title>
-  <link rel="stylesheet" href="./personal.css">
+  <title>Ashley Uy | Personal |</title>
+  <link rel="stylesheet" href="./commercial.css">
   <style>
     /* Remove default link styling */
     a {
@@ -17,46 +17,48 @@
   </style>
 </head>
 <body>
-    <div class="hero-content">
-        <div class="site-logo">
-          <div class="word">
-            <a href="index.html"> <h1>Ashley</h1></a>
-          </div>
-          <div class="word">
-            <a href="index.html"> <h1>Uy<sup></sup></h1></a>
-          </div>
+    <div class="container">
+        <div class="hero-content">
+            <div class="site-logo">
+                <div class="word">
+                    <a href="index.html"><h1>Ashley</h1></a>
+                </div>
+                <div class="word">
+                    <a href="index.html"><h1>Uy<sup></sup></h1></a>
+                </div>
+            </div>
+
+            <div class="nav">
+                <div class="nav-item">
+                    <a href="commercial.html"><p>Commercial</p></a>
+                </div>
+                <div class="nav-item">
+                    <a href="personal.html"><p>Personal</p></a>
+                </div>
+                <div class="nav-item">
+                    <a href="mailto:ashleyuy.booking@gmail.com">
+                        <p>Contact</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="gallery">
+                <!-- Add images dynamically via JavaScript -->
+            </div>
+
+            <!-- Modal for viewing images -->
+            <div class="modal hidden">
+                <span class="close">&times;</span>
+                <img class="modal-content" id="modal-image">
+                <div class="caption" id="modal-caption"></div>
+            </div>
         </div>
 
-        <div class="nav">
-          <div class="nav-item">
-            <a href="commercial.html"><p>Commercial</p></a>
-          </div>
-          <div class="nav-item">
-            <a href="personal.html"><p>Personal</p></a>
-          </div>
-          <div class="nav-item">
-            <a href="mailto:ashleyuy.booking@gmail.com">
-                <p>Contact</p>
-            </a>
-          </div>
-        </div>
-
-  <div class="gallery">
-    <!-- Add images dynamically via JavaScript -->
-  </div>
-
-  <!-- Modal for viewing images -->
-  <div class="modal hidden">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="modal-image">
-    <div class="caption" id="modal-caption"></div>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    Website Designed by <a href="https://robingabrieldesign.com" target="_blank">Robin Gabriel ©</a>
-  </footer>
-
-  <script src="./personal.js"></script>
+        <!-- Footer -->
+        <footer>
+            Website Designed by <a href="https://robingabrieldesign.com" target="_blank">Robin Gabriel ©</a>
+        </footer>
+    </div>
+    <script src="./personal.js"></script>
 </body>
 </html>

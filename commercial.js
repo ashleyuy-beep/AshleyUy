@@ -73,3 +73,9 @@ modal.addEventListener('click', (e) => {
     modal.classList.remove('show');
   }
 });
+
+// Add animation class on page load
+window.addEventListener('load', () => {
+  const container = document.querySelector('.container');
+  container.classList.add('animate');
+});
