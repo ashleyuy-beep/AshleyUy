@@ -26,51 +26,53 @@ img {
     animation: fadeIn 1s forwards;
 }
 
-.hero-content {
-    position: relative;
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    min-height: 100vh; /* Change from height to min-height */
-}
-
-.site-logo {
-    position: absolute;
-    top: 2em;
-    left: 2em;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    z-index: 10000;
     display: flex;
-    gap: 1em;
-}
-
-.site-logo h1 {
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1em;
+  }
+  
+  .overlay-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .site-logo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+  
+  .site-logo h1 {
     color: #000;
-    font-size: 2vw;
+    font-size: 25px;
     font-weight: 500;
     line-height: 1;
-}
-
-.site-logo h1 sup {
-    position: absolute;
-    font-size: 2rem;
-}
-
-.nav {
-    position: absolute;
-    top: 2em;
-    right: 2em;
+  }
+  
+  .nav {
     display: flex;
     gap: 1em;
-    z-index: 9999;
-}
-
-.nav .nav-item p {
-    font-size: 16px;
+  }
+  
+  .nav .nav-item p {
+    font-size: 20px;
     font-weight: 500;
     cursor: pointer;
     transition: color 0.3s;
-}
-
-.nav .nav-item a {
-    color: black;
-}
+  }
 
 .nav .nav-item p:hover {
     color: #555;
@@ -224,3 +226,15 @@ footer a:hover {
         opacity: 0;
     }
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .site-logo h1 {
+      font-size: 14px;
+    }
+  
+    .nav .nav-item p {
+      font-size: 10px;
+    }
+  }
+  
