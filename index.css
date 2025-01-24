@@ -51,7 +51,7 @@ body {
 
 .nav {
   display: flex;
-  gap: 2em;
+  gap: 1em;
 }
 
 .nav .nav-item p {
@@ -144,10 +144,10 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
   .site-logo h1 {
-    font-size: 18px;
+    font-size: 14px;
   }
 
   .nav .nav-item p {
-    font-size: 14px;
+    font-size: 10px;
   }
 }
