@@ -5,61 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ashley Uy | Home |</title>
     <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    
     <style>
       /* Remove default link styling */
       a {
-        text-decoration: none;
-        color: inherit;
-      }
-    </style>
-  </head>
-  <body>
+         text-decoration: none;
+         color: inherit;
+       }
+     </style>
 
-    <!-- Overlay Navigation -->
-    <div class="overlay">
-      <div class="overlay-content">
-        <div class="site-logo">
-          <a href="index.html">
-            <h1>Ashley Uy</h1>
-          </a>
-        </div>
-        <div class="nav">
-          <div class="nav-item">
-            <a href="commercial.html"><p>Commercial</p></a>
-          </div>
-          <div class="nav-item">
-            <a href="personal.html"><p>Personal</p></a>
-          </div>
-          <div class="nav-item">
-            <a href="mailto:ashleyuy.booking@gmail.com">
-              <p>Contact</p>
+    <div class="container">
+      <div class="carousel-items"></div>
+      <div class="active-item"></div>
+    </div>
+      <!-- Overlay Navigation -->
+      <div class="overlay">
+        <div class="overlay-content">
+          <div class="site-logo">
+            <a href="index.html">
+              <h1>Ashley Uy</h1>
             </a>
           </div>
+          <div class="nav">
+            <div class="nav-item">
+              <a href="about.html"><p>About</p></a>
+            </div>
+            <div class="nav-item">
+              <a href="commercial.html"><p>Commercial</p></a>
+            </div>
+            <div class="nav-item">
+              <a href="mailto:ashleyuy.booking@gmail.com">
+                <p>Contact</p>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="hero-content">
-      <div class="team-img">
-        <img src="./images/PERSONAL PROJECT/DSCF0466 copy.jpg" alt="Hero Image" />
-      </div>
-      <div class="hero-description">
-        <p>
-          Born in Manila, Philippines, moved to Los Angeles, CA.
-          <br />
-          Ashley is a multidisciplinary photographer specializing in campaigns,
-          lookbooks, portraits, and street photography. His work draws deeply from
-          his immigrant background and personal experiences, capturing a unique,
-          timeless perspective.
-        </p>
-      </div>
-    </div>
-    
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js"></script>
-    <script src="https://unpkg.com/split-type"></script>
-    <script src="./index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/intersection-observer@0.12.2/intersection-observer.min.js"></script>
+
+    <script>
+      const carouselItems = document.querySelector(".carousel-items");
+      const activeItem = document.querySelector(".active-item");
+      const activeItemImage = document.createElement("img");
+      activeItem.appendChild(activeItemImage);
+
+      for (let i = 1; i <= 87; i++) { // Change 100 to 87
+        const carouselItem = document.createElement("div");
+        carouselItem.className = "carousel-item";
+
+        const img = document.createElement("img");
+        img.src = `./HOME PHOTOS/img${i}.jpeg`;
+
+        carouselItem.appendChild(img);
+        carouselItems.appendChild(carouselItem);
+      }
+
+      function lerp(start, end, t) {
+        return start * (1 - t) + end * t;
+      }
+
+      let currentX = 0;
+      let lastScrollY = 0;
+
+      window.addEventListener("wheel", (e) => {
+        lastScrollY += e.deltaY;
+        const maxScroll = carouselItems.scrollWidth - window.innerWidth;
+        lastScrollY = Math.min(Math.max(lastScrollY, 0), maxScroll);
+      });
+
+      let lastActive = null;
+      let currentLeftmostItem = null;
+
+      function checkAndUpdateActiveItem() {
+        let allItems = document.querySelectorAll(".carousel-item");
+        for (let item of allItems) {
+          const rect = item.getBoundingClientRect();
+          if (rect.left >= 0 && rect.left < 10) {
+            if (currentLeftmostItem !== item) {
+              if (lastActive) {
+                lastActive.classList.remove("active");
+              }
+              item.classList.add("active");
+              const src = item.querySelector("img").src;
+              activeItemImage.src = src;
+              lastActive = item;
+              currentLeftmostItem = item;
+            }
+            break;
+          }
+        }
+      }
+
+      function animate() {
+        currentX = lerp(currentX, lastScrollY, 0.075);
+        carouselItems.style.transform = `translateX(-${currentX}px)`;
+        checkAndUpdateActiveItem();
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    </script>
   </body>
 </html>
