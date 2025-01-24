@@ -12,13 +12,57 @@ body {
   font-family: "Helvetica Neue Thin", sans-serif;
   background-color: #fff;
   overflow: hidden;
-  touch-action: none;
 }
 
-img {
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  background-color: rgba(255, 255, 255, 0.95);
+  z-index: 10000;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2em;
+}
+
+.overlay-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-logo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.site-logo h1 {
+  color: #000;
+  font-size: 2vw;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.nav {
+  display: flex;
+  gap: 2em;
+}
+
+.nav .nav-item p {
+  font-size: 1.5vw;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.nav .nav-item p:hover {
+  color: #555;
 }
 
 /* Hero Section */
@@ -29,117 +73,13 @@ img {
   overflow: hidden;
 }
 
-/* Logo */
-.site-logo {
-  position: absolute;
-  top: 2em;
-  left: 2em;
-  display: flex;
-  gap: 1em;
-}
-
-.site-logo h1 {
-  color: #000;
-  font-size: 2vw;
-  font-weight: 500;
-  line-height: 1;
-}
-
-.site-logo h1 sup {
-  position: absolute;
-  font-size: 2rem;
-}
-
-/* Navigation */
-.nav {
-  position: absolute;
-  top: 2em;
-  right: 2em;
-  display: flex;
-  gap: 1em;
-  z-index: 9999;
-}
-
-.nav .nav-item p {
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.nav .nav-item a {
-  color: black;
-}
-
-.nav .nav-item p:hover {
-  color: #555;
-}
-
-/* Revealers */
-.revealers {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  z-index: 2;
-}
-
-.revealer {
-  flex: 1;
-  width: 100%;
-  background-color: #fff;
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-}
-
-/* Images */
-.images {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  transform-origin: center center;
-  will-change: transform;
-  overflow: hidden;
-}
-
-.img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1.5);
-  width: 100%;
-  height: 100%;
-  visibility: visible;
-  will-change: transform;
-  opacity: 0;
-}
-
-.img:first-child {
-  opacity: 1;
-}
-
-/* Remove stacked images */
-.images.stacked-container {
-  display: none; /* Hides the left-side stacked images */
-}
-
-.img.stacked {
-  display: none; /* Ensures individual stacked images are hidden */
-}
-
-
 /* Team Image */
 .team-img {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 30%; /* Adjusted size */
+  width: 30%;
   height: auto;
   clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
 }
@@ -148,117 +88,13 @@ img {
   filter: saturate(0);
 }
 
-/* Site Info */
-.site-info {
-  position: absolute;
-  bottom: 2em;
-  left: 2em;
-  width: 50%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-}
-
-.site-info .row {
-  display: flex;
-  gap: 2em;
-}
-
-.site-info .row .col {
-  flex: 1;
-}
-
-.site-info h2 {
-  font-size: 25px;
-  font-weight: 500;
-  line-height: 1.25;
-}
-
-.site-info p {
-  text-transform: uppercase;
-  font-size: 11px;
-  font-weight: 500;
-  color: #000;
-}
-
-.site-info .row:nth-child(2) .col:nth-child(2) {
-  display: flex;
-}
-
-.address,
-.socials {
-  flex: 1;
-}
-
-.address p,
-.socials p {
-  line-height: 1.25;
-}
-
-/* Animations */
-.word,
-.nav-item,
-.line {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-}
-
-.word h1,
-.nav-item p,
-.site-info h2 .line span,
-.line p {
-  position: relative;
-  will-change: transform;
-}
-
-.site-info h2 .line span {
-  display: block;
-  transform: translateY(100%);
-}
-
-.word h1,
-.nav-item p,
-.line p {
-  transform: translateY(100%);
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
-  .site-logo {
-    top: 1em;
-    left: 1em;
-  }
-
   .site-logo h1 {
-    font-size: 28px;
-  }
-
-  .nav {
-    top: 1em;
-    right: 1em;
-    gap: 1em;
+    font-size: 5vw;
   }
 
   .nav .nav-item p {
-    font-size: 14px;
-  }
-
-  .team-img {
-    width: 50%;
-    height: auto;
-  }
-
-  .site-info {
-    width: 90%;
-    bottom: 1em;
-  }
-
-  .site-info h2 {
-    font-size: 20px;
-  }
-
-  .site-info p {
-    font-size: 9px;
+    font-size: 4vw;
   }
 }
