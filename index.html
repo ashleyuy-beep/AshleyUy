@@ -52,7 +52,8 @@
       const activeItemImage = document.createElement("img");
       activeItem.appendChild(activeItemImage);
 
-      for (let i = 1; i <= 87; i++) { // Change 100 to 87
+      // Generate carousel items
+      for (let i = 1; i <= 87; i++) {
         const carouselItem = document.createElement("div");
         carouselItem.className = "carousel-item";
 
@@ -69,11 +70,38 @@
 
       let currentX = 0;
       let lastScrollY = 0;
+      let touchStartX = 0;
+      let touchDeltaX = 0;
 
+      // Calculate the maximum scroll value based on the carousel width
+      function getMaxScroll() {
+        return carouselItems.scrollWidth - window.innerWidth;
+      }
+
+      // Handle desktop scrolling
       window.addEventListener("wheel", (e) => {
         lastScrollY += e.deltaY;
-        const maxScroll = carouselItems.scrollWidth - window.innerWidth;
+        const maxScroll = getMaxScroll();
         lastScrollY = Math.min(Math.max(lastScrollY, 0), maxScroll);
+      });
+
+      // Handle mobile touch events
+      carouselItems.addEventListener("touchstart", (e) => {
+        touchStartX = e.touches[0].clientX;
+      });
+
+      carouselItems.addEventListener("touchmove", (e) => {
+        const touchX = e.touches[0].clientX;
+        touchDeltaX = touchStartX - touchX;
+        touchStartX = touchX;
+
+        lastScrollY += touchDeltaX;
+        const maxScroll = getMaxScroll();
+        lastScrollY = Math.min(Math.max(lastScrollY, 0), maxScroll);
+      });
+
+      carouselItems.addEventListener("touchend", () => {
+        touchDeltaX = 0;
       });
 
       let lastActive = null;
@@ -106,7 +134,9 @@
         requestAnimationFrame(animate);
       }
 
+      // Start animation
       animate();
+
     </script>
   </body>
 </html>
