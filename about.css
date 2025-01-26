@@ -15,55 +15,59 @@
   }
   
   /* Overlay */
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0);
-    z-index: 10000;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 1em;
-  }
-  
-  .overlay-content {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .site-logo {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-  }
-  
-  .site-logo h1 {
-    color: #000;
-    font-size: 25px;
-    font-weight: 500;
-    line-height: 1;
-  }
-  
-  .nav {
-    display: flex;
-    gap: 1em;
-  }
-  
-  .nav .nav-item p {
-    font-size: 20px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-  
-  .nav .nav-item p:hover {
-    color: #555;
-  }
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  z-index: 10000;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1em;
+}
+
+/* Overlay Content */
+.overlay-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-logo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.site-logo h1 {
+  color: #000;
+  font-size: 25px;
+  font-weight: 300; /* Make the logo text lighter */
+  line-height: 1;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5em; /* Add spacing between items */
+  margin-left: auto; /* Push items to the right */
+  align-items: center; /* Vertically align items */
+}
+
+.nav .nav-item p {
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.nav .nav-item p:hover {
+  color: #555;
+}
+
   
   /* Hero Section */
   .hero-content {

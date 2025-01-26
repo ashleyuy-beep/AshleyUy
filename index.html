@@ -3,140 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ashley Uy | Home |</title>
+    <title>Ashley Uy | Home</title>
     <link rel="stylesheet" href="index.css" />
   </head>
+  <style>
+    /* Remove default link styling */
+    a {
+       text-decoration: none;
+       color: inherit;
+     }
+   </style>
   <body>
-    
-    <style>
-      /* Remove default link styling */
-      a {
-         text-decoration: none;
-         color: inherit;
-       }
-     </style>
-
     <div class="container">
-      <div class="carousel-items"></div>
-      <div class="active-item"></div>
-    </div>
-      <!-- Overlay Navigation -->
-      <div class="overlay">
-        <div class="overlay-content">
-          <div class="site-logo">
-            <a href="index.html">
-              <h1>Ashley Uy</h1>
-            </a>
-          </div>
-          <div class="nav">
-            <div class="nav-item">
-              <a href="about.html"><p>About</p></a>
-            </div>
-            <div class="nav-item">
-              <a href="commercial.html"><p>Commercial</p></a>
-            </div>
-            <div class="nav-item">
-              <a href="mailto:ashleyuy.booking@gmail.com">
-                <p>Contact</p>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="logo"><a href="#">Ashley Uy</a></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/intersection-observer@0.12.2/intersection-observer.min.js"></script>
+      <section class="hero pinned">
+        <h1>Multidisciplinary <br />Photographer</h1>
+      </section>
 
-    <script>
-      const carouselItems = document.querySelector(".carousel-items");
-      const activeItem = document.querySelector(".active-item");
-      const activeItemImage = document.createElement("img");
-      activeItem.appendChild(activeItemImage);
+      <!-- Cards for images -->
+      <section class="card pinned">
+        <div class="img"><img src="./HOME PHOTOS/IMG1.jpeg" alt="" /></div>
+      </section>
+      <section class="card pinned">
+        <div class="img"><img src="./HOME PHOTOS/IMG2.jpeg" alt="" /></div>
+      </section>
+      <section class="card pinned">
+        <div class="img"><img src="./HOME PHOTOS/IMG45.jpeg" alt="" /></div>
+      </section>
+      <section class="card pinned">
+        <div class="img"><img src="./images/PERSONAL PROJECT/DSCF0466 copy.jpg" alt="" /></div>
+      </section>
+      <section class="card pinned">
+        <div class="img"><img src="./images/PERSONAL PROJECT/DSCF0476 copy.jpg" alt="" /></div>
+      </section>
+      <section class="card scroll">
+        <div class="img"><img src="./images/PERSONAL PROJECT/Image 6 (3).JPG" alt="" /></div>
+      </section>
 
-      // Generate carousel items
-      for (let i = 1; i <= 87; i++) {
-        const carouselItem = document.createElement("div");
-        carouselItem.className = "carousel-item";
+      <section class="footer">
+        <a href="about.html"><p>Home</p></a>
+      </section>
+      
 
-        const img = document.createElement("img");
-        img.src = `./HOME PHOTOS/img${i}.jpeg`;
-
-        carouselItem.appendChild(img);
-        carouselItems.appendChild(carouselItem);
-      }
-
-      function lerp(start, end, t) {
-        return start * (1 - t) + end * t;
-      }
-
-      let currentX = 0;
-      let lastScrollY = 0;
-      let touchStartX = 0;
-      let touchDeltaX = 0;
-
-      // Calculate the maximum scroll value based on the carousel width
-      function getMaxScroll() {
-        return carouselItems.scrollWidth - window.innerWidth;
-      }
-
-      // Handle desktop scrolling
-      window.addEventListener("wheel", (e) => {
-        lastScrollY += e.deltaY;
-        const maxScroll = getMaxScroll();
-        lastScrollY = Math.min(Math.max(lastScrollY, 0), maxScroll);
-      });
-
-      // Handle mobile touch events
-      carouselItems.addEventListener("touchstart", (e) => {
-        touchStartX = e.touches[0].clientX;
-      });
-
-      carouselItems.addEventListener("touchmove", (e) => {
-        const touchX = e.touches[0].clientX;
-        touchDeltaX = touchStartX - touchX;
-        touchStartX = touchX;
-
-        lastScrollY += touchDeltaX;
-        const maxScroll = getMaxScroll();
-        lastScrollY = Math.min(Math.max(lastScrollY, 0), maxScroll);
-      });
-
-      carouselItems.addEventListener("touchend", () => {
-        touchDeltaX = 0;
-      });
-
-      let lastActive = null;
-      let currentLeftmostItem = null;
-
-      function checkAndUpdateActiveItem() {
-        let allItems = document.querySelectorAll(".carousel-item");
-        for (let item of allItems) {
-          const rect = item.getBoundingClientRect();
-          if (rect.left >= 0 && rect.left < 10) {
-            if (currentLeftmostItem !== item) {
-              if (lastActive) {
-                lastActive.classList.remove("active");
-              }
-              item.classList.add("active");
-              const src = item.querySelector("img").src;
-              activeItemImage.src = src;
-              lastActive = item;
-              currentLeftmostItem = item;
-            }
-            break;
-          }
-        }
-      }
-
-      function animate() {
-        currentX = lerp(currentX, lastScrollY, 0.075);
-        carouselItems.style.transform = `translateX(-${currentX}px)`;
-        checkAndUpdateActiveItem();
-        requestAnimationFrame(animate);
-      }
-
-      // Start animation
-      animate();
-
-    </script>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="./index.js"></script>
   </body>
 </html>
