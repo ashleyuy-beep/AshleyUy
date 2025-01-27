@@ -1,55 +1,25 @@
-gsap.registerPlugin(ScrollTrigger);
+const nav = document.getElementById("nav");
 
-document.addEventListener("DOMContentLoaded", function () {
-  const footer = document.querySelector(".footer");
-  const lastCard = document.querySelector(".card.scroll");
-  const pinnedSections = gsap.utils.toArray(".pinned");
+for (const link of nav.getElementsByTagName("a")) {
+  link.onmousemove = (e) => {
+    const rect = link.getBoundingClientRect(),
+      img = link.querySelector("img");
 
-  pinnedSections.forEach((section, index, sections) => {
-    let img = section.querySelector(".img");
+    //     img.style.left = `${e.clientX - rect.left}px`;
+    //     img.style.top = `${e.clientY - rect.top}px`;
+  };
+}
 
-    let nextSection = sections[index + 1] || lastCard;
-    let endScalePoint = `top+=${nextSection.offsetTop - section.offsetTop} top`;
+window.onmousemove = (e) => {
+  const percent = e.clientX / window.innerWidth;
 
-    gsap.to(section, {
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end:
-          index === sections.length
-            ? `+=${lastCard.offsetHeight / 2}`
-            : footer.offsetTop - window.innerHeight,
-        pin: true,
-        pinSpacing: false,
-        scrub: 1,
-      },
-    });
-
-    gsap.fromTo(
-      img,
-      { scale: 1 },
-      {
-        scale: 0.5,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: endScalePoint,
-          scrub: 1,
-        },
-      }
-    );
-  });
-
-  const heroH1 = document.querySelector(".hero h1");
-  ScrollTrigger.create({
-    trigger: document.body,
-    start: "top top",
-    end: "+=400vh",
-    scrub: 1,
-    onUpdate: (self) => {
-      let opacityProgress = self.progress;
-      heroH1.style.opacity = 1 - opacityProgress;
+  nav.animate(
+    {
+      transform: `translateX(${percent * nav.offsetWidth * -1}px)`,
     },
-  });
-});
+    {
+      fill: "forwards",
+      duration: 4000,
+    }
+  );
+};
