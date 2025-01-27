@@ -77,7 +77,7 @@ body {
   height: 100%;
   overflow: hidden; /* Prevent overflow */
   display: flex;
-  justify-content: flex-start;
+  justify-content: fixed;
   align-items: center;
 }
 
@@ -93,10 +93,10 @@ body {
 }
 
 .gallery-item {
-  flex: 0 0 calc(25% - 1em); /* Show 4 items at a time */
+  flex: 0 0 calc(25% - .5em); /* Show 4 items at a time */
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  display: flex;
+  display: fixed;
   align-items: center;
   justify-content: center;
   transition: transform 0.3s ease;
