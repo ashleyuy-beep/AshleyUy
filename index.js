@@ -1,25 +1,21 @@
-const nav = document.getElementById("nav");
+document.addEventListener("DOMContentLoaded", () => {
+  const gallery = document.querySelector(".gallery");
+  let scrollPosition = 0;
 
-for (const link of nav.getElementsByTagName("a")) {
-  link.onmousemove = (e) => {
-    const rect = link.getBoundingClientRect(),
-      img = link.querySelector("img");
+  window.addEventListener("wheel", (event) => {
+    event.preventDefault(); // Prevent default vertical scroll
 
-    //     img.style.left = `${e.clientX - rect.left}px`;
-    //     img.style.top = `${e.clientY - rect.top}px`;
-  };
-}
+    // Calculate new scroll position
+    scrollPosition += event.deltaY;
 
-window.onmousemove = (e) => {
-  const percent = e.clientX / window.innerWidth;
+    // Get gallery's max scrollable width
+    const maxScroll = gallery.scrollWidth - window.innerWidth;
 
-  nav.animate(
-    {
-      transform: `translateX(${percent * nav.offsetWidth * -1}px)`,
-    },
-    {
-      fill: "forwards",
-      duration: 4000,
-    }
-  );
-};
+    // Restrict scroll position to gallery bounds
+    if (scrollPosition < 0) scrollPosition = 0;
+    if (scrollPosition > maxScroll) scrollPosition = maxScroll;
+
+    // Apply transform to gallery
+    gallery.style.transform = `translateX(-${scrollPosition}px)`;
+  });
+});
