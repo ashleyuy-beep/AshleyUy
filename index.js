@@ -97,3 +97,4 @@ document.addEventListener("DOMContentLoaded", init)
 // Refresh images on button click
 document.querySelector(".view-toggle").addEventListener("click", randomizeImages)
 
+

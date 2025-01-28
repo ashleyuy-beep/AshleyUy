@@ -34,7 +34,8 @@ header {
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   max-width: 100%;
-  margin: 0 auto;
+  margin: 10 20;
+  margin-top: 50px;
 }
 
 .grid-item {
