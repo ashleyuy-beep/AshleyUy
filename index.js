@@ -36,6 +36,40 @@ const images = [
   "HOME PHOTOS/IMG34.jpeg",
   "HOME PHOTOS/IMG35.jpeg",
   "HOME PHOTOS/IMG36.jpeg",
+  "HOME PHOTOS/IMG37.jpeg",
+  "HOME PHOTOS/IMG38.jpeg",
+  "HOME PHOTOS/IMG39.jpeg",
+  "HOME PHOTOS/IMG40.jpeg",
+  "HOME PHOTOS/IMG41.jpeg",
+  "HOME PHOTOS/IMG42.jpeg",
+  "HOME PHOTOS/IMG43.jpeg",
+  "HOME PHOTOS/IMG44.jpeg",
+  "HOME PHOTOS/IMG45.jpeg",
+  "HOME PHOTOS/IMG46.jpeg",
+  "HOME PHOTOS/IMG47.jpeg",
+  "HOME PHOTOS/IMG48.jpeg",
+  "HOME PHOTOS/IMG49.jpeg",
+  "HOME PHOTOS/IMG50.jpeg",
+  "HOME PHOTOS/IMG51.jpeg",
+  "HOME PHOTOS/IMG52.jpeg",
+  "HOME PHOTOS/IMG53.jpeg",
+  "HOME PHOTOS/IMG54.jpeg",
+  "HOME PHOTOS/IMG55.jpeg",
+  "HOME PHOTOS/IMG56.jpeg",
+  "HOME PHOTOS/IMG57.jpeg",
+  "HOME PHOTOS/IMG58.jpeg",
+  "HOME PHOTOS/IMG59.jpeg",
+  "HOME PHOTOS/IMG60.jpeg",
+  "HOME PHOTOS/IMG61.jpeg",
+  "HOME PHOTOS/IMG62.jpeg",
+  "HOME PHOTOS/IMG63.jpeg",
+  "HOME PHOTOS/IMG64.jpeg",
+  "HOME PHOTOS/IMG88.jpeg",
+  "HOME PHOTOS/IMG89.jpeg",
+  "HOME PHOTOS/IMG90.jpeg",
+  "HOME PHOTOS/IMG91.jpeg",
+
+
 ]
 
 // Colors for background transition
@@ -57,20 +91,13 @@ const colors = [
 
 // Function to determine contrasting color
 function getContrastColor(hexcolor) {
-  // If a leading # is provided, remove it
   if (hexcolor.slice(0, 1) === "#") {
     hexcolor = hexcolor.slice(1)
   }
-
-  // Convert to RGB value
   var r = Number.parseInt(hexcolor.substr(0, 2), 16)
   var g = Number.parseInt(hexcolor.substr(2, 2), 16)
   var b = Number.parseInt(hexcolor.substr(4, 2), 16)
-
-  // Get YIQ ratio
   var yiq = (r * 299 + g * 587 + b * 114) / 1000
-
-  // Check contrast
   return yiq >= 128 ? "black" : "white"
 }
 
@@ -103,14 +130,18 @@ function randomizeImages() {
     const imgElement = document.createElement("img")
     imgElement.src = img
     imgElement.alt = `Image ${index + 1}`
-    imgElement.style.opacity = "0"
+
+    // Add error handling for images
+    imgElement.onerror = function () {
+      this.style.display = "none"
+    }
+
+    imgElement.onload = () => {
+      gridItem.classList.add("loaded")
+    }
 
     gridItem.appendChild(imgElement)
     gridContainer.appendChild(gridItem)
-
-    setTimeout(() => {
-      imgElement.style.opacity = "1"
-    }, index * 50)
   })
 }
 
@@ -135,9 +166,18 @@ function init() {
 document.addEventListener("DOMContentLoaded", init)
 
 // Refresh images on page load and when the logo is clicked
-window.addEventListener("load", randomizeImages)
+window.addEventListener("load", () => {
+  randomizeImages()
+  window.scrollTo(0, 0)
+})
+
 document.querySelector(".site-logo").addEventListener("click", (e) => {
   e.preventDefault()
   randomizeImages()
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  })
 })
+
 
