@@ -1,12 +1,3 @@
-// State management
-const isGridView = false
-const isScrolled = false
-
-// DOM Elements
-const app = document.getElementById("app")
-const listView = document.getElementById("listView")
-const gridItems = document.querySelectorAll(".grid-item img")
-
 // Image data
 const images = [
   "HOME PHOTOS/IMG1.jpeg",
@@ -45,35 +36,80 @@ const images = [
   "HOME PHOTOS/IMG34.jpeg",
   "HOME PHOTOS/IMG35.jpeg",
   "HOME PHOTOS/IMG36.jpeg",
-  // Add more image paths here
 ]
 
 // Colors for background transition
 const colors = [
-  "#FFFFFF", // Pure white
-  "#F8F8F8", // Very light gray
-  "#F0F0F0", // Light gray
-  "#E8E8E8", // Softer gray
-  "#E0E0E0", // Neutral gray
-  "#D8D8D8", // Medium-light gray
-  "#D0D0D0", // Medium gray
-  "#C8C8C8", // Slightly darker gray
-  "#B8B8B8", // Mid-gray with more contrast
-  "#A8A8A8", // Medium-dark gray
-  "#909090", // Darker gray
-  "#707070", // Even darker gray
-  "#505050", // Deep gray
-];
+  "#FFFFFF",
+  "#F8F8F8",
+  "#F0F0F0",
+  "#E8E8E8",
+  "#E0E0E0",
+  "#D8D8D8",
+  "#D0D0D0",
+  "#C8C8C8",
+  "#B8B8B8",
+  "#A8A8A8",
+  "#909090",
+  "#707070",
+  "#505050",
+]
 
+// Function to determine contrasting color
+function getContrastColor(hexcolor) {
+  // If a leading # is provided, remove it
+  if (hexcolor.slice(0, 1) === "#") {
+    hexcolor = hexcolor.slice(1)
+  }
+
+  // Convert to RGB value
+  var r = Number.parseInt(hexcolor.substr(0, 2), 16)
+  var g = Number.parseInt(hexcolor.substr(2, 2), 16)
+  var b = Number.parseInt(hexcolor.substr(4, 2), 16)
+
+  // Get YIQ ratio
+  var yiq = (r * 299 + g * 587 + b * 114) / 1000
+
+  // Check contrast
+  return yiq >= 128 ? "black" : "white"
+}
 
 // Randomize and set images
 function randomizeImages() {
+  const gridContainer = document.getElementById("grid-container")
+  gridContainer.innerHTML = "" // Clear existing content
+
   const shuffled = [...images].sort(() => 0.5 - Math.random())
-  gridItems.forEach((img, index) => {
-    img.src = shuffled[index % shuffled.length]
-    img.style.opacity = "0"
+
+  shuffled.forEach((img, index) => {
+    const gridItem = document.createElement("div")
+    gridItem.className = "grid-item"
+
+    // Randomly decide the size of the grid item
+    const size = Math.random() < 0.7 ? "small" : Math.random() < 0.9 ? "medium" : "large"
+
+    switch (size) {
+      case "small":
+        gridItem.style.width = "30%"
+        break
+      case "medium":
+        gridItem.style.width = "45%"
+        break
+      case "large":
+        gridItem.style.width = "60%"
+        break
+    }
+
+    const imgElement = document.createElement("img")
+    imgElement.src = img
+    imgElement.alt = `Image ${index + 1}`
+    imgElement.style.opacity = "0"
+
+    gridItem.appendChild(imgElement)
+    gridContainer.appendChild(gridItem)
+
     setTimeout(() => {
-      img.style.opacity = "1"
+      imgElement.style.opacity = "1"
     }, index * 50)
   })
 }
@@ -82,7 +118,11 @@ function randomizeImages() {
 function handleScroll() {
   const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
   const colorIndex = Math.floor(scrollPercentage / (100 / colors.length))
-  document.body.style.backgroundColor = colors[colorIndex]
+  const backgroundColor = colors[colorIndex]
+  const contrastColor = getContrastColor(backgroundColor)
+
+  document.body.style.backgroundColor = backgroundColor
+  document.querySelector(".overlay").style.color = contrastColor
 }
 
 // Initialize
@@ -94,7 +134,10 @@ function init() {
 // Run initialization when DOM is loaded
 document.addEventListener("DOMContentLoaded", init)
 
-// Refresh images on button click
-document.querySelector(".view-toggle").addEventListener("click", randomizeImages)
-
+// Refresh images on page load and when the logo is clicked
+window.addEventListener("load", randomizeImages)
+document.querySelector(".site-logo").addEventListener("click", (e) => {
+  e.preventDefault()
+  randomizeImages()
+})
 
