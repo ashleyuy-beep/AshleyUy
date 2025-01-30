@@ -46,7 +46,7 @@ body {
 }
 
  /* Overlay */
- .overlay {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -106,4 +106,18 @@ body {
     font-size: 10px;
   }
 }
+
+.nav {
+  display: flex;
+  gap: 2em;
+}
+
+.nav .nav-item p {
+  font-size: 16px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+
 
