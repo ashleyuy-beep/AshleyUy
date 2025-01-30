@@ -32,7 +32,22 @@ const images = [
   'images/PERSONAL PROJECT/P1020804.JPG',
   'images/PERSONAL PROJECT/IMG_7579.JPG',
   'images/PERSONAL PROJECT/IMG_1042.JPG',
-  
+  'images/PERSONAL PROJECT/DSCF0425 Large.jpeg',
+  'images/PERSONAL PROJECT/Image 1 Large.jpeg',
+  'images/PERSONAL PROJECT/Image 3 Large.jpeg',
+  'images/PERSONAL PROJECT/Image 4 Large 3.13.20 PM.jpeg',
+  'images/PERSONAL PROJECT/Image 5 (2) Large.jpeg',
+  'images/PERSONAL PROJECT/Image 6 (2) Large.jpeg',
+  'images/PERSONAL PROJECT/Image 7 (3) Large.jpeg',
+  'images/PERSONAL PROJECT/Image 7 (4) Large.jpeg',
+  'images/PERSONAL PROJECT/Image Large.jpeg',
+  'images/PERSONAL PROJECT/IMG_4892 Large.jpeg',
+  'images/PERSONAL PROJECT/IMG_5533 Large.jpeg',
+  'images/PERSONAL PROJECT/P1020888 Large.jpeg',
+  'images/PERSONAL PROJECT/P1020895 Large.jpeg',
+  'images/PERSONAL PROJECT/P1020896 Large.jpeg',
+
+
 ];
 
 // Populate gallery
