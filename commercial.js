@@ -72,111 +72,124 @@ const images = [
 
 // Add this new function for the loading overlay
 function showLoadingOverlay() {
-  const overlay = document.createElement("div")
-  overlay.className = "loading-overlay"
-  const spinner = document.createElement("div")
-  spinner.className = "loading-spinner"
-  overlay.appendChild(spinner)
-  document.body.appendChild(overlay)
+  const overlay = document.createElement("div");
+  overlay.className = "loading-overlay";
+  const spinner = document.createElement("div");
+  spinner.className = "loading-spinner";
+  overlay.appendChild(spinner);
+  document.body.appendChild(overlay);
 
-  return overlay
+  return overlay;
 }
+
+// Ensure modal is hidden initially
+document.addEventListener("DOMContentLoaded", () => {
+  modal.classList.remove("show"); // Ensures modal is hidden at startup
+});
 
 // Populate gallery
 function populateGallery() {
-  console.log("Populating gallery...")
-  const loadingOverlay = showLoadingOverlay()
-  let loadedImages = 0
+  console.log("Populating gallery...");
+  const loadingOverlay = showLoadingOverlay();
+  let loadedImages = 0;
 
   images.forEach((src, index) => {
-    const img = document.createElement("img")
-    img.src = src
-    img.alt = `Image ${index + 1}`
-    img.dataset.index = index
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = `Image ${index + 1}`;
+    img.dataset.index = index;
 
     img.addEventListener("load", () => {
-      console.log(`Image ${index + 1} loaded successfully`)
-      loadedImages++
-      img.classList.add("loaded")
+      console.log(`Image ${index + 1} loaded successfully`);
+      loadedImages++;
+      img.classList.add("loaded");
 
       if (loadedImages === images.length) {
         setTimeout(() => {
-          loadingOverlay.classList.add("hidden")
-          setTimeout(() => loadingOverlay.remove(), 500)
-        }, 500)
+          loadingOverlay.classList.add("hidden");
+          setTimeout(() => loadingOverlay.remove(), 500);
+        }, 500);
       }
-    })
+    });
 
     img.addEventListener("error", () => {
-      console.error(`Failed to load image ${index + 1}: ${src}`)
-      loadedImages++
-    })
+      console.error(`Failed to load image ${index + 1}: ${src}`);
+      loadedImages++;
+    });
 
-    img.addEventListener("click", openModal)
-    gallery.appendChild(img)
-  })
-  console.log("Gallery population complete")
+    img.addEventListener("click", openModal);
+    gallery.appendChild(img);
+  });
+
+  console.log("Gallery population complete");
 }
 
 function openModal(e) {
-  const src = e.target.src
-  const index = Number.parseInt(e.target.dataset.index)
-  modalImage.src = src
-  modalCaption.textContent = `Image ${index + 1} of ${images.length}`
-  modal.classList.add("show")
-  document.body.style.overflow = "hidden" // Disable scrolling when modal is open
+  if (!modal) return; // Ensure modal exists before modifying it
+
+  const src = e.target.src;
+  const index = Number.parseInt(e.target.dataset.index);
+  modalImage.src = src;
+  modalCaption.textContent = `Image ${index + 1} of ${images.length}`;
+  modal.classList.add("show");
+  document.body.style.overflow = "hidden"; // Disable scrolling when modal is open
 }
 
 function closeModalFunction() {
-  modal.classList.remove("show")
-  document.body.style.overflow = "" // Re-enable scrolling when modal is closed
+  if (!modal) return; // Prevent errors if modal isn't defined
+
+  modal.classList.remove("show");
+  document.body.style.overflow = ""; // Re-enable scrolling when modal is closed
 }
 
-// Close modal
-closeModal.addEventListener("click", closeModalFunction)
+// Ensure modal closes properly
+if (closeModal) {
+  closeModal.addEventListener("click", closeModalFunction);
+}
 
 // Close modal on outside click
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) {
-    closeModalFunction()
-  }
-})
+if (modal) {
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModalFunction();
+    }
+  });
+}
 
 // Close modal on Escape key press
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && modal.classList.contains("show")) {
-    closeModalFunction()
+    closeModalFunction();
   }
-})
+});
 
 // Add animation class on page load
 window.addEventListener("load", () => {
-  console.log("Page loaded")
-  document.body.classList.add("loaded")
-  populateGallery()
-})
+  console.log("Page loaded");
+  document.body.classList.add("loaded");
+  populateGallery();
+});
 
-console.log("JavaScript file loaded")
-
-// Lazy loading images (This part remains unchanged from the original code)
+// Lazy loading images
 const lazyLoad = (target) => {
   const io = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        const img = entry.target
-        const src = img.getAttribute("data-src")
+        const img = entry.target;
+        const src = img.getAttribute("data-src");
 
-        img.setAttribute("src", src)
-        img.classList.add("fade-in")
+        img.setAttribute("src", src);
+        img.classList.add("fade-in");
 
-        observer.disconnect()
+        observer.unobserve(img);
       }
-    })
-  })
+    });
+  });
 
-  io.observe(target)
-}
+  io.observe(target);
+};
 
-// Apply lazy loading to gallery images (This part remains unchanged from the original code)
-document.querySelectorAll(".gallery img").forEach(lazyLoad)
+// Apply lazy loading to gallery images
+document.querySelectorAll(".gallery img").forEach(lazyLoad);
 
+console.log("JavaScript file loaded");
