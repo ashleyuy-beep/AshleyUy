@@ -101,7 +101,7 @@ function getContrastColor(hexcolor) {
   var g = Number.parseInt(hexcolor.substr(2, 2), 16)
   var b = Number.parseInt(hexcolor.substr(4, 2), 16)
   var yiq = (r * 299 + g * 587 + b * 114) / 1000
-  return yiq >= 128 ? "black" : "white"
+  return yiq >= 128 ? "black" : "black"
 }
 
 // Randomize and set images
