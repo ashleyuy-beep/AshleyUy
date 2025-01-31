@@ -136,26 +136,6 @@ window.addEventListener("load", () => {
   populateGallery()
 })
 
-// Edit caption functionality
-modalCaption.addEventListener("click", function () {
-  const currentText = this.textContent
-  const input = document.createElement("input")
-  input.value = currentText
-  this.textContent = ""
-  this.appendChild(input)
-  input.focus()
-
-  input.addEventListener("blur", function () {
-    modalCaption.textContent = this.value
-  })
-
-  input.addEventListener("keypress", function (e) {
-    if (e.key === "Enter") {
-      this.blur()
-    }
-  })
-})
-
 console.log("JavaScript file loaded")
 
 // Lazy loading images (This part remains unchanged from the original code)
