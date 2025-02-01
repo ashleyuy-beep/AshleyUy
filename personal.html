@@ -47,13 +47,17 @@
                 <!-- Add images dynamically via JavaScript -->
             </div>
 
-            <!-- Modal for viewing images -->
-            <div class="modal hidden">
-                <span class="close">&times;</span>
-                <img class="modal-content" id="modal-image">
-                <div class="caption" id="modal-caption"></div>
+          <!-- Updated Modal Structure -->
+          <div class="modal">
+            <button class="close" aria-label="Close modal">&times;</button>
+            <div class="modal-content-wrapper">
+              <img class="modal-content" id="modal-image" alt="Featured image">
+              <div class="thumbnail-strip" id="thumbnail-strip">
+                <!-- Thumbnails will be added dynamically -->
+              </div>
             </div>
-        </div>
+          </div>
+
 
         <!-- Footer -->
         <footer>
