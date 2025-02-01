@@ -1,11 +1,3 @@
-// JavaScript for Gallery and Modal Functionality
-
-const gallery = document.querySelector(".gallery")
-const modal = document.querySelector(".modal")
-const modalImage = document.getElementById("modal-image")
-const modalCaption = document.getElementById("modal-caption")
-const closeModal = document.querySelector(".close")
-
 // Your existing images array
 const images = [
   "images/Commercial/IMG_8420.JPG",
@@ -70,126 +62,174 @@ const images = [
   "images/Commercial/LAYOVERPASSPORT copy/LAYOVER7.jpg",
 ]
 
-// Add this new function for the loading overlay
-function showLoadingOverlay() {
-  const overlay = document.createElement("div");
-  overlay.className = "loading-overlay";
-  const spinner = document.createElement("div");
-  spinner.className = "loading-spinner";
-  overlay.appendChild(spinner);
-  document.body.appendChild(overlay);
+const gallery = document.querySelector(".gallery")
+const modal = document.querySelector(".modal")
+const modalImage = document.getElementById("modal-image")
+const thumbnailStrip = document.getElementById("thumbnail-strip")
+const closeModal = document.querySelector(".close")
+const loadingScreen = document.getElementById("loading-screen")
 
-  return overlay;
-}
+// Helper function to show loading overlay
+// function showLoadingOverlay() {
+//   const loadingOverlay = document.createElement("div")
+//   loadingOverlay.classList.add("loading-overlay")
+//   const spinner = document.createElement("div")
+//   spinner.classList.add("loading-spinner")
+//   loadingOverlay.appendChild(spinner)
+//   document.body.appendChild(loadingOverlay)
+//   return loadingOverlay
+// }
 
-// Ensure modal is hidden initially
-document.addEventListener("DOMContentLoaded", () => {
-  modal.classList.remove("show"); // Ensures modal is hidden at startup
-});
-
-// Populate gallery
+// Modified populateGallery function
 function populateGallery() {
-  console.log("Populating gallery...");
-  const loadingOverlay = showLoadingOverlay();
-  let loadedImages = 0;
+  console.log("Populating gallery...")
+  let loadedImages = 0
 
   images.forEach((src, index) => {
-    const img = document.createElement("img");
-    img.src = src;
-    img.alt = `Image ${index + 1}`;
-    img.dataset.index = index;
+    const img = document.createElement("img")
+    img.src = src
+    img.alt = `Image ${index + 1}`
+    img.dataset.index = index
 
     img.addEventListener("load", () => {
-      console.log(`Image ${index + 1} loaded successfully`);
-      loadedImages++;
-      img.classList.add("loaded");
+      console.log(`Image ${index + 1} loaded successfully`)
+      loadedImages++
+      img.classList.add("loaded")
 
       if (loadedImages === images.length) {
         setTimeout(() => {
-          loadingOverlay.classList.add("hidden");
-          setTimeout(() => loadingOverlay.remove(), 500);
-        }, 500);
+          loadingScreen.style.opacity = "0"
+          setTimeout(() => {
+            loadingScreen.style.display = "none"
+          }, 500)
+        }, 1000)
       }
-    });
+    })
 
     img.addEventListener("error", () => {
-      console.error(`Failed to load image ${index + 1}: ${src}`);
-      loadedImages++;
-    });
+      console.error(`Failed to load image ${index + 1}: ${src}`)
+      loadedImages++
+    })
 
-    img.addEventListener("click", openModal);
-    gallery.appendChild(img);
-  });
-
-  console.log("Gallery population complete");
+    img.addEventListener("click", openModal)
+    gallery.appendChild(img)
+  })
 }
 
+// Modified openModal function
 function openModal(e) {
-  if (!modal) return; // Ensure modal exists before modifying it
+  const clickedImage = e.target
+  const index = Number(clickedImage.dataset.index)
 
-  const src = e.target.src;
-  const index = Number.parseInt(e.target.dataset.index);
-  modalImage.src = src;
-  modalCaption.textContent = `Image ${index + 1} of ${images.length}`;
-  modal.classList.add("show");
-  document.body.style.overflow = "hidden"; // Disable scrolling when modal is open
+  // Clear existing thumbnails
+  thumbnailStrip.innerHTML = ""
+
+  // Create thumbnails
+  images.forEach((src, i) => {
+    const thumbnail = document.createElement("img")
+    thumbnail.src = src
+    thumbnail.alt = `Thumbnail ${i + 1}`
+    thumbnail.classList.add("thumbnail")
+    if (i === index) thumbnail.classList.add("active")
+
+    thumbnail.addEventListener("click", () => {
+      modalImage.src = src
+      // Update active thumbnail
+      document.querySelectorAll(".thumbnail").forEach((thumb) => {
+        thumb.classList.remove("active")
+      })
+      thumbnail.classList.add("active")
+    })
+
+    thumbnailStrip.appendChild(thumbnail)
+  })
+
+  modalImage.src = clickedImage.src
+  modalImage.dataset.index = index
+  modal.classList.add("show")
+  document.body.style.overflow = "hidden"
 }
 
+// Modified close modal function
 function closeModalFunction() {
-  if (!modal) return; // Prevent errors if modal isn't defined
-
-  modal.classList.remove("show");
-  document.body.style.overflow = ""; // Re-enable scrolling when modal is closed
+  modal.classList.remove("show")
+  document.body.style.overflow = ""
+  // Clear thumbnails when closing
+  thumbnailStrip.innerHTML = ""
 }
 
-// Ensure modal closes properly
-if (closeModal) {
-  closeModal.addEventListener("click", closeModalFunction);
-}
+// Keep your existing event listeners
+closeModal.addEventListener("click", closeModalFunction)
 
-// Close modal on outside click
-if (modal) {
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      closeModalFunction();
-    }
-  });
-}
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    closeModalFunction()
+  }
+})
 
-// Close modal on Escape key press
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && modal.classList.contains("show")) {
-    closeModalFunction();
+    closeModalFunction()
   }
-});
+})
 
-// Add animation class on page load
+// Initialize the gallery when the page loads
 window.addEventListener("load", () => {
-  console.log("Page loaded");
-  document.body.classList.add("loaded");
-  populateGallery();
-});
+  console.log("Page loaded")
+  populateGallery()
+})
 
-// Lazy loading images
-const lazyLoad = (target) => {
-  const io = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        const src = img.getAttribute("data-src");
+// Add touch support for mobile devices
+let touchStartX = 0
+let touchEndX = 0
 
-        img.setAttribute("src", src);
-        img.classList.add("fade-in");
+function handleSwipe() {
+  if (touchStartX - touchEndX > 50) {
+    // Swipe left, show next image
+    showNextImage()
+  } else if (touchEndX - touchStartX > 50) {
+    // Swipe right, show previous image
+    showPreviousImage()
+  }
+}
 
-        observer.unobserve(img);
-      }
-    });
-  });
+modal.addEventListener("touchstart", (e) => {
+  touchStartX = e.changedTouches[0].screenX
+})
 
-  io.observe(target);
-};
+modal.addEventListener("touchend", (e) => {
+  touchEndX = e.changedTouches[0].screenX
+  handleSwipe()
+})
 
-// Apply lazy loading to gallery images
-document.querySelectorAll(".gallery img").forEach(lazyLoad);
+function showNextImage() {
+  const currentIndex = Number.parseInt(modalImage.dataset.index)
+  const nextIndex = (currentIndex + 1) % images.length
+  updateModalImage(nextIndex)
+}
 
-console.log("JavaScript file loaded");
+function showPreviousImage() {
+  const currentIndex = Number.parseInt(modalImage.dataset.index)
+  const previousIndex = (currentIndex - 1 + images.length) % images.length
+  updateModalImage(previousIndex)
+}
+
+function updateModalImage(index) {
+  modalImage.src = images[index]
+  modalImage.dataset.index = index
+  updateActiveThumbnail(index)
+}
+
+function updateActiveThumbnail(index) {
+  const thumbnails = document.querySelectorAll(".thumbnail")
+  thumbnails.forEach((thumb, i) => {
+    if (i === index) {
+      thumb.classList.add("active")
+    } else {
+      thumb.classList.remove("active")
+    }
+  })
+}
+
+console.log("JavaScript file loaded")
+

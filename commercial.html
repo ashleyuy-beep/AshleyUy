@@ -5,57 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ashley Uy | Commercial |</title>
   <link rel="stylesheet" href="./commercial.css">
-  <style>
-    /* Remove default link styling */
-    a {
-        text-decoration: none;
-        color: inherit;
-      }
-    </style>
-  </head>
-  <body>
+</head>
+<body>
 
-    <!-- Overlay Navigation -->
-    <div class="overlay">
-      <div class="overlay-content">
-        <div class="site-logo">
-          <a href="home.html">
-            <h1>Ashley Uy</h1>
-          </a>
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="loading-screen">
+    <h2 class="loading-text">Commercial</h2>
+  </div>
+
+  <!-- Overlay Navigation -->
+  <div class="overlay">
+    <div class="overlay-content">
+      <div class="site-logo">
+        <a href="home.html">
+          <h1>Ashley Uy</h1>
+        </a>
+      </div>
+      <div class="nav">
+        <div class="nav-item">
+          <a href="about.html"><p>About</p></a>
         </div>
-        <div class="nav">
-          <div class="nav-item">
-            <a href="about.html"><p>About</p></a>
-          </div>
-          <div class="nav-item">
-            <a href="personal.html"><p>Personal</p></a>
-          </div>
-          <div class="nav-item">
-            <a href="mailto:ashleyuy.booking@gmail.com">
-              <p>Contact</p>
-            </a>
-          </div>
+        <div class="nav-item">
+          <a href="personal.html"><p>Personal</p></a>
+        </div>
+        <div class="nav-item">
+          <a href="mailto:ashleyuy.booking@gmail.com">
+            <p>Contact</p>
+          </a>
         </div>
       </div>
     </div>
+  </div>
 
-            <div class="gallery">
-                <!-- Add images dynamically via JavaScript -->
-            </div>
+  <div class="gallery">
+    <!-- Images will be added dynamically via JavaScript -->
+  </div>
 
-            <!-- Modal for viewing images -->
-            <div class="modal hidden">
-                <span class="close">&times;</span>
-                <img class="modal-content" id="modal-image">
-                <div class="caption" id="modal-caption"></div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer>
-            Website Designed by <a href="https://robingabrieldesign.com" target="_blank">Robin Gabriel ©</a>
-        </footer>
+  <!-- Updated Modal Structure -->
+  <div class="modal">
+    <button class="close" aria-label="Close modal">&times;</button>
+    <div class="modal-content-wrapper">
+      <img class="modal-content" id="modal-image" alt="Featured image">
+      <div class="thumbnail-strip" id="thumbnail-strip">
+        <!-- Thumbnails will be added dynamically -->
+      </div>
     </div>
-    <script src="./commercial.js"></script>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    Website Designed by <a href="https://robingabrieldesign.com" target="_blank">Robin Gabriel ©</a>
+  </footer>
+
+  <script src="./commercial.js"></script>
 </body>
 </html>
+

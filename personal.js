@@ -1,11 +1,3 @@
-// JavaScript for Gallery and Modal Functionality
-
-const gallery = document.querySelector(".gallery")
-const modal = document.querySelector(".modal")
-const modalImage = document.getElementById("modal-image")
-const modalCaption = document.getElementById("modal-caption")
-const closeModal = document.querySelector(".close")
-
 // Dummy images for gallery
 const images = [
   'images/PERSONAL PROJECT/Untitled (3).JPG',
@@ -50,22 +42,27 @@ const images = [
 
 ];
 
-// Add this new function for the loading overlay
-function showLoadingOverlay() {
-  const overlay = document.createElement("div")
-  overlay.className = "loading-overlay"
-  const spinner = document.createElement("div")
-  spinner.className = "loading-spinner"
-  overlay.appendChild(spinner)
-  document.body.appendChild(overlay)
+const gallery = document.querySelector(".gallery")
+const modal = document.querySelector(".modal")
+const modalImage = document.getElementById("modal-image")
+const thumbnailStrip = document.getElementById("thumbnail-strip")
+const closeModal = document.querySelector(".close")
+const loadingScreen = document.getElementById("loading-screen")
 
-  return overlay
-}
+// Helper function to show loading overlay
+// function showLoadingOverlay() {
+//   const loadingOverlay = document.createElement("div")
+//   loadingOverlay.classList.add("loading-overlay")
+//   const spinner = document.createElement("div")
+//   spinner.classList.add("loading-spinner")
+//   loadingOverlay.appendChild(spinner)
+//   document.body.appendChild(loadingOverlay)
+//   return loadingOverlay
+// }
 
-// Populate gallery
+// Modified populateGallery function
 function populateGallery() {
   console.log("Populating gallery...")
-  const loadingOverlay = showLoadingOverlay()
   let loadedImages = 0
 
   images.forEach((src, index) => {
@@ -81,9 +78,11 @@ function populateGallery() {
 
       if (loadedImages === images.length) {
         setTimeout(() => {
-          loadingOverlay.classList.add("hidden")
-          setTimeout(() => loadingOverlay.remove(), 500)
-        }, 500)
+          loadingScreen.style.opacity = "0"
+          setTimeout(() => {
+            loadingScreen.style.display = "none"
+          }, 500)
+        }, 1000)
       }
     })
 
@@ -95,67 +94,122 @@ function populateGallery() {
     img.addEventListener("click", openModal)
     gallery.appendChild(img)
   })
-  console.log("Gallery population complete")
 }
 
+// Modified openModal function
 function openModal(e) {
-  const src = e.target.src
-  const index = Number.parseInt(e.target.dataset.index)
-  modalImage.src = src
-  modalCaption.textContent = `Image ${index + 1} of ${images.length}`
+  const clickedImage = e.target
+  const index = Number(clickedImage.dataset.index)
+
+  // Clear existing thumbnails
+  thumbnailStrip.innerHTML = ""
+
+  // Create thumbnails
+  images.forEach((src, i) => {
+    const thumbnail = document.createElement("img")
+    thumbnail.src = src
+    thumbnail.alt = `Thumbnail ${i + 1}`
+    thumbnail.classList.add("thumbnail")
+    if (i === index) thumbnail.classList.add("active")
+
+    thumbnail.addEventListener("click", () => {
+      modalImage.src = src
+      // Update active thumbnail
+      document.querySelectorAll(".thumbnail").forEach((thumb) => {
+        thumb.classList.remove("active")
+      })
+      thumbnail.classList.add("active")
+    })
+
+    thumbnailStrip.appendChild(thumbnail)
+  })
+
+  modalImage.src = clickedImage.src
+  modalImage.dataset.index = index
   modal.classList.add("show")
-  document.body.style.overflow = "hidden" // Disable scrolling when modal is open
+  document.body.style.overflow = "hidden"
 }
 
+// Modified close modal function
 function closeModalFunction() {
   modal.classList.remove("show")
-  document.body.style.overflow = "" // Re-enable scrolling when modal is closed
+  document.body.style.overflow = ""
+  // Clear thumbnails when closing
+  thumbnailStrip.innerHTML = ""
 }
 
-// Close modal
+// Keep your existing event listeners
 closeModal.addEventListener("click", closeModalFunction)
 
-// Close modal on outside click
 modal.addEventListener("click", (e) => {
   if (e.target === modal) {
     closeModalFunction()
   }
 })
 
-// Close modal on Escape key press
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && modal.classList.contains("show")) {
     closeModalFunction()
   }
 })
 
-// Add animation class on page load
+// Initialize the gallery when the page loads
 window.addEventListener("load", () => {
   console.log("Page loaded")
-  document.body.classList.add("loaded")
   populateGallery()
 })
 
-console.log("JavaScript file loaded")
+// Add touch support for mobile devices
+let touchStartX = 0
+let touchEndX = 0
 
-// Lazy loading images (This part remains unchanged from the original code)
-const lazyLoad = (target) => {
-  const io = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const img = entry.target
-        const src = img.getAttribute("data-src")
-
-        img.setAttribute("src", src)
-        img.classList.add("fade-in")
-
-        observer.disconnect()
-      }
-    })
-  })
-
-  io.observe(target)
+function handleSwipe() {
+  if (touchStartX - touchEndX > 50) {
+    // Swipe left, show next image
+    showNextImage()
+  } else if (touchEndX - touchStartX > 50) {
+    // Swipe right, show previous image
+    showPreviousImage()
+  }
 }
 
-// Apply lazy loading to gallery images (This part remains unchanged from the original code)
-document.querySelectorAll(".gallery img").forEach(lazyLoad)
+modal.addEventListener("touchstart", (e) => {
+  touchStartX = e.changedTouches[0].screenX
+})
+
+modal.addEventListener("touchend", (e) => {
+  touchEndX = e.changedTouches[0].screenX
+  handleSwipe()
+})
+
+function showNextImage() {
+  const currentIndex = Number.parseInt(modalImage.dataset.index)
+  const nextIndex = (currentIndex + 1) % images.length
+  updateModalImage(nextIndex)
+}
+
+function showPreviousImage() {
+  const currentIndex = Number.parseInt(modalImage.dataset.index)
+  const previousIndex = (currentIndex - 1 + images.length) % images.length
+  updateModalImage(previousIndex)
+}
+
+function updateModalImage(index) {
+  modalImage.src = images[index]
+  modalImage.dataset.index = index
+  updateActiveThumbnail(index)
+}
+
+function updateActiveThumbnail(index) {
+  const thumbnails = document.querySelectorAll(".thumbnail")
+  thumbnails.forEach((thumb, i) => {
+    if (i === index) {
+      thumb.classList.add("active")
+    } else {
+      thumb.classList.remove("active")
+    }
+  })
+}
+
+console.log("JavaScript file loaded")
+
