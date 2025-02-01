@@ -71,27 +71,52 @@ const images = [
     "HOME PHOTOS/IMG89.jpeg",
     "HOME PHOTOS/IMG90.jpeg",
     "HOME PHOTOS/IMG91.jpeg",
-  
-  
+    'HOME PHOTOS/IMG92.jpeg',
+    'HOME PHOTOS/IMG93.jpeg',
+    'HOME PHOTOS/IMG94.jpeg',
+    'HOME PHOTOS/IMG95.jpeg',
+    'HOME PHOTOS/IMG96.jpeg',
+    'HOME PHOTOS/IMG97.jpeg',
+    'HOME PHOTOS/IMG98.jpeg',
+    'HOME PHOTOS/IMG99.jpeg',
+    'HOME PHOTOS/IMG100.jpeg',
+    'HOME PHOTOS/IMG101.jpeg',
+    'HOME PHOTOS/IMG102.jpeg',
+    'HOME PHOTOS/IMG103.jpeg',
+    'HOME PHOTOS/IMG104.jpeg',
+    'HOME PHOTOS/IMG105.jpeg',
+    'HOME PHOTOS/IMG106.jpeg',
+    'HOME PHOTOS/IMG107.jpeg',
+    'HOME PHOTOS/IMG108.jpeg',
+    'HOME PHOTOS/IMG109.jpeg',
+    'HOME PHOTOS/IMG110.jpeg',
+    'HOME PHOTOS/IMG111.jpeg',
+    'HOME PHOTOS/IMG112.jpeg',
+    'HOME PHOTOS/IMG113.jpeg',
+    'HOME PHOTOS/IMG114.jpeg',
+    'HOME PHOTOS/IMG115.jpeg',
+    'HOME PHOTOS/IMG116.jpeg',
+    'HOME PHOTOS/IMG117.jpeg',
+
   ]
   
-  // Colors for background transition
+    // Colors for background transition
   const colors = [
-    "#FFFFFF",
-    "#F8F8F8",
-    "#F0F0F0",
-    "#E8E8E8",
-    "#E0E0E0",
-    "#D8D8D8",
-    "#D0D0D0",
-    "#C8C8C8",
-    "#B8B8B8",
-    "#A8A8A8",
-    "#909090",
-    "#707070",
-    "#505050",
-  ]
-  
+    "#FFFFFF",  // white
+    "#FAF9F6",  // very light beige
+    "#F5F5DC",  // light beige
+    "#EFEBD1",  // beige
+    "#E8E1C8",  // soft beige
+    "#D9D0B7",  // muted beige
+    "#D1C7A6",  // light tan beige
+    "#C9B79D",  // warm beige
+    "#BBA48C",  // darker beige
+    "#B19B7A",  // tan beige
+    "#9A8A68",  // rich beige
+    "#8F7A57",  // deeper beige
+    "#7D6A46",  // darker beige
+  ];
+
   // Function to determine contrasting color
   function getContrastColor(hexcolor) {
     if (hexcolor.slice(0, 1) === "#") {
