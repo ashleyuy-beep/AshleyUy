@@ -38,6 +38,7 @@ const images = [
   'images/PERSONAL PROJECT/P1020888 Large.jpeg',
   'images/PERSONAL PROJECT/P1020895 Large.jpeg',
   'images/PERSONAL PROJECT/P1020896 Large.jpeg',
+  'images/PERSONAL PROJECT/PERSONAL!!!! Large.jpeg',
 
 
 ];
