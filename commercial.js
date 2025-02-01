@@ -255,5 +255,7 @@ function updateActiveThumbnail(index) {
   })
 }
 
+
+
 console.log("JavaScript file loaded")
 
