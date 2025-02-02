@@ -115,6 +115,28 @@
     transition: opacity 0.3s;
   }
   
-  
+  /* Responsive Design */
+@media (max-width: 768px) {
+  .nav .nav-item a {
+    font-size: 14px;
+  }
+
+  .overlay {
+    height: 0.5rem;
+  }
+
+  .gallery-container {
+    height: calc(100vh - 50px);
+  }
+
+  .site-logo h1 {
+    font-size: 20px;
+  }
+  .nav {
+    gap: 1em;
+  }
+}
+
+
   
   

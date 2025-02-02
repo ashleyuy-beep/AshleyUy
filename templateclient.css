@@ -127,7 +127,7 @@ a {
   }
 
   .overlay {
-    height: 50px;
+    height: 0.5rem;
   }
 
   .gallery-container {
@@ -136,6 +136,9 @@ a {
 
   .site-logo h1 {
     font-size: 20px;
+  }
+  .nav {
+    gap: 1em;
   }
 }
 
