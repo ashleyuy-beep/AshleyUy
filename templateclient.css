@@ -141,10 +141,6 @@ a {
   transition: opacity 0.3s;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 1024px) {
-}
-
 @media (max-width: 768px) {
   .nav {
     gap: 1em;
