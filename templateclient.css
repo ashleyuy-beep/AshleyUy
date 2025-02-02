@@ -126,22 +126,9 @@ a {
 @media (max-width: 768px) {
   .nav .nav-item p {
     font-size: 10px;
+    font-weight: 300; /* Ensure the font weight is thin on mobile */
   }
-}
 
-.nav {
-  display: flex;
-  gap: 1em;
-}
-
-.nav .nav-item p {
-  font-size: 16px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: opacity 0.3s;
-}
-
-@media (max-width: 768px) {
   .nav {
     gap: 1em;
   }
@@ -166,6 +153,7 @@ a {
 
   .nav .nav-item p {
     font-size: 14px;
+    font-weight: 300; /* Ensure the font weight is thin on mobile */
   }
 
   .loading-text {
