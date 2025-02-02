@@ -2,12 +2,12 @@
 const images = [
   { src: "HOME PHOTOS/IMG1.jpeg", href: "/personal.html" },
   { src: "HOME PHOTOS/IMG2.jpeg", href: "/personal.html" },
-  { src: "HOME PHOTOS/IMG3.jpeg", href: "" },
+  { src: "HOME PHOTOS/IMG3.jpeg", href: "/sameold.html" },
   { src: "HOME PHOTOS/IMG4.jpeg", href: "" },
   { src: "HOME PHOTOS/IMG5.jpeg", href: "/personal.html" },
   { src: "HOME PHOTOS/IMG6.jpeg", href: "/personal.html" },
   { src: "HOME PHOTOS/IMG7.jpeg", href: "/personal.html" },
-  { src: "HOME PHOTOS/IMG8.jpeg", href: "" },
+  { src: "HOME PHOTOS/IMG8.jpeg", href: "/sameold.html" },
   { src: "HOME PHOTOS/IMG9.jpeg", href: "" },
   { src: "HOME PHOTOS/IMG10.jpeg", href: "/page10" },
   { src: "HOME PHOTOS/IMG11.jpeg", href: "/page11" },
@@ -28,8 +28,8 @@ const images = [
   { src: "HOME PHOTOS/IMG25.jpeg", href: "/personal.html" },
   { src: "HOME PHOTOS/IMG26.jpeg", href: "/personal.html" },
   { src: "HOME PHOTOS/IMG27.jpeg", href: "/personal.html" },
-  { src: "HOME PHOTOS/IMG28.jpeg", href: "/page28" },
-  { src: "HOME PHOTOS/IMG29.jpeg", href: "/page29" },
+  { src: "HOME PHOTOS/IMG28.jpeg", href: "/sameold.html" },
+  { src: "HOME PHOTOS/IMG29.jpeg", href: "/sameold.html" },
   { src: "HOME PHOTOS/IMG30.jpeg", href: "/page30" },
   { src: "HOME PHOTOS/IMG31.jpeg", href: "/personal.html" },
   { src: "HOME PHOTOS/IMG32.jpeg", href: "/personal.html" },
@@ -44,9 +44,9 @@ const images = [
   { src: "HOME PHOTOS/IMG41.jpeg", href: "/personal.html" },
   { src: "HOME PHOTOS/IMG42.jpeg", href: "/personal.html" },
   { src: "HOME PHOTOS/IMG43.jpeg", href: "/personal.html" },
-  { src: "HOME PHOTOS/IMG44.jpeg", href: "/page44" },
-  { src: "HOME PHOTOS/IMG45.jpeg", href: "/page45" },
-  { src: "HOME PHOTOS/IMG46.jpeg", href: "/page46" },
+  { src: "HOME PHOTOS/IMG44.jpeg", href: "/sameold.html" },
+  { src: "HOME PHOTOS/IMG45.jpeg", href: "/sameold.html" },
+  { src: "HOME PHOTOS/IMG46.jpeg", href: "/sameold.html" },
   { src: "HOME PHOTOS/IMG47.jpeg", href: "/page47" },
   { src: "HOME PHOTOS/IMG48.jpeg", href: "/page48" },
   { src: "HOME PHOTOS/IMG49.jpeg", href: "/page49" },
@@ -55,7 +55,7 @@ const images = [
   { src: "HOME PHOTOS/IMG52.jpeg", href: "/page52" },
   { src: "HOME PHOTOS/IMG53.jpeg", href: "/page53" },
   { src: "HOME PHOTOS/IMG54.jpeg", href: "/page54" },
-  { src: "HOME PHOTOS/IMG55.jpeg", href: "/page55" },
+  { src: "HOME PHOTOS/IMG55.jpeg", href: "/sameold.html" },
   { src: "HOME PHOTOS/IMG56.jpeg", href: "/page56" },
   { src: "HOME PHOTOS/IMG57.jpeg", href: "/personal.html" },
   { src: "HOME PHOTOS/IMG58.jpeg", href: "/page58" },
@@ -98,24 +98,9 @@ const images = [
   { src: "HOME PHOTOS/IMG115.jpeg", href: "/page115" },
   { src: "HOME PHOTOS/IMG116.jpeg", href: "/page116" },
   { src: "HOME PHOTOS/IMG117.jpeg", href: "/page117" },
+  { src: "HOME PHOTOS/IMG118.jpeg", href: "/sameold.html" },
 ]
 
-// Colors for background transition
-const colors = [
-  "#FFFFFF", // white
-  "#FAF9F6", // very light beige
-  "#F5F5DC", // light beige
-  "#EFEBD1", // beige
-  "#E8E1C8", // soft beige
-  "#D9D0B7", // muted beige
-  "#D1C7A6", // light tan beige
-  "#C9B79D", // warm beige
-  "#BBA48C", // darker beige
-  "#B19B7A", // tan beige
-  "#9A8A68", // rich beige
-  "#8F7A57", // deeper beige
-  "#7D6A46", // darker beige
-]
 
 // Function to determine contrasting color
 function getContrastColor(hexcolor) {
