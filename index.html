@@ -3,15 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page</title>
-    <link rel="stylesheet" href="index.css">
+    <title>Ashley Uy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@100&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+
+        .text {
+            font-family: 'Helvetica Neue', sans-serif;
+            font-weight: 100;
+            font-size: 1rem;
+            color: white;
+            animation: blink 1s linear 5 forwards;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+    <script>
+        setTimeout(() => {
+            window.location.href = "home.html";
+        }, 5000); // Redirects after 5 seconds (5 blinks)
+    </script>
 </head>
 <body>
-    <div class="video-container">
-        <video id="background-video" autoplay muted>
-            <source src="images/VIDEO/Photo-Gallery-[remix].mov" type="">
-        </video>
-    </div>
-    <script src="index.js"></script>
+    <div class="text">Ashley Uy</div>
 </body>
 </html>

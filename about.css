@@ -106,17 +106,6 @@
     margin: 0;
   }
   
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .team-img {
-      width: 80%;
-    }
-  
-    .hero-description {
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-  }
   
   /* Images Container */
   .images {
@@ -141,6 +130,18 @@
     object-fit: cover;
   }
   
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .team-img {
+      width: 80%;
+    }
+
+    .hero-description {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+  }
+
   /* Responsive Design */
   @media (max-width: 768px) {
 
