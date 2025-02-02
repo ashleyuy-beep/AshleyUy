@@ -174,7 +174,7 @@ body {
 
   /* Shrink images even further on smaller screens */
   .grid-item img {
-      width: 70%;
+      width: 100%;
       height: auto;
   }
 }
