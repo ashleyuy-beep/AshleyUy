@@ -142,28 +142,15 @@ a {
 
 /* Responsive Adjustments */
 @media (max-width: 1024px) {
-.gallery {
-  grid-template-columns: repeat(3, 1fr);
-}
 }
 
 @media (max-width: 768px) {
-.gallery {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5em;
-  padding: 1em;
-}
-
 .nav {
   gap: 1em;
 }
 
 .site-logo h1 {
   font-size: 20px;
-}
-.loading-text {
-  font-size: 2rem;
-}
 }
 
 @media (max-width: 480px) {
