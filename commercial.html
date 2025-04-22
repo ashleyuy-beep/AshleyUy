@@ -52,8 +52,8 @@
       scroll-behavior: smooth;
     }
 
-    /* Overlay */
-    .overlay {
+    /* Header Navigation */
+    .header {
       position: fixed;
       top: 0;
       left: 0;
@@ -64,50 +64,107 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1em;
-    }
-
-    .overlay-content {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 1em 2em;
     }
 
     .site-logo {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5em;
-    }
-
-    .site-logo h1 {
       font-size: 25px;
       font-weight: 300;
       line-height: 1;
     }
 
-    .nav {
+    .nav-icons {
       display: flex;
-      gap: 2em;
+      gap: 1.5em;
+      align-items: center;
     }
 
-    .nav .nav-item p {
-      font-size: 16px;
-      font-weight: 300;
+    .nav-icon {
       cursor: pointer;
-      transition: opacity 0.3s;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .nav .nav-item p:hover {
-      opacity: 0.7;
+    .grid-icon {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 2px;
+      width: 18px;
+      height: 18px;
     }
 
-    /* Gallery */
+    .grid-dot {
+      width: 4px;
+      height: 4px;
+      background-color: black; /* Changed from red to black */
+      border-radius: 50%;
+    }
+
+    .singular-icon {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      width: 18px;
+    }
+
+    .line {
+      width: 18px;
+      height: 2px;
+      background-color: black; /* Changed from red to black */
+    }
+
+    .overlay-icon {
+      width: 18px;
+      height: 18px;
+      background-color: black; /* Changed from red to black */
+      border-radius: 50%;
+    }
+
+    /* Overlay Menu */
+    .overlay-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      z-index: 10001;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay-menu.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .menu-item {
+      margin: 15px 0;
+      font-size: 28px;
+      font-weight: 300;
+    }
+
+    /* Gallery Layouts */
     .gallery {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1em;
       padding: 2em;
+      transition: all 0.5s ease;
+    }
+
+    .gallery.singular-view {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2em;
     }
 
     .gallery img {
@@ -120,12 +177,23 @@
       aspect-ratio: 4 / 5;
     }
 
+    .gallery.singular-view img {
+      width: auto;
+      max-width: 80%;
+      max-height: 80vh;
+      aspect-ratio: auto;
+    }
+
     .gallery img.loaded {
       opacity: 1;
     }
 
     .gallery img:hover {
       transform: scale(1.05);
+    }
+
+    .gallery.singular-view img:hover {
+      transform: none;
     }
 
     /* Modal */
@@ -201,64 +269,7 @@
       color: #bbb;
     }
 
-    @media (max-width: 768px) {
-      .gallery {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5em;
-        padding: 1em;
-      }
-
-      .nav {
-        gap: 1em;
-      }
-
-      .site-logo h1 {
-        font-size: 20px;
-      }
-      .loading-text {
-        font-size: 2rem;
-      }
-
-      .close {
-        font-size: 24px;
-        top: 15px;
-        right: 15px;
-      }
-
-      .modal-content-wrapper {
-        width: 95%;
-        height: 85%;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .gallery {
-        grid-template-columns: 1fr;
-      }
-      .overlay {
-        padding: 0.5em;
-      }
-      .nav .nav-item p {
-        font-size: 14px;
-      }
-      .loading-text {
-        font-size: 1.5rem;
-      }
-    }
-
-    /* Remove default link styling */
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    @media (hover: none) {
-      .gallery img:hover {
-        transform: none;
-      }
-    }
-
-    /* Footer styles */
+    /* Footer */
     footer {
       text-align: center;
       padding: 20px;
@@ -275,40 +286,121 @@
     footer a:hover {
       color: #000;
     }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5em;
+        padding: 1em;
+      }
+
+      .header {
+        padding: 1em;
+      }
+
+      .site-logo {
+        font-size: 20px;
+      }
+
+      .loading-text {
+        font-size: 2rem;
+      }
+
+      .close {
+        font-size: 24px;
+        top: 15px;
+        right: 15px;
+      }
+
+      .modal-content-wrapper {
+        width: 95%;
+        height: 85%;
+      }
+
+      .menu-item {
+        font-size: 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        padding: 0.5em 1em;
+      }
+
+      .loading-text {
+        font-size: 1.5rem;
+      }
+
+      .nav-icons {
+        gap: 1em;
+      }
+    }
+
+    /* Remove default link styling */
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    @media (hover: none) {
+      .gallery img:hover {
+        transform: none;
+      }
+    }
   </style>
 </head>
 <body>
-
   <!-- Loading Screen -->
   <div id="loading-screen" class="loading-screen">
     <h2 class="loading-text">Commercial</h2>
   </div>
 
-  <!-- Overlay Navigation -->
-  <div class="overlay">
-    <div class="overlay-content">
-      <div class="site-logo">
-        <a href="home.html">
-          <h1>Ashley Uy</h1>
-        </a>
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="site-logo">
+      <a href="home.html">Ashley Uy</a>
+    </div>
+    <div class="nav-icons">
+      <div class="nav-icon" id="grid-view">
+        <div class="grid-icon">
+          <div class="grid-dot"></div>
+          <div class="grid-dot"></div>
+          <div class="grid-dot"></div>
+          <div class="grid-dot"></div>
+          <div class="grid-dot"></div>
+          <div class="grid-dot"></div>
+          <div class="grid-dot"></div>
+          <div class="grid-dot"></div>
+          <div class="grid-dot"></div>
+        </div>
       </div>
-      <div class="nav">
-        <div class="nav-item">
-          <a href="about.html"><p>About</p></a>
+      <div class="nav-icon" id="singular-view">
+        <div class="singular-icon">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
         </div>
-        <div class="nav-item">
-          <a href="personal.html"><p>Personal</p></a>
-        </div>
-        <div class="nav-item">
-          <a href="commercial.html">
-            <p>Commercial</p>
-          </a>
-        </div>
+      </div>
+      <div class="nav-icon" id="menu-toggle">
+        <div class="overlay-icon"></div>
       </div>
     </div>
+  </header>
+
+  <!-- Overlay Menu -->
+  <div class="overlay-menu" id="overlay-menu">
+    <div class="menu-item"><a href="home.html">Home</a></div>
+    <div class="menu-item"><a href="about.html">About</a></div>
+    <div class="menu-item"><a href="commercial.html">Commercial</a></div>
+    <div class="menu-item"><a href="personal.html">Personal</a></div>
   </div>
 
-  <div class="gallery">
+  <div class="gallery" id="gallery">
     <!-- Images will be added dynamically via JavaScript -->
   </div>
 
@@ -415,167 +507,195 @@
       "images/Commercial/LAYOVERPASSPORT copy/LAYOVER4.jpg",
       "images/Commercial/passport-frontback aligned copy/orange back.jpg",
       "images/Commercial/LAYOVERPASSPORT copy/LAYOVER7.jpg",
-    ]
+    ];
 
-    const gallery = document.querySelector(".gallery")
-    const modal = document.querySelector(".modal")
-    const modalImage = document.getElementById("modal-image")
-    const thumbnailStrip = document.getElementById("thumbnail-strip")
-    const closeModal = document.querySelector(".close")
-    const loadingScreen = document.getElementById("loading-screen")
+    const gallery = document.querySelector(".gallery");
+    const modal = document.querySelector(".modal");
+    const modalImage = document.getElementById("modal-image");
+    const thumbnailStrip = document.getElementById("thumbnail-strip");
+    const closeModal = document.querySelector(".close");
+    const loadingScreen = document.getElementById("loading-screen");
+    const overlayMenu = document.getElementById("overlay-menu");
+    const menuToggle = document.getElementById("menu-toggle");
+    const gridViewBtn = document.getElementById("grid-view");
+    const singularViewBtn = document.getElementById("singular-view");
+
+    // Toggle menu
+    menuToggle.addEventListener("click", () => {
+      overlayMenu.classList.toggle("active");
+    });
+
+    // Toggle view modes
+    gridViewBtn.addEventListener("click", () => {
+      gallery.classList.remove("singular-view");
+    });
+
+    singularViewBtn.addEventListener("click", () => {
+      gallery.classList.add("singular-view");
+    });
 
     // Modified populateGallery function
     function populateGallery() {
-      console.log("Populating gallery...")
-      let loadedImages = 0
+      console.log("Populating gallery...");
+      let loadedImages = 0;
 
       images.forEach((src, index) => {
-        const img = document.createElement("img")
-        img.src = src
-        img.alt = `Image ${index + 1}`
-        img.dataset.index = index
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = `Image ${index + 1}`;
+        img.dataset.index = index;
 
         img.addEventListener("load", () => {
-          console.log(`Image ${index + 1} loaded successfully`)
-          loadedImages++
-          img.classList.add("loaded")
+          console.log(`Image ${index + 1} loaded successfully`);
+          loadedImages++;
+          img.classList.add("loaded");
 
           if (loadedImages === images.length) {
             setTimeout(() => {
-              loadingScreen.style.opacity = "0"
+              loadingScreen.style.opacity = "0";
               setTimeout(() => {
-                loadingScreen.style.display = "none"
-              }, 500)
-            }, 1000)
+                loadingScreen.style.display = "none";
+              }, 500);
+            }, 1000);
           }
-        })
+        });
 
         img.addEventListener("error", () => {
-          console.error(`Failed to load image ${index + 1}: ${src}`)
-          loadedImages++
-        })
+          console.error(`Failed to load image ${index + 1}: ${src}`);
+          loadedImages++;
+        });
 
-        img.addEventListener("click", openModal)
-        gallery.appendChild(img)
-      })
+        img.addEventListener("click", openModal);
+        gallery.appendChild(img);
+      });
     }
 
     // Modified openModal function
     function openModal(e) {
-      const clickedImage = e.target
-      const index = Number(clickedImage.dataset.index)
+      const clickedImage = e.target;
+      const index = Number(clickedImage.dataset.index);
 
       // Clear existing thumbnails
-      thumbnailStrip.innerHTML = ""
+      thumbnailStrip.innerHTML = "";
 
       // Create thumbnails
       images.forEach((src, i) => {
-        const thumbnail = document.createElement("img")
-        thumbnail.src = src
-        thumbnail.alt = `Thumbnail ${i + 1}`
-        thumbnail.classList.add("thumbnail")
-        if (i === index) thumbnail.classList.add("active")
+        const thumbnail = document.createElement("img");
+        thumbnail.src = src;
+        thumbnail.alt = `Thumbnail ${i + 1}`;
+        thumbnail.classList.add("thumbnail");
+        if (i === index) thumbnail.classList.add("active");
 
         thumbnail.addEventListener("click", () => {
-          modalImage.src = src
+          modalImage.src = src;
+          modalImage.dataset.index = i;
           // Update active thumbnail
           document.querySelectorAll(".thumbnail").forEach((thumb) => {
-            thumb.classList.remove("active")
-          })
-          thumbnail.classList.add("active")
-        })
+            thumb.classList.remove("active");
+          });
+          thumbnail.classList.add("active");
+        });
 
-        thumbnailStrip.appendChild(thumbnail)
-      })
+        thumbnailStrip.appendChild(thumbnail);
+      });
 
-      modalImage.src = clickedImage.src
-      modalImage.dataset.index = index
-      modal.classList.add("show")
-      document.body.style.overflow = "hidden"
+      modalImage.src = clickedImage.src;
+      modalImage.dataset.index = index;
+      modal.classList.add("show");
+      document.body.style.overflow = "hidden";
     }
 
     // Modified close modal function
     function closeModalFunction() {
-      modal.classList.remove("show")
-      document.body.style.overflow = ""
+      modal.classList.remove("show");
+      document.body.style.overflow = "";
       // Clear thumbnails when closing
-      thumbnailStrip.innerHTML = ""
+      thumbnailStrip.innerHTML = "";
     }
 
     // Keep your existing event listeners
-    closeModal.addEventListener("click", closeModalFunction)
+    closeModal.addEventListener("click", closeModalFunction);
 
     modal.addEventListener("click", (e) => {
       if (e.target === modal) {
-        closeModalFunction()
+        closeModalFunction();
       }
-    })
+    });
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && modal.classList.contains("show")) {
-        closeModalFunction()
+        closeModalFunction();
+      } else if (e.key === "Escape" && overlayMenu.classList.contains("active")) {
+        overlayMenu.classList.remove("active");
       }
-    })
+    });
 
     // Initialize the gallery when the page loads
     window.addEventListener("load", () => {
-      console.log("Page loaded")
-      populateGallery()
-    })
+      console.log("Page loaded");
+      populateGallery();
+    });
 
     // Add touch support for mobile devices
-    let touchStartX = 0
-    let touchEndX = 0
+    let touchStartX = 0;
+    let touchEndX = 0;
 
     function handleSwipe() {
       if (touchStartX - touchEndX > 50) {
         // Swipe left, show next image
-        showNextImage()
+        showNextImage();
       } else if (touchEndX - touchStartX > 50) {
         // Swipe right, show previous image
-        showPreviousImage()
+        showPreviousImage();
       }
     }
 
     modal.addEventListener("touchstart", (e) => {
-      touchStartX = e.changedTouches[0].screenX
-    })
+      touchStartX = e.changedTouches[0].screenX;
+    });
 
     modal.addEventListener("touchend", (e) => {
-      touchEndX = e.changedTouches[0].screenX
-      handleSwipe()
-    })
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
 
     function showNextImage() {
-      const currentIndex = Number.parseInt(modalImage.dataset.index)
-      const nextIndex = (currentIndex + 1) % images.length
-      updateModalImage(nextIndex)
+      const currentIndex = Number.parseInt(modalImage.dataset.index);
+      const nextIndex = (currentIndex + 1) % images.length;
+      updateModalImage(nextIndex);
     }
 
     function showPreviousImage() {
-      const currentIndex = Number.parseInt(modalImage.dataset.index)
-      const previousIndex = (currentIndex - 1 + images.length) % images.length
-      updateModalImage(previousIndex)
+      const currentIndex = Number.parseInt(modalImage.dataset.index);
+      const previousIndex = (currentIndex - 1 + images.length) % images.length;
+      updateModalImage(previousIndex);
     }
 
     function updateModalImage(index) {
-      modalImage.src = images[index]
-      modalImage.dataset.index = index
-      updateActiveThumbnail(index)
+      modalImage.src = images[index];
+      modalImage.dataset.index = index;
+      updateActiveThumbnail(index);
     }
 
     function updateActiveThumbnail(index) {
-      const thumbnails = document.querySelectorAll(".thumbnail")
+      const thumbnails = document.querySelectorAll(".thumbnail");
       thumbnails.forEach((thumb, i) => {
         if (i === index) {
-          thumb.classList.add("active")
+          thumb.classList.add("active");
         } else {
-          thumb.classList.remove("active")
+          thumb.classList.remove("active");
         }
-      })
+      });
     }
 
-    console.log("JavaScript file loaded")
+    // Close overlay menu when clicking on a menu item
+    document.querySelectorAll(".menu-item a").forEach(item => {
+      item.addEventListener("click", () => {
+        overlayMenu.classList.remove("active");
+      });
+    });
+
+    console.log("JavaScript file loaded");
   </script>
 </body>
 </html>
