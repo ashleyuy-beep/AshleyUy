@@ -4,7 +4,183 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Corteiz RTW</title>
-    <link rel="stylesheet" href="templateclient.css" />
+    <style>
+      :root {
+        --primary-bg: white;
+        --dark-bg: black;
+        --transition-duration: 700ms;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Helvetica Neue Thin", sans-serif;
+        min-height: 100vh;
+        overflow: hidden;
+        touch-action: on;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* Overlay (Updated to match home.css) */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background-color: rgba(255, 255, 255, 0.9);
+        z-index: 10000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1em;
+      }
+
+      .overlay-content {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* Logo (Updated to match home.css) */
+      .site-logo {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+      }
+
+      .site-logo h1 {
+        font-size: 25px;
+        font-weight: 300;
+        line-height: 1;
+      }
+
+      /* Navigation (Updated to match home.css) */
+      .nav {
+        display: flex;
+        gap: 2em;
+      }
+
+      .nav .nav-item p {
+        font-size: 16px;
+        font-weight: 300;
+        cursor: pointer;
+        transition: opacity 0.3s;
+      }
+
+      .nav .nav-item p:hover {
+        opacity: 0.7;
+      }
+
+      /* Gallery */
+      .gallery-container {
+        height: calc(100vh - 60px);
+        width: 100vw;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .gallery {
+        display: inline-flex;
+        height: 100%;
+        padding: 20px 0;
+        cursor: grab;
+        user-select: none;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        margin-top: 50px;
+      }
+
+      .gallery.active {
+        cursor: grabbing;
+        cursor: -webkit-grabbing;
+      }
+
+      .gallery-item {
+        height: 100%;
+        margin-right: 20px;
+      }
+
+      .gallery-item img {
+        height: 80%;
+        width: auto;
+        object-fit: contain;
+        pointer-events: none;
+      }
+
+      /* Footer */
+      .footer {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 18px;
+        font-weight: 300;
+        z-index: 1000;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .nav .nav-item p {
+          font-size: 10px;
+          font-weight: 300; /* Ensure the font weight is thin on mobile */
+        }
+
+        .nav {
+          gap: 1em;
+        }
+
+        .site-logo h1 {
+          font-size: 20px;
+        }
+
+        .loading-text {
+          font-size: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .gallery {
+          grid-template-columns: 1fr;
+        }
+
+        .overlay {
+          padding: 0.5em;
+        }
+
+        .nav .nav-item p {
+          font-size: 14px;
+          font-weight: 300; /* Ensure the font weight is thin on mobile */
+        }
+
+        .loading-text {
+          font-size: 1.5rem;
+        }
+      }
+
+      /* Remove default link styling */
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* Prevent hover effects on touch devices */
+      @media (hover: none) {
+        .gallery img:hover {
+          transform: none;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="overlay">
@@ -33,6 +209,84 @@
       <p>Corteiz</p>
     </footer>
 
-    <script src="crtz.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const gallery = document.getElementById("gallery");
+        const images = [
+          "images/Commercial/Alyssa Hot choco (2) Large.jpeg",
+          "images/Commercial/Image 3 Large.jpeg",
+          "images/Commercial/Image 4 (3) Large.jpeg",
+          "images/Commercial/IMG_0221 2 Large.jpeg",
+          "images/Commercial/IMG_0299 Large.jpeg",
+          "images/Commercial/IMG_0300 Large.jpeg",
+          "images/Commercial/IMG_0403 Large.jpeg",
+          "images/Commercial/IMG_0407 Large.jpeg",
+          "images/Commercial/Untitled (4) Large.jpeg",
+        ];
+
+        images.forEach((image, index) => {
+          const item = document.createElement("div");
+          item.className = "gallery-item";
+
+          const img = document.createElement("img");
+          img.src = image;
+          img.alt = `Gallery image ${index + 1}`;
+
+          img.onerror = () => {
+            console.error(`Failed to load image: ${image}`);
+            item.textContent = "Image failed to load";
+          };
+
+          item.appendChild(img);
+          gallery.appendChild(item);
+        });
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        gallery.addEventListener("mousedown", (e) => {
+          isDown = true;
+          gallery.classList.add("active");
+          startX = e.pageX - gallery.offsetLeft;
+          scrollLeft = gallery.scrollLeft;
+        });
+
+        gallery.addEventListener("mouseleave", () => {
+          isDown = false;
+          gallery.classList.remove("active");
+        });
+
+        gallery.addEventListener("mouseup", () => {
+          isDown = false;
+          gallery.classList.remove("active");
+        });
+
+        gallery.addEventListener("mousemove", (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - gallery.offsetLeft;
+          const walk = (x - startX) * 2;
+          gallery.scrollLeft = scrollLeft - walk;
+        });
+
+        gallery.addEventListener("touchstart", (e) => {
+          isDown = true;
+          startX = e.touches[0].pageX - gallery.offsetLeft;
+          scrollLeft = gallery.scrollLeft;
+        });
+
+        gallery.addEventListener("touchend", () => {
+          isDown = false;
+        });
+
+        gallery.addEventListener("touchmove", (e) => {
+          if (!isDown) return;
+          const x = e.touches[0].pageX - gallery.offsetLeft;
+          const walk = (x - startX) * 2;
+          gallery.scrollLeft = scrollLeft - walk;
+        }, { passive: true });
+      });
+    </script>
   </body>
 </html>

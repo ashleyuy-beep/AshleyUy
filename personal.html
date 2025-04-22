@@ -4,66 +4,532 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personal</title>
-  <link rel="stylesheet" href="./personal.css">
   <style>
-     /* Remove default link styling */
-     a {
-        text-decoration: none;
-        color: inherit;
+    /* Loading Screen */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10002;
+    }
+
+    .loading-text {
+      font-size: 1rem;
+      font-weight: 300;
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+      0%,
+      100% {
+        opacity: 1;
       }
-    </style>
-  </head>
-  <body>
-    <!-- Loading Screen -->
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      font-family: "Helvetica Neue Thin", sans-serif;
+      background-color: #fff;
+      padding-top: 60px;
+      scroll-behavior: smooth;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background-color: rgba(255, 255, 255, 0.9);
+      z-index: 10000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1em;
+    }
+
+    .overlay-content {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-logo {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+    }
+
+    .site-logo h1 {
+      font-size: 25px;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .nav {
+      display: flex;
+      gap: 2em;
+    }
+
+    .nav .nav-item p {
+      font-size: 16px;
+      font-weight: 300;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    .nav .nav-item p:hover {
+      opacity: 0.7;
+    }
+
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1em;
+      padding: 2em;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      cursor: pointer;
+      transition: opacity 0.5s ease, transform 0.3s ease;
+      opacity: 0;
+      aspect-ratio: 4 / 5;
+    }
+
+    .gallery img.loaded {
+      opacity: 1;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 50px;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.9);
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.show {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content-wrapper {
+      position: relative;
+      width: 90%;
+      max-width: 1200px;
+      height: 90%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-content {
+      max-width: 100%;
+      max-height: calc(100% - 100px);
+      object-fit: contain;
+    }
+
+    .thumbnail-strip {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 10px 0;
+    }
+
+    .thumbnail {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+    }
+
+    .thumbnail.active {
+      opacity: 1;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 300;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1100;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #bbb;
+    }
+
+    @media (max-width: 768px) {
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5em;
+        padding: 1em;
+      }
+
+      .nav {
+        gap: 1em;
+      }
+
+      .site-logo h1 {
+        font-size: 20px;
+      }
+      .loading-text {
+        font-size: 2rem;
+      }
+
+      .close {
+        font-size: 24px;
+        top: 15px;
+        right: 15px;
+      }
+
+      .modal-content-wrapper {
+        width: 95%;
+        height: 85%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+      .overlay {
+        padding: 0.5em;
+      }
+      .nav .nav-item p {
+        font-size: 14px;
+      }
+      .loading-text {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Remove default link styling */
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    @media (hover: none) {
+      .gallery img:hover {
+        transform: none;
+      }
+    }
+
+    /* Footer styles */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #666;
+      margin-top: 20px;
+    }
+
+    footer a {
+      color: #333;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Screen -->
   <div id="loading-screen" class="loading-screen">
     <h2 class="loading-text">Personal</h2>
   </div>
 
-    <!-- Overlay Navigation -->
-    <div class="overlay">
-      <div class="overlay-content">
-        <div class="site-logo">
-          <a href="home.html">
-            <h1>Ashley Uy</h1>
-          </a>
+  <!-- Overlay Navigation -->
+  <div class="overlay">
+    <div class="overlay-content">
+      <div class="site-logo">
+        <a href="home.html">
+          <h1>Ashley Uy</h1>
+        </a>
+      </div>
+      <div class="nav">
+        <div class="nav-item">
+          <a href="about.html"><p>About</p></a>
         </div>
-        <div class="nav">
-          <div class="nav-item">
-            <a href="about.html"><p>About</p></a>
-          </div>
-          <div class="nav-item">
-            <a href="commercial.html"><p>Commercial</p></a>
-          </div>
-          <div class="nav-item">
-            <a href="personal.html"><p>Personal</p></a>
-          </div>
-            </a>
-          </div>
+        <div class="nav-item">
+          <a href="commercial.html"><p>Commercial</p></a>
+        </div>
+        <div class="nav-item">
+          <a href="personal.html"><p>Personal</p></a>
+        </div>
+          </a>
         </div>
       </div>
     </div>
+  </div>
 
-            <div class="gallery">
-                <!-- Add images dynamically via JavaScript -->
-            </div>
+  <div class="gallery">
+    <!-- Add images dynamically via JavaScript -->
+  </div>
 
-          <!-- Updated Modal Structure -->
-          <div class="modal">
-            <button class="close" aria-label="Close modal">&times;</button>
-            <div class="modal-content-wrapper">
-              <img class="modal-content" id="modal-image" alt="Featured image">
-              <div class="thumbnail-strip" id="thumbnail-strip">
-                <!-- Thumbnails will be added dynamically -->
-              </div>
-            </div>
-          </div>
-
-
-        <!-- Footer -->
-        <footer>
-            Website Designed by <a href="https://robingabrieldesign.com" target="_blank">Robin Gabriel ©</a>
-        </footer>
+  <!-- Updated Modal Structure -->
+  <div class="modal">
+    <button class="close" aria-label="Close modal">&times;</button>
+    <div class="modal-content-wrapper">
+      <img class="modal-content" id="modal-image" alt="Featured image">
+      <div class="thumbnail-strip" id="thumbnail-strip">
+        <!-- Thumbnails will be added dynamically -->
+      </div>
     </div>
-    <script src="./personal.js"></script>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    Website Designed by <a href="https://robingabrieldesign.com" target="_blank">Robin Gabriel ©</a>
+  </footer>
+
+  <script>
+    // Dummy images for gallery
+    const images = [
+      'images/PERSONAL PROJECT/Untitled (3).JPG',
+      'images/PERSONAL PROJECT/DSCF0466 copy.jpg',
+      'images/PERSONAL PROJECT/DSCF0476 copy.jpg',
+      'images/PERSONAL PROJECT/Image 2 (3).JPG',
+      'images/PERSONAL PROJECT/Image 2 (4).JPG',
+      'images/PERSONAL PROJECT/Image 3 (4).JPG',
+      'images/PERSONAL PROJECT/Image 3 (5).JPG',
+      'images/PERSONAL PROJECT/Image 4 (2).JPG',
+      'images/PERSONAL PROJECT/Image 4.JPG',
+      'images/PERSONAL PROJECT/Image 5.JPG',
+      'images/PERSONAL PROJECT/Image 6 (3).JPG',
+      'images/PERSONAL PROJECT/Image 7 (2).JPG',
+      'images/PERSONAL PROJECT/IMG_0309.JPG',
+      'images/PERSONAL PROJECT/IMG_0317.JPG',
+      'images/PERSONAL PROJECT/IMG_0788.JPG',
+      'images/PERSONAL PROJECT/IMG_0847.JPG',
+      'images/PERSONAL PROJECT/IMG_3521.JPG',
+      'images/PERSONAL PROJECT/IMG_7417.JPG',
+      'images/PERSONAL PROJECT/IMG_7553.JPG',
+      'images/PERSONAL PROJECT/P1020733.JPG',
+      'images/PERSONAL PROJECT/P1020783.JPG',
+      'images/PERSONAL PROJECT/P1020804.JPG',
+      'images/PERSONAL PROJECT/IMG_7579.JPG',
+      'images/PERSONAL PROJECT/IMG_1042.JPG',
+      'images/PERSONAL PROJECT/DSCF0425 Large.jpeg',
+      'images/PERSONAL PROJECT/Image 1 Large.jpeg',
+      'images/PERSONAL PROJECT/Image 3 Large.jpeg',
+      'images/PERSONAL PROJECT/Image 4 Large 3.13.20 PM.jpeg',
+      'images/PERSONAL PROJECT/Image 5 (2) Large.jpeg',
+      'images/PERSONAL PROJECT/Image 6 (2) Large.jpeg',
+      'images/PERSONAL PROJECT/Image 7 (3) Large.jpeg',
+      'images/PERSONAL PROJECT/Image 7 (4) Large.jpeg',
+      'images/PERSONAL PROJECT/Image Large.jpeg',
+      'images/PERSONAL PROJECT/IMG_4892 Large.jpeg',
+      'images/PERSONAL PROJECT/IMG_5533 Large.jpeg',
+      'images/PERSONAL PROJECT/P1020888 Large.jpeg',
+      'images/PERSONAL PROJECT/P1020895 Large.jpeg',
+      'images/PERSONAL PROJECT/P1020896 Large.jpeg',
+      'images/PERSONAL PROJECT/PERSONAL!!!! Large.jpeg',
+    ];
+
+    const gallery = document.querySelector(".gallery");
+    const modal = document.querySelector(".modal");
+    const modalImage = document.getElementById("modal-image");
+    const thumbnailStrip = document.getElementById("thumbnail-strip");
+    const closeModal = document.querySelector(".close");
+    const loadingScreen = document.getElementById("loading-screen");
+
+    // Modified populateGallery function
+    function populateGallery() {
+      console.log("Populating gallery...");
+      let loadedImages = 0;
+
+      images.forEach((src, index) => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = `Image ${index + 1}`;
+        img.dataset.index = index;
+
+        img.addEventListener("load", () => {
+          console.log(`Image ${index + 1} loaded successfully`);
+          loadedImages++;
+          img.classList.add("loaded");
+
+          if (loadedImages === images.length) {
+            setTimeout(() => {
+              loadingScreen.style.opacity = "0";
+              setTimeout(() => {
+                loadingScreen.style.display = "none";
+              }, 500);
+            }, 1000);
+          }
+        });
+
+        img.addEventListener("error", () => {
+          console.error(`Failed to load image ${index + 1}: ${src}`);
+          loadedImages++;
+        });
+
+        img.addEventListener("click", openModal);
+        gallery.appendChild(img);
+      });
+    }
+
+    // Modified openModal function
+    function openModal(e) {
+      const clickedImage = e.target;
+      const index = Number(clickedImage.dataset.index);
+
+      // Clear existing thumbnails
+      thumbnailStrip.innerHTML = "";
+
+      // Create thumbnails
+      images.forEach((src, i) => {
+        const thumbnail = document.createElement("img");
+        thumbnail.src = src;
+        thumbnail.alt = `Thumbnail ${i + 1}`;
+        thumbnail.classList.add("thumbnail");
+        if (i === index) thumbnail.classList.add("active");
+
+        thumbnail.addEventListener("click", () => {
+          modalImage.src = src;
+          // Update active thumbnail
+          document.querySelectorAll(".thumbnail").forEach((thumb) => {
+            thumb.classList.remove("active");
+          });
+          thumbnail.classList.add("active");
+        });
+
+        thumbnailStrip.appendChild(thumbnail);
+      });
+
+      modalImage.src = clickedImage.src;
+      modalImage.dataset.index = index;
+      modal.classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+
+    // Modified close modal function
+    function closeModalFunction() {
+      modal.classList.remove("show");
+      document.body.style.overflow = "";
+      // Clear thumbnails when closing
+      thumbnailStrip.innerHTML = "";
+    }
+
+    // Keep your existing event listeners
+    closeModal.addEventListener("click", closeModalFunction);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModalFunction();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("show")) {
+        closeModalFunction();
+      }
+    });
+
+    // Initialize the gallery when the page loads
+    window.addEventListener("load", () => {
+      console.log("Page loaded");
+      populateGallery();
+    });
+
+    // Add touch support for mobile devices
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    function handleSwipe() {
+      if (touchStartX - touchEndX > 50) {
+        // Swipe left, show next image
+        showNextImage();
+      } else if (touchEndX - touchStartX > 50) {
+        // Swipe right, show previous image
+        showPreviousImage();
+      }
+    }
+
+    modal.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    modal.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function showNextImage() {
+      const currentIndex = Number.parseInt(modalImage.dataset.index);
+      const nextIndex = (currentIndex + 1) % images.length;
+      updateModalImage(nextIndex);
+    }
+
+    function showPreviousImage() {
+      const currentIndex = Number.parseInt(modalImage.dataset.index);
+      const previousIndex = (currentIndex - 1 + images.length) % images.length;
+      updateModalImage(previousIndex);
+    }
+
+    function updateModalImage(index) {
+      modalImage.src = images[index];
+      modalImage.dataset.index = index;
+      updateActiveThumbnail(index);
+    }
+
+    function updateActiveThumbnail(index) {
+      const thumbnails = document.querySelectorAll(".thumbnail");
+      thumbnails.forEach((thumb, i) => {
+        if (i === index) {
+          thumb.classList.add("active");
+        } else {
+          thumb.classList.remove("active");
+        }
+      });
+    }
+
+    console.log("JavaScript file loaded");
+  </script>
 </body>
 </html>
