@@ -17,6 +17,7 @@
       justify-content: center;
       align-items: center;
       z-index: 10002;
+      transition: opacity 0.5s ease;
     }
 
     .loading-text {
@@ -65,12 +66,19 @@
       justify-content: space-between;
       align-items: center;
       padding: 1em 2em;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
     }
 
     .site-logo {
       font-size: 25px;
       font-weight: 300;
       line-height: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .site-logo:hover {
+      transform: translateY(-2px);
     }
 
     .nav-icons {
@@ -86,6 +94,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .nav-icon:hover {
+      transform: scale(1.1);
     }
 
     .grid-icon {
@@ -99,7 +112,7 @@
     .grid-dot {
       width: 4px;
       height: 4px;
-      background-color: black; /* Changed from red to black */
+      background-color: black;
       border-radius: 50%;
     }
 
@@ -113,14 +126,92 @@
     .line {
       width: 18px;
       height: 2px;
-      background-color: black; /* Changed from red to black */
+      background-color: black;
+      transition: width 0.3s ease;
+    }
+
+    .nav-icon:hover .line {
+      width: 15px;
     }
 
     .overlay-icon {
       width: 18px;
       height: 18px;
-      background-color: black; /* Changed from red to black */
+      background-color: black;
       border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-icon:hover .overlay-icon {
+      transform: scale(0.9);
+    }
+
+    /* View toggle icons */
+    #view-toggle {
+      position: relative;
+      width: 24px;
+      height: 24px;
+    }
+
+    #grid-view, #singular-view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    #grid-view.active, #singular-view.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Close button for overlay */
+    .close-overlay {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      z-index: 10002;
+      display: none;
+    }
+
+    .close-overlay::before,
+    .close-overlay::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: black;
+    }
+
+    .close-overlay::before {
+      transform: rotate(45deg);
+    }
+
+    .close-overlay::after {
+      transform: rotate(-45deg);
+    }
+
+    .overlay-menu.active .close-overlay {
+      display: block;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     /* Overlay Menu */
@@ -137,7 +228,7 @@
       justify-content: center;
       align-items: center;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.5s ease;
     }
 
     .overlay-menu.active {
@@ -149,6 +240,33 @@
       margin: 15px 0;
       font-size: 28px;
       font-weight: 300;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-3px);
+    }
+
+    .menu-item a {
+      position: relative;
+      display: inline-block;
+    }
+
+    .menu-item a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: black;
+      transition: width 0.3s ease;
+    }
+
+    .menu-item a:hover::after {
+      width: 100%;
     }
 
     /* Gallery Layouts */
@@ -175,6 +293,7 @@
       transition: opacity 0.5s ease, transform 0.3s ease;
       opacity: 0;
       aspect-ratio: 4 / 5;
+      transform: translateY(20px);
     }
 
     .gallery.singular-view img {
@@ -186,6 +305,7 @@
 
     .gallery img.loaded {
       opacity: 1;
+      transform: translateY(0);
     }
 
     .gallery img:hover {
@@ -207,13 +327,15 @@
       height: 100%;
       overflow: auto;
       background-color: rgba(0, 0, 0, 0.9);
-      transition: opacity 0.3s ease;
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
 
     .modal.show {
       display: flex;
       justify-content: center;
       align-items: center;
+      opacity: 1;
     }
 
     .modal-content-wrapper {
@@ -223,6 +345,14 @@
       height: 90%;
       display: flex;
       flex-direction: column;
+      transform: scale(0.95);
+      opacity: 0;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+
+    .modal.show .modal-content-wrapper {
+      transform: scale(1);
+      opacity: 1;
     }
 
     .modal-content {
@@ -236,6 +366,21 @@
       gap: 10px;
       overflow-x: auto;
       padding: 10px 0;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    }
+
+    .thumbnail-strip::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .thumbnail-strip::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .thumbnail-strip::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 6px;
     }
 
     .thumbnail {
@@ -244,11 +389,16 @@
       object-fit: cover;
       cursor: pointer;
       opacity: 0.6;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .thumbnail:hover {
+      transform: translateY(-3px);
     }
 
     .thumbnail.active {
       opacity: 1;
+      border: 2px solid white;
     }
 
     .close {
@@ -262,11 +412,13 @@
       border: none;
       cursor: pointer;
       z-index: 1100;
+      transition: transform 0.3s ease, color 0.3s ease;
     }
 
     .close:hover,
     .close:focus {
       color: #bbb;
+      transform: rotate(90deg);
     }
 
     /* Footer */
@@ -276,6 +428,7 @@
       font-size: 14px;
       color: #666;
       margin-top: 20px;
+      transition: opacity 0.3s ease;
     }
 
     footer a {
@@ -290,7 +443,7 @@
     /* Responsive Design */
     @media (max-width: 768px) {
       .gallery {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 0.5em;
         padding: 1em;
       }
@@ -325,7 +478,8 @@
 
     @media (max-width: 480px) {
       .gallery {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.3em;
       }
 
       .header {
@@ -352,6 +506,18 @@
         transform: none;
       }
     }
+
+    /* Animation for staggered image loading */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
@@ -366,24 +532,28 @@
       <a href="home.html">Ashley Uy</a>
     </div>
     <div class="nav-icons">
-      <div class="nav-icon" id="grid-view">
-        <div class="grid-icon">
-          <div class="grid-dot"></div>
-          <div class="grid-dot"></div>
-          <div class="grid-dot"></div>
-          <div class="grid-dot"></div>
-          <div class="grid-dot"></div>
-          <div class="grid-dot"></div>
-          <div class="grid-dot"></div>
-          <div class="grid-dot"></div>
-          <div class="grid-dot"></div>
+      <div id="view-toggle">
+        <!-- Grid view icon (shown when in singular view) -->
+        <div class="nav-icon" id="grid-view">
+          <div class="grid-icon">
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+          </div>
         </div>
-      </div>
-      <div class="nav-icon" id="singular-view">
-        <div class="singular-icon">
-          <div class="line"></div>
-          <div class="line"></div>
-          <div class="line"></div>
+        <!-- Singular view icon (shown when in grid view) -->
+        <div class="nav-icon" id="singular-view" class="active">
+          <div class="singular-icon">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
         </div>
       </div>
       <div class="nav-icon" id="menu-toggle">
@@ -394,6 +564,7 @@
 
   <!-- Overlay Menu -->
   <div class="overlay-menu" id="overlay-menu">
+    <div class="close-overlay" id="close-overlay"></div>
     <div class="menu-item"><a href="home.html">Home</a></div>
     <div class="menu-item"><a href="about.html">About</a></div>
     <div class="menu-item"><a href="commercial.html">Commercial</a></div>
@@ -517,24 +688,58 @@
     const loadingScreen = document.getElementById("loading-screen");
     const overlayMenu = document.getElementById("overlay-menu");
     const menuToggle = document.getElementById("menu-toggle");
+    const closeOverlay = document.getElementById("close-overlay");
     const gridViewBtn = document.getElementById("grid-view");
     const singularViewBtn = document.getElementById("singular-view");
+    const viewToggle = document.getElementById("view-toggle");
 
-    // Toggle menu
+    // Initialize view mode
+    let isGridView = true;
+    updateViewIcons();
+
+    // Function to update view icons based on current view
+    function updateViewIcons() {
+      if (isGridView) {
+        // In grid view, show singular icon
+        singularViewBtn.classList.add("active");
+        gridViewBtn.classList.remove("active");
+      } else {
+        // In singular view, show grid icon
+        gridViewBtn.classList.add("active");
+        singularViewBtn.classList.remove("active");
+      }
+    }
+
+    // Toggle menu with animation
     menuToggle.addEventListener("click", () => {
-      overlayMenu.classList.toggle("active");
+      overlayMenu.classList.add("active");
+    });
+
+    // Close overlay with X button
+    closeOverlay.addEventListener("click", () => {
+      overlayMenu.classList.remove("active");
     });
 
     // Toggle view modes
-    gridViewBtn.addEventListener("click", () => {
-      gallery.classList.remove("singular-view");
+    viewToggle.addEventListener("click", () => {
+      isGridView = !isGridView;
+      gallery.classList.toggle("singular-view");
+      updateViewIcons();
+      
+      // Apply staggered animation to images when switching views
+      const allImages = gallery.querySelectorAll("img");
+      allImages.forEach((img, index) => {
+        img.style.animationDelay = `${index * 0.05}s`;
+        img.style.animation = "fadeInUp 0.5s ease forwards";
+        
+        // Reset animation after it completes
+        setTimeout(() => {
+          img.style.animation = "";
+        }, 500 + (index * 50));
+      });
     });
 
-    singularViewBtn.addEventListener("click", () => {
-      gallery.classList.add("singular-view");
-    });
-
-    // Modified populateGallery function
+    // Modified populateGallery function with staggered loading
     function populateGallery() {
       console.log("Populating gallery...");
       let loadedImages = 0;
@@ -544,11 +749,16 @@
         img.src = src;
         img.alt = `Image ${index + 1}`;
         img.dataset.index = index;
+        img.style.transitionDelay = `${index * 0.03}s`;
 
         img.addEventListener("load", () => {
           console.log(`Image ${index + 1} loaded successfully`);
           loadedImages++;
-          img.classList.add("loaded");
+          
+          // Add a slight delay before showing each image for a staggered effect
+          setTimeout(() => {
+            img.classList.add("loaded");
+          }, index * 30);
 
           if (loadedImages === images.length) {
             setTimeout(() => {
@@ -570,7 +780,7 @@
       });
     }
 
-    // Modified openModal function
+    // Modified openModal function with animations
     function openModal(e) {
       const clickedImage = e.target;
       const index = Number(clickedImage.dataset.index);
@@ -578,39 +788,78 @@
       // Clear existing thumbnails
       thumbnailStrip.innerHTML = "";
 
-      // Create thumbnails
+      // Create thumbnails with staggered loading
       images.forEach((src, i) => {
         const thumbnail = document.createElement("img");
         thumbnail.src = src;
         thumbnail.alt = `Thumbnail ${i + 1}`;
         thumbnail.classList.add("thumbnail");
+        thumbnail.style.opacity = "0";
+        thumbnail.style.transform = "translateY(10px)";
+        thumbnail.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+        thumbnail.style.transitionDelay = `${i * 0.01}s`;
+        
         if (i === index) thumbnail.classList.add("active");
 
         thumbnail.addEventListener("click", () => {
-          modalImage.src = src;
-          modalImage.dataset.index = i;
-          // Update active thumbnail
-          document.querySelectorAll(".thumbnail").forEach((thumb) => {
-            thumb.classList.remove("active");
-          });
-          thumbnail.classList.add("active");
+          modalImage.style.opacity = "0";
+          modalImage.style.transform = "scale(0.95)";
+          
+          setTimeout(() => {
+            modalImage.src = src;
+            modalImage.dataset.index = i;
+            
+            setTimeout(() => {
+              modalImage.style.opacity = "1";
+              modalImage.style.transform = "scale(1)";
+            }, 50);
+            
+            // Update active thumbnail
+            document.querySelectorAll(".thumbnail").forEach((thumb) => {
+              thumb.classList.remove("active");
+            });
+            thumbnail.classList.add("active");
+          }, 300);
         });
 
         thumbnailStrip.appendChild(thumbnail);
+        
+        // Trigger the animation after a small delay
+        setTimeout(() => {
+          thumbnail.style.opacity = "0.6";
+          thumbnail.style.transform = "translateY(0)";
+        }, 10 + (i * 10));
       });
 
-      modalImage.src = clickedImage.src;
-      modalImage.dataset.index = index;
+      modalImage.style.opacity = "0";
+      modalImage.style.transform = "scale(0.95)";
+      modalImage.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+      
+      setTimeout(() => {
+        modalImage.src = clickedImage.src;
+        modalImage.dataset.index = index;
+        
+        setTimeout(() => {
+          modalImage.style.opacity = "1";
+          modalImage.style.transform = "scale(1)";
+        }, 100);
+      }, 100);
+      
       modal.classList.add("show");
       document.body.style.overflow = "hidden";
     }
 
-    // Modified close modal function
+    // Modified close modal function with animation
     function closeModalFunction() {
-      modal.classList.remove("show");
-      document.body.style.overflow = "";
-      // Clear thumbnails when closing
-      thumbnailStrip.innerHTML = "";
+      modal.style.opacity = "0";
+      
+      setTimeout(() => {
+        modal.classList.remove("show");
+        modal.style.opacity = "1";
+        document.body.style.overflow = "";
+        // Clear thumbnails when closing
+        thumbnailStrip.innerHTML = "";
+      }, 500);
     }
 
     // Keep your existing event listeners
@@ -627,6 +876,10 @@
         closeModalFunction();
       } else if (e.key === "Escape" && overlayMenu.classList.contains("active")) {
         overlayMenu.classList.remove("active");
+      } else if (e.key === "ArrowRight" && modal.classList.contains("show")) {
+        showNextImage();
+      } else if (e.key === "ArrowLeft" && modal.classList.contains("show")) {
+        showPreviousImage();
       }
     });
 
@@ -634,9 +887,14 @@
     window.addEventListener("load", () => {
       console.log("Page loaded");
       populateGallery();
+      
+      // Start in grid view by default
+      isGridView = true;
+      gallery.classList.remove("singular-view");
+      updateViewIcons();
     });
 
-    // Add touch support for mobile devices
+    // Add touch support for mobile devices with improved animations
     let touchStartX = 0;
     let touchEndX = 0;
 
@@ -662,19 +920,41 @@
     function showNextImage() {
       const currentIndex = Number.parseInt(modalImage.dataset.index);
       const nextIndex = (currentIndex + 1) % images.length;
-      updateModalImage(nextIndex);
+      updateModalImage(nextIndex, 'next');
     }
 
     function showPreviousImage() {
       const currentIndex = Number.parseInt(modalImage.dataset.index);
       const previousIndex = (currentIndex - 1 + images.length) % images.length;
-      updateModalImage(previousIndex);
+      updateModalImage(previousIndex, 'prev');
     }
 
-    function updateModalImage(index) {
-      modalImage.src = images[index];
-      modalImage.dataset.index = index;
-      updateActiveThumbnail(index);
+    function updateModalImage(index, direction) {
+      // Add slide animation based on direction
+      const slideOut = direction === 'next' ? 'translateX(-50px)' : 'translateX(50px)';
+      const slideIn = direction === 'next' ? 'translateX(50px)' : 'translateX(-50px)';
+      
+      modalImage.style.opacity = "0";
+      modalImage.style.transform = slideOut;
+      
+      setTimeout(() => {
+        modalImage.src = images[index];
+        modalImage.dataset.index = index;
+        modalImage.style.transform = slideIn;
+        
+        setTimeout(() => {
+          modalImage.style.opacity = "1";
+          modalImage.style.transform = "translateX(0)";
+        }, 50);
+        
+        updateActiveThumbnail(index);
+        
+        // Scroll the active thumbnail into view
+        const activeThumb = document.querySelector(".thumbnail.active");
+        if (activeThumb) {
+          activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }, 300);
     }
 
     function updateActiveThumbnail(index) {
@@ -688,10 +968,14 @@
       });
     }
 
-    // Close overlay menu when clicking on a menu item
+    // Close overlay menu when clicking on a menu item with animation
     document.querySelectorAll(".menu-item a").forEach(item => {
       item.addEventListener("click", () => {
-        overlayMenu.classList.remove("active");
+        overlayMenu.style.opacity = "0";
+        setTimeout(() => {
+          overlayMenu.classList.remove("active");
+          overlayMenu.style.opacity = "1";
+        }, 300);
       });
     });
 
