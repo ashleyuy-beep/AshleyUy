@@ -21,8 +21,8 @@
         overflow: hidden;
       }
       
-      /* Overlay */
-      .overlay {
+      /* Header Navigation */
+      .header {
         position: fixed;
         top: 0;
         left: 0;
@@ -33,42 +33,154 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1em;
-      }
-      
-      .overlay-content {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        padding: 1em 2em;
+        backdrop-filter: blur(5px);
+        transition: all 0.3s ease;
       }
       
       .site-logo {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5em;
-      }
-      
-      .site-logo h1 {
         font-size: 25px;
         font-weight: 300;
         line-height: 1;
+        transition: transform 0.3s ease;
       }
       
-      .nav {
+      .site-logo:hover {
+        transform: translateY(-2px);
+      }
+      
+      .nav-icons {
         display: flex;
-        gap: 2em;
+        gap: 1.5em;
+        align-items: center;
       }
       
-      .nav .nav-item p {
-        font-size: 16px;
-        font-weight: 300;
+      .nav-icon {
         cursor: pointer;
-        transition: opacity 0.3s;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: transform 0.3s ease, opacity 0.3s ease;
       }
       
-      .nav .nav-item p:hover {
-        opacity: 0.7;
+      .nav-icon:hover {
+        transform: scale(1.1);
+      }
+      
+      .overlay-icon {
+        width: 18px;
+        height: 18px;
+        background-color: black;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+      }
+      
+      .nav-icon:hover .overlay-icon {
+        transform: scale(0.9);
+      }
+      
+      /* Close button for overlay */
+      .close-overlay {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        z-index: 10002;
+        display: none;
+      }
+      
+      .close-overlay::before,
+      .close-overlay::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: black;
+      }
+      
+      .close-overlay::before {
+        transform: rotate(45deg);
+      }
+      
+      .close-overlay::after {
+        transform: rotate(-45deg);
+      }
+      
+      .overlay-menu.active .close-overlay {
+        display: block;
+        animation: fadeIn 0.3s ease forwards;
+      }
+      
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      
+      /* Overlay Menu */
+      .overlay-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        z-index: 10001;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+      
+      .overlay-menu.active {
+        display: flex;
+        opacity: 1;
+      }
+      
+      .menu-item {
+        margin: 15px 0;
+        font-size: 28px;
+        font-weight: 300;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+      }
+      
+      .menu-item:hover {
+        transform: translateY(-3px);
+      }
+      
+      .menu-item a {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .menu-item a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background-color: black;
+        transition: width 0.3s ease;
+      }
+      
+      .menu-item a:hover::after {
+        width: 100%;
       }
       
       /* Hero Section */
@@ -91,6 +203,14 @@
         height: auto;
         margin-bottom: 1em;
         overflow: hidden;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+      
+      .team-img.loaded {
+        opacity: 1;
+        transform: translateY(0);
       }
       
       .team-img img {
@@ -105,6 +225,14 @@
         font-size: 1rem;
         line-height: 1.6;
         color: #000000;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+      }
+      
+      .hero-description.loaded {
+        opacity: 1;
+        transform: translateY(0);
       }
       
       .hero-description p {
@@ -148,15 +276,16 @@
           padding: 1em;
         }
       
-        .nav {
-          gap: 1em;
+        .header {
+          padding: 1em;
         }
       
-        .site-logo h1 {
+        .site-logo {
           font-size: 20px;
         }
-        .loading-text {
-          font-size: 2rem;
+        
+        .team-img {
+          width: 60%;
         }
       }
       
@@ -164,14 +293,17 @@
         .gallery {
           grid-template-columns: 1fr;
         }
-        .overlay {
-          padding: 0.5em;
+        
+        .header {
+          padding: 0.5em 1em;
         }
-        .nav .nav-item p {
-          font-size: 14px;
+        
+        .team-img {
+          width: 80%;
         }
-        .loading-text {
-          font-size: 1.5rem;
+        
+        .hero-description {
+          font-size: 0.9rem;
         }
       }
       
@@ -180,44 +312,38 @@
         text-decoration: none;
         color: inherit;
       }
-      
-      @media (hover: none) {
-        .gallery img:hover {
-          transform: none;
-        }
-      }
     </style>
   </head>
   <body>
-    <!-- Overlay Navigation -->
-    <div class="overlay">
-      <div class="overlay-content">
-        <div class="site-logo">
-          <a href="index.html">
-            <h1>Ashley Uy</h1>
-          </a>
-        </div>
-        <div class="nav">
-          <div class="nav-item">
-            <a href="home.html"><p>Home</p></a>
-          </div>
-          <div class="nav-item">
-            <a href="commercial.html"><p>Commercial</p></a>
-          </div>
-          <div class="nav-item">
-            <a href="personal.html"><p>Personal</p></a>
-          </div>
-            </a>
-          </div>
+    <!-- Header Navigation -->
+    <header class="header">
+      <div class="site-logo">
+        <a href="home.html">Ashley Uy</a>
+      </div>
+      <div class="nav-icons">
+        <div class="nav-icon" id="menu-toggle">
+          <div class="overlay-icon"></div>
         </div>
       </div>
+    </header>
+
+    <!-- Overlay Menu -->
+    <div class="overlay-menu" id="overlay-menu">
+      <div class="close-overlay" id="close-overlay"></div>
+      <div class="menu-item"><a href="home.html">Home</a></div>
+      <div class="menu-item"><a href="commercial.html">Commercial</a></div>
+      <div class="menu-item"><a href="personal.html">Personal</a></div>
+      <div class="menu-item"><a href="about.html">About</a></div>
+      <div class="menu-item"><a href="foundobjects.html">Found Objects</a></div>
+      <div class="menu-item"><a href="sameold.html">Same Old</a></div>
+      <div class="menu-item"><a href="crtz.html">CRTZ</a></div>
     </div>
 
     <div class="hero-content">
-      <div class="team-img">
+      <div class="team-img" id="team-img">
         <img src="./images/PERSONAL PROJECT/IMG_4734.JPG" alt="Hero Image" />
       </div>
-      <div class="hero-description">
+      <div class="hero-description" id="hero-description">
         <p>
           Born in Manila, Philippines, moved to Los Angeles, CA.
           <br />
@@ -227,7 +353,7 @@
           timeless perspective.
         </p>
         <br/> 
-        <pr><a href="mailto:ashleyuy.booking@gmail.com">ashleyuy.booking@gmail.com</a></div></pr>
+        <p><a href="mailto:ashleyuy.booking@gmail.com">ashleyuy.booking@gmail.com</a></p>
       </div>
     </div>
 
@@ -235,6 +361,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js"></script>
     <script src="https://unpkg.com/split-type"></script>
-    <script src=""></script>
+    <script>
+      // Menu toggle functionality
+      const menuToggle = document.getElementById("menu-toggle");
+      const overlayMenu = document.getElementById("overlay-menu");
+      const closeOverlay = document.getElementById("close-overlay");
+      
+      // Toggle menu with animation
+      menuToggle.addEventListener("click", () => {
+        overlayMenu.classList.add("active");
+      });
+      
+      // Close overlay with X button
+      closeOverlay.addEventListener("click", () => {
+        overlayMenu.classList.remove("active");
+      });
+      
+      // Close overlay menu when clicking on a menu item with animation
+      document.querySelectorAll(".menu-item a").forEach(item => {
+        item.addEventListener("click", () => {
+          overlayMenu.style.opacity = "0";
+          setTimeout(() => {
+            overlayMenu.classList.remove("active");
+            overlayMenu.style.opacity = "1";
+          }, 300);
+        });
+      });
+      
+      // Handle escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && overlayMenu.classList.contains("active")) {
+          overlayMenu.classList.remove("active");
+        }
+      });
+      
+      // Add animation to content elements
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.getElementById('team-img').classList.add('loaded');
+          
+          setTimeout(() => {
+            document.getElementById('hero-description').classList.add('loaded');
+          }, 200);
+        }, 300);
+      });
+    </script>
   </body>
 </html>

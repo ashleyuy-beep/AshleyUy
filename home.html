@@ -30,6 +30,17 @@
         gap: 50px;
         padding: 10px;
         margin-top: 50px; /* Increased to accommodate fixed header */
+        transition: all 0.5s ease;
+      }
+
+      /* Singular View Container */
+      .singular-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2em;
+        padding: 10px;
+        margin-top: 50px;
       }
 
       /* Grid Items */
@@ -50,6 +61,19 @@
         max-height: 100%; /* Ensures it doesn't exceed original size */
         object-fit: contain; /* Keeps the full image visible without cropping */
         display: block;
+        transition: transform 0.3s ease;
+      }
+
+      .grid-item img:hover {
+        transform: scale(1.05);
+      }
+
+      .singular-container .grid-item {
+        width: 80% !important;
+      }
+
+      .singular-container .grid-item img:hover {
+        transform: none;
       }
 
       /* When loaded, images will fade in */
@@ -70,119 +94,236 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1em;
-      }
-
-      .overlay-content {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        padding: 1em 2em;
+        backdrop-filter: blur(5px);
+        transition: all 0.3s ease;
       }
 
       .site-logo {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5em;
-      }
-
-      .site-logo h1 {
         font-size: 25px;
         font-weight: 300;
         line-height: 1;
+        transition: transform 0.3s ease;
       }
 
-      /* Navigation */
-      .nav {
+      .site-logo:hover {
+        transform: translateY(-2px);
+      }
+
+      .nav-icons {
         display: flex;
-        gap: 2em;
+        gap: 1.5em;
+        align-items: center;
       }
 
-      .nav .nav-item p {
-        font-size: 16px;
-        font-weight: 300;
+      .nav-icon {
         cursor: pointer;
-        transition: opacity 0.3s;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: transform 0.3s ease, opacity 0.3s ease;
       }
 
-      .nav .nav-item p:hover {
-        opacity: 0.7;
+      .nav-icon:hover {
+        transform: scale(1.1);
+      }
+
+      .grid-icon {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 2px;
+        width: 18px;
+        height: 18px;
+      }
+
+      .grid-dot {
+        width: 4px;
+        height: 4px;
+        background-color: black;
+        border-radius: 50%;
+      }
+
+      .singular-icon {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        width: 18px;
+      }
+
+      .line {
+        width: 18px;
+        height: 2px;
+        background-color: black;
+        transition: width 0.3s ease;
+      }
+
+      .nav-icon:hover .line {
+        width: 15px;
+      }
+
+      .overlay-icon {
+        width: 18px;
+        height: 18px;
+        background-color: black;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+      }
+
+      .nav-icon:hover .overlay-icon {
+        transform: scale(0.9);
+      }
+
+      /* View toggle icons */
+      #view-toggle {
+        position: relative;
+        width: 24px;
+        height: 24px;
+      }
+
+      #grid-view, #singular-view {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+
+      #grid-view.active, #singular-view.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* Close button for overlay */
+      .close-overlay {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        z-index: 10002;
+        display: none;
+      }
+
+      .close-overlay::before,
+      .close-overlay::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: black;
+      }
+
+      .close-overlay::before {
+        transform: rotate(45deg);
+      }
+
+      .close-overlay::after {
+        transform: rotate(-45deg);
+      }
+
+      .overlay-menu.active .close-overlay {
+        display: block;
+        animation: fadeIn 0.3s ease forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* Overlay Menu */
+      .overlay-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        z-index: 10001;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      .overlay-menu.active {
+        display: flex;
+        opacity: 1;
+      }
+
+      .menu-item {
+        margin: 15px 0;
+        font-size: 28px;
+        font-weight: 300;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+      }
+
+      .menu-item:hover {
+        transform: translateY(-3px);
+      }
+
+      .menu-item a {
+        position: relative;
+        display: inline-block;
+      }
+
+      .menu-item a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background-color: black;
+        transition: width 0.3s ease;
+      }
+
+      .menu-item a:hover::after {
+        width: 100%;
       }
 
       /* Responsive Design */
       @media (max-width: 768px) {
-        .nav .nav-item p {
-            font-size: 10px;
-        }
-      }
-
-      /* Adjust Navigation */
-      .nav {
-        display: flex;
-        gap: 1em;
-      }
-
-      .nav .nav-item p {
-        font-size: 16px;
-        font-weight: 300;
-        cursor: pointer;
-        transition: opacity 0.3s;
-      }
-
-      /* Responsive Adjustments */
-      @media (max-width: 1024px) {
-        .gallery {
-            grid-template-columns: repeat(3, 1fr);
-        }
-      }
-
-      @media (max-width: 768px) {
-        .gallery {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.5em;
-            padding: 1em;
+        .grid-container {
+          gap: 30px;
         }
 
-        .nav {
-            gap: 1em;
+        .overlay {
+          padding: 1em;
         }
 
-        .site-logo h1 {
-            font-size: 20px;
-        }
-
-        .loading-text {
-            font-size: 2rem;
-        }
-
-        /* Shrink images on mobile */
-        .grid-item img {
-            width: 80%; /* Scales down to 80% of its original size */
-            height: auto;
+        .site-logo {
+          font-size: 20px;
         }
       }
 
       @media (max-width: 480px) {
-        .gallery {
-            grid-template-columns: 3fr;
+        .grid-container {
+          gap: 20px;
         }
 
         .overlay {
-            padding: 0.5em;
+          padding: 0.5em 1em;
         }
 
-        .nav .nav-item p {
-            font-size: 14px;
-        }
-
-        .loading-text {
-            font-size: 1.5rem;
-        }
-
-        /* Shrink images even further on smaller screens */
-        .grid-item img {
-            width: 100%;
-            height: auto;
+        .nav-icons {
+          gap: 1em;
         }
       }
 
@@ -194,41 +335,73 @@
 
       /* Prevent hover effects on touch devices */
       @media (hover: none) {
-        .gallery img:hover {
-            transform: none;
+        .grid-item img:hover {
+          transform: none;
+        }
+      }
+
+      /* Animation for staggered image loading */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
       }
     </style>
   </head>
   <body>
     <div class="overlay">
-      <div class="overlay-content">
-        <div class="site-logo">
-          <a href="index.html">
-            <h1>Ashley Uy</h1>
-          </a>
+      <div class="site-logo">
+        <a href="index.html">Ashley Uy</a>
+      </div>
+      <div class="nav-icons">
+        <div id="view-toggle">
+          <!-- Grid view icon (shown when in singular view) -->
+          <div class="nav-icon" id="grid-view">
+            <div class="grid-icon">
+              <div class="grid-dot"></div>
+              <div class="grid-dot"></div>
+              <div class="grid-dot"></div>
+              <div class="grid-dot"></div>
+              <div class="grid-dot"></div>
+              <div class="grid-dot"></div>
+              <div class="grid-dot"></div>
+              <div class="grid-dot"></div>
+              <div class="grid-dot"></div>
+            </div>
+          </div>
+          <!-- Singular view icon (shown when in grid view) -->
+          <div class="nav-icon" id="singular-view" class="active">
+            <div class="singular-icon">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </div>
+          </div>
         </div>
-        <div class="nav">
-          <div class="nav-item">
-            <a href="home.html"><p>Home</p></a>
-          </div>
-          <div class="nav-item">
-            <a href="commercial.html"><p>Commercial</p></a>
-          </div>
-          <div class="nav-item">
-            <a href="personal.html"><p>Personal</p></a>
-          </div>
-          <div class="nav-item">
-            <a href="about.html"><p>About</p></a>
-          </div>
-            </a>
-          </div>
+        <div class="nav-icon" id="menu-toggle">
+          <div class="overlay-icon"></div>
         </div>
       </div>
     </div>
 
-    <div class="grid-container" id="grid-container">
-      <!-- Grid items will be dynamically added here -->
+    <!-- Overlay Menu -->
+    <div class="overlay-menu" id="overlay-menu">
+      <div class="close-overlay" id="close-overlay"></div>
+      <div class="menu-item"><a href="home.html">Home</a></div>
+      <div class="menu-item"><a href="commercial.html">Commercial</a></div>
+      <div class="menu-item"><a href="personal.html">Personal</a></div>
+      <div class="menu-item"><a href="about.html">About</a></div>
+    </div>
+
+    <div id="content-container">
+      <div class="grid-container" id="grid-container">
+        <!-- Grid items will be dynamically added here -->
+      </div>
     </div>
 
     <script>
@@ -350,7 +523,107 @@
         return yiq >= 128 ? "black" : "black";
       }
 
-      // Randomize and set images
+      // Initialize view mode
+      let isGridView = true;
+      const contentContainer = document.getElementById("content-container");
+      const gridContainer = document.getElementById("grid-container");
+      const viewToggle = document.getElementById("view-toggle");
+      const gridViewBtn = document.getElementById("grid-view");
+      const singularViewBtn = document.getElementById("singular-view");
+      const overlayMenu = document.getElementById("overlay-menu");
+      const menuToggle = document.getElementById("menu-toggle");
+      const closeOverlay = document.getElementById("close-overlay");
+
+      // Function to update view icons based on current view
+      function updateViewIcons() {
+        if (isGridView) {
+          // In grid view, show singular icon
+          singularViewBtn.classList.add("active");
+          gridViewBtn.classList.remove("active");
+        } else {
+          // In singular view, show grid icon
+          gridViewBtn.classList.add("active");
+          singularViewBtn.classList.remove("active");
+        }
+      }
+
+      // Toggle menu with animation
+      menuToggle.addEventListener("click", () => {
+        overlayMenu.classList.add("active");
+      });
+
+      // Close overlay with X button
+      closeOverlay.addEventListener("click", () => {
+        overlayMenu.classList.remove("active");
+      });
+
+      // Toggle view modes
+      viewToggle.addEventListener("click", () => {
+        isGridView = !isGridView;
+        toggleViewMode();
+      });
+
+      function toggleViewMode() {
+        updateViewIcons();
+        
+        // Clear the current container
+        contentContainer.innerHTML = '';
+        
+        if (isGridView) {
+          // Create grid container
+          const newGridContainer = document.createElement('div');
+          newGridContainer.className = 'grid-container';
+          newGridContainer.id = 'grid-container';
+          contentContainer.appendChild(newGridContainer);
+          
+          // Populate with randomized images
+          randomizeImages();
+        } else {
+          // Create singular container
+          const singularContainer = document.createElement('div');
+          singularContainer.className = 'singular-container';
+          singularContainer.id = 'grid-container'; // Keep same ID for compatibility
+          contentContainer.appendChild(singularContainer);
+          
+          // Populate with sequential images
+          populateSingularView();
+        }
+      }
+
+      // Populate singular view with images in sequence
+      function populateSingularView() {
+        const container = document.getElementById("grid-container");
+        container.innerHTML = ""; // Clear existing content
+
+        images.forEach((img, index) => {
+          const gridItem = document.createElement("div");
+          gridItem.className = "grid-item";
+
+          const anchorElement = document.createElement("a");
+          anchorElement.href = img.href;
+
+          const imgElement = document.createElement("img");
+          imgElement.src = img.src;
+          imgElement.alt = `Image ${index + 1}`;
+
+          // Add error handling for images
+          imgElement.onerror = function () {
+            this.style.display = "none";
+          };
+
+          imgElement.onload = () => {
+            setTimeout(() => {
+              gridItem.classList.add("loaded");
+            }, index * 100); // Staggered loading effect
+          };
+
+          anchorElement.appendChild(imgElement);
+          gridItem.appendChild(anchorElement);
+          container.appendChild(gridItem);
+        });
+      }
+
+      // Randomize and set images for grid view
       function randomizeImages() {
         const gridContainer = document.getElementById("grid-container");
         gridContainer.innerHTML = ""; // Clear existing content
@@ -382,6 +655,7 @@
           const imgElement = document.createElement("img");
           imgElement.src = img.src;
           imgElement.alt = `Image ${index + 1}`;
+          imgElement.style.transitionDelay = `${index * 0.03}s`;
 
           // Add error handling for images
           imgElement.onerror = function () {
@@ -389,7 +663,9 @@
           };
 
           imgElement.onload = () => {
-            gridItem.classList.add("loaded");
+            setTimeout(() => {
+              gridItem.classList.add("loaded");
+            }, index * 30); // Staggered loading effect
           };
 
           anchorElement.appendChild(imgElement);
@@ -413,6 +689,25 @@
       function init() {
         randomizeImages();
         window.addEventListener("scroll", handleScroll);
+        updateViewIcons();
+        
+        // Close overlay menu when clicking on a menu item with animation
+        document.querySelectorAll(".menu-item a").forEach(item => {
+          item.addEventListener("click", () => {
+            overlayMenu.style.opacity = "0";
+            setTimeout(() => {
+              overlayMenu.classList.remove("active");
+              overlayMenu.style.opacity = "1";
+            }, 300);
+          });
+        });
+        
+        // Handle escape key
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && overlayMenu.classList.contains("active")) {
+            overlayMenu.classList.remove("active");
+          }
+        });
       }
 
       // Run initialization when DOM is loaded
