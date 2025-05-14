@@ -144,44 +144,71 @@
     <div class="slideshow-container">
         <div class="loading-message"></div>
         
-        <!-- Original images -->
-        <div class="slide" id="slide-1">
+        <!-- Original images from previous index.html -->
+        <div class="slide">
             <img class="slide-image" src="images/Commercial/bellbags for commercial/IMG_0680.JPG" alt="Bell Bag" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
-        <div class="slide" id="slide-2">
+        <div class="slide">
             <img class="slide-image" src="images/Commercial/bellbags for commercial/IMG_0706.JPG" alt="Bell Bag" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
-        <div class="slide" id="slide-3">
+        <div class="slide">
             <img class="slide-image" src="images/Commercial/IMG_0300 Large.jpeg" alt="Commercial Photography" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
-        <div class="slide" id="slide-4">
+        <div class="slide">
             <img class="slide-image" src="images/PERSONAL PROJECT/Image 4 Large 3.13.20 PM.jpeg" alt="Personal Project" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
-        <div class="slide" id="slide-5">
+        <div class="slide">
             <img class="slide-image" src="images/PERSONAL PROJECT/IMG_3521.JPG" alt="Personal Project" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
-        <div class="slide" id="slide-6">
+        <div class="slide">
             <img class="slide-image" src="images/Commercial/Bell bag final/IMG_3901.jpg" alt="Bell Bag Final" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
         
-        <!-- Duplicate images (second showing) -->
-        <div class="slide" id="slide-7">
-            <img class="slide-image" src="images/Commercial/bellbags for commercial/IMG_0680.JPG" alt="Bell Bag" onload="this.parentElement.dataset.loaded = 'true'">
+        <!-- Images from home.html -->
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG1.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
-        <div class="slide" id="slide-8">
-            <img class="slide-image" src="images/Commercial/bellbags for commercial/IMG_0706.JPG" alt="Bell Bag" onload="this.parentElement.dataset.loaded = 'true'">
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG2.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
-        <div class="slide" id="slide-9">
-            <img class="slide-image" src="images/Commercial/IMG_0300 Large.jpeg" alt="Commercial Photography" onload="this.parentElement.dataset.loaded = 'true'">
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG3.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
-        <div class="slide" id="slide-10">
-            <img class="slide-image" src="images/PERSONAL PROJECT/Image 4 Large 3.13.20 PM.jpeg" alt="Personal Project" onload="this.parentElement.dataset.loaded = 'true'">
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG4.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
-        <div class="slide" id="slide-11">
-            <img class="slide-image" src="images/PERSONAL PROJECT/IMG_3521.JPG" alt="Personal Project" onload="this.parentElement.dataset.loaded = 'true'">
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG5.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
-        <div class="slide" id="slide-12">
-            <img class="slide-image" src="images/Commercial/Bell bag final/IMG_3901.jpg" alt="Bell Bag Final" onload="this.parentElement.dataset.loaded = 'true'">
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG6.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+        </div>
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG7.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+        </div>
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG8.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+        </div>
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG9.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+        </div>
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG10.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+        </div>
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG11.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+        </div>
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG12.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+        </div>
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG13.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+        </div>
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG14.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+        </div>
+        <div class="slide">
+            <img class="slide-image" src="HOME PHOTOS/IMG15.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
         
         <div class="name-container">
@@ -199,20 +226,39 @@
             let slideshowComplete = false;
             let slideshowStarted = false;
             
-            // Calculate time per slide: 4500ms total ÷ 12 slides = 375ms per slide
-            const timePerSlide = 375; // 375ms per slide
+            // Total slideshow duration: 7.5 seconds (7500ms)
+            const totalDuration = 7500;
             
-            // Check if all images are loaded
+            // Calculate time per slide based on the number of slides
+            const timePerSlide = Math.floor(totalDuration / slides.length);
+            
+            console.log(`Showing ${slides.length} slides with ${timePerSlide}ms per slide`);
+            
+            // Check if enough images are loaded to start
             function checkImagesLoaded() {
-                let allLoaded = true;
-                // Only check the first 6 slides (original images)
-                for (let i = 0; i < 6; i++) {
-                    if (slides[i].dataset.loaded !== 'true') {
-                        allLoaded = false;
+                let loadedCount = 0;
+                const minSlidesToCheck = Math.min(5, slides.length);
+                
+                for (let i = 0; i < slides.length; i++) {
+                    if (slides[i].dataset.loaded === 'true') {
+                        loadedCount++;
                     }
                 }
                 
-                return allLoaded;
+                // Start if at least 5 images or 30% of slides are loaded
+                return loadedCount >= Math.max(minSlidesToCheck, Math.floor(slides.length * 0.3));
+            }
+            
+            // Preload next few images
+            function preloadNextImages(currentIndex) {
+                const preloadCount = 3; // Number of images to preload ahead
+                
+                for (let i = currentIndex + 1; i < Math.min(currentIndex + 1 + preloadCount, slides.length); i++) {
+                    const img = slides[i].querySelector('img');
+                    if (img && !img.complete) {
+                        img.src = img.src; // Trigger load if not already loading
+                    }
+                }
             }
             
             // Function to start slideshow
@@ -224,6 +270,9 @@
                 
                 // Show first slide
                 slides[0].classList.add('active');
+                
+                // Preload next few images
+                preloadNextImages(0);
                 
                 // Start slideshow
                 setTimeout(nextSlide, timePerSlide);
@@ -245,6 +294,9 @@
                     // Show next slide
                     slides[currentSlide].classList.add('active');
                     
+                    // Preload next few images
+                    preloadNextImages(currentSlide);
+                    
                     // Schedule next slide change
                     setTimeout(nextSlide, timePerSlide);
                     
@@ -258,22 +310,22 @@
                 }
             }
             
-            // Check if images are loaded every 500ms
+            // Check if images are loaded every 300ms
             const loadCheckInterval = setInterval(function() {
                 if (checkImagesLoaded()) {
                     clearInterval(loadCheckInterval);
                     startSlideshow();
                 }
-            }, 500);
+            }, 300);
             
-            // Fallback: Start slideshow after 5 seconds even if not all images are loaded
+            // Fallback: Start slideshow after 4 seconds even if not all images are loaded
             setTimeout(function() {
                 clearInterval(loadCheckInterval);
                 if (!slideshowStarted) {
                     console.log('Starting slideshow with fallback');
                     startSlideshow();
                 }
-            }, 5000);
+            }, 4000);
             
             // Make name clickable to go to home page
             nameContainer.addEventListener('click', function() {
@@ -296,10 +348,25 @@
                 if (img.complete) {
                     slide.dataset.loaded = 'true';
                 }
-                
-                // For duplicate slides (7-12), mark as loaded since they use the same images
-                if (index >= 6) {
-                    slide.dataset.loaded = 'true';
+            });
+            
+            // Add keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                // Skip to name on spacebar or Enter
+                if ((e.key === ' ' || e.key === 'Enter') && !slideshowComplete) {
+                    // Clear any pending slide changes
+                    for (let i = 0; i < 100; i++) {
+                        clearTimeout(i);
+                    }
+                    
+                    // Hide all slides
+                    slides.forEach(slide => {
+                        slide.classList.remove('active');
+                    });
+                    
+                    // Show name
+                    slideshowComplete = true;
+                    nameContainer.classList.add('active');
                 }
             });
         });

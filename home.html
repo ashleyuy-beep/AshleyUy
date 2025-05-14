@@ -36,16 +36,18 @@
         will-change: opacity;
       }
 
-      /* Singular View Container */
+      /* Singular View Container - Improved centering */
       .singular-container {
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: flex-start;
         gap: 2em;
         padding: 10px;
         margin-top: 60px;
         transition: opacity 0.3s ease;
         will-change: opacity;
+        width: 100%;
       }
 
       /* Grid Items */
@@ -75,8 +77,25 @@
         transform: scale(1.03);
       }
 
+      /* Improved singular view styling */
       .singular-container .grid-item {
         width: 80% !important;
+        display: flex;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .singular-container .grid-item a {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .singular-container .grid-item img {
+        max-width: 100%;
+        max-height: 80vh;
+        margin: 0 auto;
       }
 
       .singular-container .grid-item img:hover {
@@ -330,7 +349,7 @@
       /* Responsive Design */
       @media (max-width: 768px) {
         .grid-container {
-          gap: 20px;
+          gap: 15px;
         }
 
         .overlay {
@@ -340,11 +359,16 @@
         .site-logo {
           font-size: 18px;
         }
+        
+        .singular-container .grid-item {
+          width: 90% !important;
+        }
       }
 
       @media (max-width: 480px) {
         .grid-container {
-          gap: 15px;
+          gap: 10px;
+          padding: 8px;
         }
 
         .overlay {
@@ -356,8 +380,8 @@
           gap: 1em;
         }
         
-        .grid-item {
-          width: 100% !important; /* Force single column on mobile */
+        .singular-container .grid-item {
+          width: 95% !important;
         }
       }
 
@@ -550,6 +574,9 @@
       const menuToggle = document.getElementById("menu-toggle");
       const closeOverlay = document.getElementById("close-overlay");
       const loadingIndicator = document.getElementById("loading-indicator");
+      
+      // Store the current randomized order of images
+      let currentRandomOrder = [];
 
       // Function to show loading indicator
       function showLoading() {
@@ -626,7 +653,7 @@
             singularContainer.id = 'grid-container'; // Keep same ID for compatibility
             contentContainer.appendChild(singularContainer);
             
-            // Populate with sequential images
+            // Use the same random order for singular view
             populateSingularView();
           }
         }, 300); // Match the CSS transition time
@@ -663,11 +690,15 @@
         // Add these images to our main images array
         images.push(...imagesToLoad);
         
+        // Randomize the new images and add them to our current random order
+        const newRandomImages = [...imagesToLoad].sort(() => 0.5 - Math.random());
+        currentRandomOrder.push(...newRandomImages);
+        
         // Update the view with new images
         if (isGridView) {
-          appendGridImages(imagesToLoad);
+          appendGridImages(newRandomImages);
         } else {
-          appendSingularImages(imagesToLoad);
+          appendSingularImages(newRandomImages);
         }
         
         // Hide loading after a short delay
@@ -705,25 +736,44 @@
         const gridItem = document.createElement("div");
         gridItem.className = "grid-item";
 
-        // For grid view, set random sizes
+        // For grid view, set random sizes - adjusted for mobile compatibility
         if (isGridView) {
-          const size = Math.random() < 0.7 ? "small" : Math.random() < 0.9 ? "medium" : "large";
+          // Get device width to adjust sizes for mobile
+          const deviceWidth = window.innerWidth;
           
-          switch (size) {
+          // Adjust size distribution based on screen size
+          let sizeDistribution;
+          
+          if (deviceWidth <= 480) {
+            // For mobile, use smaller sizes to fit more items per row
+            sizeDistribution = Math.random() < 0.5 ? "small" : Math.random() < 0.8 ? "medium" : "large";
+          } else {
+            // For desktop, use the original distribution
+            sizeDistribution = Math.random() < 0.7 ? "small" : Math.random() < 0.9 ? "medium" : "large";
+          }
+          
+          switch (sizeDistribution) {
             case "small":
-              gridItem.style.width = "30%";
+              gridItem.style.width = deviceWidth <= 480 ? "45%" : "30%";
               break;
             case "medium":
-              gridItem.style.width = "45%";
+              gridItem.style.width = deviceWidth <= 480 ? "60%" : "45%";
               break;
             case "large":
-              gridItem.style.width = "60%";
+              gridItem.style.width = deviceWidth <= 480 ? "90%" : "60%";
               break;
           }
         }
 
         const anchorElement = document.createElement("a");
         anchorElement.href = img.href;
+        
+        // For singular view, ensure the anchor takes full width
+        if (!isGridView) {
+          anchorElement.style.display = "flex";
+          anchorElement.style.justifyContent = "center";
+          anchorElement.style.width = "100%";
+        }
 
         const imgElement = document.createElement("img");
         imgElement.loading = "lazy"; // Native lazy loading
@@ -748,13 +798,14 @@
         return gridItem;
       }
 
-      // Populate singular view with images in sequence
+      // Populate singular view with images in the same random order as grid view
       function populateSingularView() {
         const container = document.getElementById("grid-container");
         const fragment = document.createDocumentFragment();
 
+        // Use the same randomized order that was used for grid view
         // Use a smaller batch size for better performance
-        const visibleImages = images.slice(0, 20);
+        const visibleImages = currentRandomOrder.slice(0, 20);
         
         visibleImages.forEach((img, index) => {
           const gridItem = createGridItem(img, index);
@@ -774,8 +825,11 @@
         const gridContainer = document.getElementById("grid-container");
         const fragment = document.createDocumentFragment();
 
+        // Generate a new random order
+        currentRandomOrder = [...images].sort(() => 0.5 - Math.random());
+        
         // Use a smaller batch size for better performance
-        const visibleImages = [...images].sort(() => 0.5 - Math.random()).slice(0, 20);
+        const visibleImages = currentRandomOrder.slice(0, 20);
 
         visibleImages.forEach((img, index) => {
           const gridItem = createGridItem(img, index);
@@ -790,6 +844,56 @@
         }, 50);
       }
 
+      // Handle window resize to adjust grid item sizes
+      function handleResize() {
+        if (isGridView) {
+          // Only re-render if we're in grid view
+          const currentContainer = document.querySelector('.grid-container');
+          if (currentContainer) {
+            currentContainer.style.opacity = '0';
+            
+            setTimeout(() => {
+              // Clear and rebuild the grid with appropriate sizes
+              contentContainer.innerHTML = '';
+              
+              const newGridContainer = document.createElement('div');
+              newGridContainer.className = 'grid-container';
+              newGridContainer.id = 'grid-container';
+              contentContainer.appendChild(newGridContainer);
+              
+              // Use the existing random order but adjust sizes
+              const fragment = document.createDocumentFragment();
+              const visibleImages = currentRandomOrder.slice(0, 20);
+              
+              visibleImages.forEach((img, index) => {
+                const gridItem = createGridItem(img, index);
+                fragment.appendChild(gridItem);
+              });
+              
+              newGridContainer.appendChild(fragment);
+              
+              // Fade in the container
+              setTimeout(() => {
+                newGridContainer.style.opacity = '1';
+              }, 50);
+            }, 300);
+          }
+        }
+      }
+
+      // Debounce function for resize events
+      function debounce(func, wait) {
+        let timeout;
+        return function() {
+          const context = this;
+          const args = arguments;
+          clearTimeout(timeout);
+          timeout = setTimeout(() => {
+            func.apply(context, args);
+          }, wait);
+        };
+      }
+
       // Initialize
       function init() {
         randomizeImages();
@@ -797,6 +901,9 @@
         
         // Add scroll event listener for infinite loading
         window.addEventListener("scroll", throttle(loadMoreImagesIfNeeded, 200));
+        
+        // Add resize event listener with debounce
+        window.addEventListener("resize", debounce(handleResize, 500));
         
         // Close overlay menu when clicking on a menu item with animation
         document.querySelectorAll(".menu-item a").forEach(item => {
