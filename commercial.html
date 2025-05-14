@@ -387,6 +387,7 @@
       width: 100%;
       height: 100px;
       margin-top: auto;
+      overflow: hidden; /* Hide scrollbars */
     }
 
     .thumbnail-strip {
@@ -394,23 +395,15 @@
       gap: 10px;
       overflow-x: auto;
       padding: 10px 0;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
       height: 100%;
       align-items: center;
     }
 
+    /* Hide scrollbar for Chrome, Safari and Opera */
     .thumbnail-strip::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .thumbnail-strip::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .thumbnail-strip::-webkit-scrollbar-thumb {
-      background-color: rgba(255, 255, 255, 0.3);
-      border-radius: 6px;
+      display: none;
     }
 
     .thumbnail {
@@ -434,55 +427,58 @@
       border: 2px solid white;
     }
 
-    .close {
+    /* Improved minimal close button with "x" */
+    .modal-close {
       position: absolute;
       top: 15px;
       right: 15px;
-      color: #fff;
-      font-size: 24px;
-      font-weight: 300;
-      background: none;
-      border: none;
+      width: 24px;
+      height: 24px;
       cursor: pointer;
       z-index: 1100;
-      transition: transform 0.3s ease, color 0.3s ease;
-      width: 30px;
-      height: 30px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      color: white;
+      font-size: 20px;
+      font-weight: 100;
       display: flex;
       justify-content: center;
       align-items: center;
+      opacity: 0.7;
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
-    .close:hover,
-    .close:focus {
-      color: #bbb;
-      transform: rotate(90deg);
+    .modal-close:hover {
+      opacity: 1;
+      transform: scale(1.1);
     }
 
-    /* Navigation arrows for modal */
+    /* Navigation arrows for modal - using < and > */
     .modal-nav {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      color: white;
-      font-size: 30px;
-      background: rgba(0, 0, 0, 0.3);
+      width: 40px;
+      height: 40px;
+      background: transparent;
       border: none;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 1100;
+      padding: 0;
+      color: white;
+      font-size: 24px;
+      font-weight: 100;
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 0.3s ease, background 0.3s ease;
-      z-index: 1100;
     }
 
     .modal-nav:hover {
       opacity: 1;
-      background: rgba(0, 0, 0, 0.5);
+      transform: translateY(-50%) scale(1.1);
     }
 
     .modal-prev {
@@ -491,6 +487,25 @@
 
     .modal-next {
       right: 20px;
+    }
+
+    /* Swipe indicator for mobile */
+    .swipe-indicator {
+      position: absolute;
+      bottom: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 12px;
+      font-weight: 100;
+      letter-spacing: 1px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .modal.show .swipe-indicator {
+      opacity: 1;
     }
 
     /* Footer */
@@ -558,10 +573,9 @@
         font-size: 1.5rem;
       }
 
-      .close {
-        font-size: 24px;
-        top: 15px;
-        right: 15px;
+      .modal-close {
+        top: 10px;
+        right: 10px;
       }
 
       .modal-content-wrapper {
@@ -582,10 +596,13 @@
         height: 80px;
       }
 
+      /* Hide arrow buttons on mobile - use swipe instead */
       .modal-nav {
-        width: 40px;
-        height: 40px;
-        font-size: 24px;
+        display: none;
+      }
+
+      .swipe-indicator {
+        opacity: 1;
       }
     }
 
@@ -615,12 +632,6 @@
 
       .thumbnail-container {
         height: 70px;
-      }
-
-      .modal-nav {
-        width: 35px;
-        height: 35px;
-        font-size: 20px;
       }
     }
 
@@ -697,7 +708,7 @@
 
   <!-- Improved Modal Structure -->
   <div class="modal" id="image-modal">
-    <button class="close" aria-label="Close modal">&times;</button>
+    <button class="modal-close" id="modal-close" aria-label="Close modal">x</button>
     <div class="modal-content-wrapper">
       <div class="modal-image-container">
         <img class="modal-content" id="modal-image" alt="Featured image">
@@ -710,6 +721,7 @@
     </div>
     <button class="modal-nav modal-prev" aria-label="Previous image">&lt;</button>
     <button class="modal-nav modal-next" aria-label="Next image">&gt;</button>
+    <div class="swipe-indicator">SWIPE LEFT OR RIGHT</div>
   </div>
 
   <!-- Footer -->
@@ -811,7 +823,7 @@
     const modal = document.getElementById("image-modal");
     const modalImage = document.getElementById("modal-image");
     const thumbnailStrip = document.getElementById("thumbnail-strip");
-    const closeModal = document.querySelector(".close");
+    const closeModal = document.getElementById("modal-close");
     const loadingScreen = document.getElementById("loading-screen");
     const loadingIndicator = document.getElementById("loading-indicator");
     const overlayMenu = document.getElementById("overlay-menu");
@@ -822,6 +834,7 @@
     const viewToggle = document.getElementById("view-toggle");
     const prevButton = document.querySelector(".modal-prev");
     const nextButton = document.querySelector(".modal-next");
+    const modalContentWrapper = document.querySelector(".modal-content-wrapper");
 
     // Initialize view mode
     let isGridView = true;
@@ -1173,7 +1186,9 @@
     prevButton.addEventListener("click", showPreviousImage);
     nextButton.addEventListener("click", showNextImage);
 
-    modal.addEventListener("click", (e) => {
+    // Close modal when clicking outside the image
+    modal.addEventListener("click", function(e) {
+      // Check if the click is directly on the modal background (not on any child elements)
       if (e.target === modal) {
         closeModalFunction();
       }
@@ -1194,27 +1209,61 @@
       }
     });
 
-    // Touch support for mobile devices
+    // Enhanced touch support for mobile devices
     let touchStartX = 0;
     let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+    let isSwiping = false;
 
     function handleSwipe() {
-      if (touchStartX - touchEndX > 50) {
-        // Swipe left, show next image
-        showNextImage();
-      } else if (touchEndX - touchStartX > 50) {
-        // Swipe right, show previous image
-        showPreviousImage();
+      // Calculate horizontal and vertical distance
+      const horizontalDistance = Math.abs(touchStartX - touchEndX);
+      const verticalDistance = Math.abs(touchStartY - touchEndY);
+      
+      // Only process as a swipe if the horizontal movement is greater than vertical
+      // and greater than a minimum threshold (to avoid processing taps as swipes)
+      if (horizontalDistance > verticalDistance && horizontalDistance > 30) {
+        if (touchStartX - touchEndX > 0) {
+          // Swipe left, show next image
+          showNextImage();
+        } else {
+          // Swipe right, show previous image
+          showPreviousImage();
+        }
+        return true;
       }
+      return false;
     }
 
     modal.addEventListener("touchstart", (e) => {
       touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+      isSwiping = true;
     });
 
+    modal.addEventListener("touchmove", (e) => {
+      if (isSwiping) {
+        // Prevent default to avoid scrolling while swiping in the modal
+        e.preventDefault();
+      }
+    }, { passive: false });
+
     modal.addEventListener("touchend", (e) => {
+      if (!isSwiping) return;
+      
       touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
+      touchEndY = e.changedTouches[0].screenY;
+      
+      // If it's a swipe, handle it
+      const wasSwipe = handleSwipe();
+      
+      // If it wasn't a swipe and the user tapped directly on the modal background, close it
+      if (!wasSwipe && e.target === modal) {
+        closeModalFunction();
+      }
+      
+      isSwiping = false;
     });
 
     // Close overlay menu when clicking on a menu item
