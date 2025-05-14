@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Commercial</title>
+  <title>Commercial | Ashley Uy</title>
   <style>
     /* Loading Screen */
     .loading-screen {
@@ -22,7 +22,7 @@
 
     .loading-text {
       font-size: 1rem;
-      font-weight: 300;
+      font-weight: 100;
       animation: blink 1.5s infinite;
     }
 
@@ -47,7 +47,8 @@
     body {
       width: 100%;
       height: 100%;
-      font-family: "Helvetica Neue Thin", sans-serif;
+      font-family: "Helvetica Neue", sans-serif;
+      font-weight: 100;
       background-color: #fff;
       padding-top: 60px;
       scroll-behavior: smooth;
@@ -60,19 +61,21 @@
       left: 0;
       width: 100%;
       height: 60px;
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(255, 255, 255, 0.95);
       z-index: 10000;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1em 2em;
       backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
       transition: all 0.3s ease;
+      will-change: transform;
     }
 
     .site-logo {
-      font-size: 25px;
-      font-weight: 300;
+      font-size: 20px;
+      font-weight: 100;
       line-height: 1;
       transition: transform 0.3s ease;
     }
@@ -228,7 +231,7 @@
       justify-content: center;
       align-items: center;
       opacity: 0;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.3s ease;
     }
 
     .overlay-menu.active {
@@ -239,7 +242,7 @@
     .menu-item {
       margin: 15px 0;
       font-size: 28px;
-      font-weight: 300;
+      font-weight: 100;
       position: relative;
       overflow: hidden;
       transition: transform 0.3s ease;
@@ -275,7 +278,8 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 1em;
       padding: 2em;
-      transition: all 0.5s ease;
+      transition: all 0.3s ease;
+      will-change: opacity, transform;
     }
 
     .gallery.singular-view {
@@ -290,10 +294,11 @@
       height: auto;
       object-fit: cover;
       cursor: pointer;
-      transition: opacity 0.5s ease, transform 0.3s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease;
       opacity: 0;
       aspect-ratio: 4 / 5;
-      transform: translateY(20px);
+      transform: translateY(10px);
+      will-change: opacity, transform;
     }
 
     .gallery.singular-view img {
@@ -309,30 +314,32 @@
     }
 
     .gallery img:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
 
     .gallery.singular-view img:hover {
       transform: none;
     }
 
-    /* Modal */
+    /* Modal - Improved for consistency */
     .modal {
       display: none;
       position: fixed;
       z-index: 1000;
       left: 0;
-      top: 50px;
+      top: 0;
       width: 100%;
       height: 100%;
-      overflow: auto;
+      overflow: hidden;
       background-color: rgba(0, 0, 0, 0.9);
       opacity: 0;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.3s ease;
+      will-change: opacity;
     }
 
     .modal.show {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       opacity: 1;
@@ -342,12 +349,15 @@
       position: relative;
       width: 90%;
       max-width: 1200px;
-      height: 90%;
+      height: 85%;
       display: flex;
       flex-direction: column;
-      transform: scale(0.95);
+      justify-content: center;
+      align-items: center;
+      transform: scale(0.98);
       opacity: 0;
-      transition: transform 0.5s ease, opacity 0.5s ease;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      will-change: transform, opacity;
     }
 
     .modal.show .modal-content-wrapper {
@@ -355,10 +365,28 @@
       opacity: 1;
     }
 
+    .modal-image-container {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
     .modal-content {
       max-width: 100%;
-      max-height: calc(100% - 100px);
+      max-height: 100%;
       object-fit: contain;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      will-change: opacity, transform;
+    }
+
+    .thumbnail-container {
+      width: 100%;
+      height: 100px;
+      margin-top: auto;
     }
 
     .thumbnail-strip {
@@ -368,6 +396,8 @@
       padding: 10px 0;
       scrollbar-width: thin;
       scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+      height: 100%;
+      align-items: center;
     }
 
     .thumbnail-strip::-webkit-scrollbar {
@@ -389,10 +419,13 @@
       object-fit: cover;
       cursor: pointer;
       opacity: 0.6;
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease, border 0.3s ease;
+      border: 2px solid transparent;
+      flex-shrink: 0;
     }
 
     .thumbnail:hover {
+      opacity: 0.9;
       transform: translateY(-3px);
     }
 
@@ -403,8 +436,8 @@
 
     .close {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 15px;
+      right: 15px;
       color: #fff;
       font-size: 24px;
       font-weight: 300;
@@ -413,12 +446,51 @@
       cursor: pointer;
       z-index: 1100;
       transition: transform 0.3s ease, color 0.3s ease;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .close:hover,
     .close:focus {
       color: #bbb;
       transform: rotate(90deg);
+    }
+
+    /* Navigation arrows for modal */
+    .modal-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 30px;
+      background: rgba(0, 0, 0, 0.3);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.3s ease, background 0.3s ease;
+      z-index: 1100;
+    }
+
+    .modal-nav:hover {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-prev {
+      left: 20px;
+    }
+
+    .modal-next {
+      right: 20px;
     }
 
     /* Footer */
@@ -440,10 +512,36 @@
       color: #000;
     }
 
+    /* Loading indicator for images */
+    .loading-indicator {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      z-index: 9999;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
     /* Responsive Design */
+    @media (max-width: 1200px) {
+      .gallery {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
     @media (max-width: 768px) {
       .gallery {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 0.5em;
         padding: 1em;
       }
@@ -453,11 +551,11 @@
       }
 
       .site-logo {
-        font-size: 20px;
+        font-size: 18px;
       }
 
       .loading-text {
-        font-size: 2rem;
+        font-size: 1.5rem;
       }
 
       .close {
@@ -474,24 +572,55 @@
       .menu-item {
         font-size: 24px;
       }
+
+      .thumbnail {
+        width: 60px;
+        height: 60px;
+      }
+
+      .thumbnail-container {
+        height: 80px;
+      }
+
+      .modal-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+      }
     }
 
     @media (max-width: 480px) {
       .gallery {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(1, 1fr);
         gap: 0.3em;
       }
 
       .header {
         padding: 0.5em 1em;
+        height: 50px;
       }
 
       .loading-text {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
       }
 
       .nav-icons {
         gap: 1em;
+      }
+
+      .thumbnail {
+        width: 50px;
+        height: 50px;
+      }
+
+      .thumbnail-container {
+        height: 70px;
+      }
+
+      .modal-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
       }
     }
 
@@ -506,18 +635,6 @@
         transform: none;
       }
     }
-
-    /* Animation for staggered image loading */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
   </style>
 </head>
 <body>
@@ -525,6 +642,9 @@
   <div id="loading-screen" class="loading-screen">
     <h2 class="loading-text">Commercial</h2>
   </div>
+
+  <!-- Loading indicator for async operations -->
+  <div class="loading-indicator" id="loading-indicator"></div>
 
   <!-- Header Navigation -->
   <header class="header">
@@ -575,15 +695,21 @@
     <!-- Images will be added dynamically via JavaScript -->
   </div>
 
-  <!-- Updated Modal Structure -->
-  <div class="modal">
+  <!-- Improved Modal Structure -->
+  <div class="modal" id="image-modal">
     <button class="close" aria-label="Close modal">&times;</button>
     <div class="modal-content-wrapper">
-      <img class="modal-content" id="modal-image" alt="Featured image">
-      <div class="thumbnail-strip" id="thumbnail-strip">
-        <!-- Thumbnails will be added dynamically -->
+      <div class="modal-image-container">
+        <img class="modal-content" id="modal-image" alt="Featured image">
+      </div>
+      <div class="thumbnail-container">
+        <div class="thumbnail-strip" id="thumbnail-strip">
+          <!-- Thumbnails will be added dynamically -->
+        </div>
       </div>
     </div>
+    <button class="modal-nav modal-prev" aria-label="Previous image">&lt;</button>
+    <button class="modal-nav modal-next" aria-label="Next image">&gt;</button>
   </div>
 
   <!-- Footer -->
@@ -592,8 +718,8 @@
   </footer>
 
   <script>
-    // Your existing images array
-    const images = [
+    // Image data - split into initial and additional batches for better performance
+    const initialImages = [
       "images/Commercial/IMG_8420.JPG",
       "images/Commercial/IMG_8563.JPG",
       "images/Commercial/IMG_8569.JPG",
@@ -613,7 +739,10 @@
       'images/Commercial/IMG_0255 Large.jpeg',
       'images/Commercial/IMG_0279 Large.jpeg',
       'images/Commercial/IMG_0288 Large.jpeg',
-      'images/Commercial/IMG_0291 Large.jpeg',
+      'images/Commercial/IMG_0291 Large.jpeg'
+    ];
+    
+    const additionalImages = [
       'images/Commercial/IMG_0272 Large.jpeg',
       'images/Commercial/IMG_0299 Large.jpeg',
       'images/Commercial/IMG_0300 Large.jpeg',
@@ -669,25 +798,47 @@
       "images/Commercial/passport-frontback aligned copy/light brown back.jpg",
       "images/Commercial/LAYOVERPASSPORT copy/LAYOVER4.jpg",
       "images/Commercial/passport-frontback aligned copy/orange back.jpg",
-      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER7.jpg",
+      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER7.jpg"
     ];
 
-    const gallery = document.querySelector(".gallery");
-    const modal = document.querySelector(".modal");
+    // Combine all images for modal navigation
+    let allImages = [...initialImages];
+    let loadedAllImages = false;
+    let isLoading = false;
+
+    // DOM elements
+    const gallery = document.getElementById("gallery");
+    const modal = document.getElementById("image-modal");
     const modalImage = document.getElementById("modal-image");
     const thumbnailStrip = document.getElementById("thumbnail-strip");
     const closeModal = document.querySelector(".close");
     const loadingScreen = document.getElementById("loading-screen");
+    const loadingIndicator = document.getElementById("loading-indicator");
     const overlayMenu = document.getElementById("overlay-menu");
     const menuToggle = document.getElementById("menu-toggle");
     const closeOverlay = document.getElementById("close-overlay");
     const gridViewBtn = document.getElementById("grid-view");
     const singularViewBtn = document.getElementById("singular-view");
     const viewToggle = document.getElementById("view-toggle");
+    const prevButton = document.querySelector(".modal-prev");
+    const nextButton = document.querySelector(".modal-next");
 
     // Initialize view mode
     let isGridView = true;
+    let modalOpen = false;
     updateViewIcons();
+
+    // Function to show loading indicator
+    function showLoading() {
+      isLoading = true;
+      loadingIndicator.style.display = "block";
+    }
+
+    // Function to hide loading indicator
+    function hideLoading() {
+      isLoading = false;
+      loadingIndicator.style.display = "none";
+    }
 
     // Function to update view icons based on current view
     function updateViewIcons() {
@@ -712,8 +863,15 @@
       overlayMenu.classList.remove("active");
     });
 
-    // Toggle view modes
+    // Toggle view modes with debounce
+    let viewToggleTimeout;
     viewToggle.addEventListener("click", () => {
+      if (viewToggleTimeout) return;
+      
+      viewToggleTimeout = setTimeout(() => {
+        viewToggleTimeout = null;
+      }, 500);
+      
       isGridView = !isGridView;
       gallery.classList.toggle("singular-view");
       updateViewIcons();
@@ -721,141 +879,299 @@
       // Apply staggered animation to images when switching views
       const allImages = gallery.querySelectorAll("img");
       allImages.forEach((img, index) => {
-        img.style.animationDelay = `${index * 0.05}s`;
-        img.style.animation = "fadeInUp 0.5s ease forwards";
-        
-        // Reset animation after it completes
-        setTimeout(() => {
-          img.style.animation = "";
-        }, 500 + (index * 50));
+        // Use requestAnimationFrame for smoother animations
+        requestAnimationFrame(() => {
+          img.style.transitionDelay = `${index * 0.02}s`;
+          img.classList.remove("loaded");
+          
+          // Re-add the loaded class after a short delay
+          setTimeout(() => {
+            img.classList.add("loaded");
+            
+            // Reset the transition delay after animation completes
+            setTimeout(() => {
+              img.style.transitionDelay = "";
+            }, 300);
+          }, 50);
+        });
       });
     });
 
-    // Modified populateGallery function with staggered loading
-    function populateGallery() {
-      console.log("Populating gallery...");
-      let loadedImages = 0;
+    // Load more images when scrolling near the bottom
+    function loadMoreImagesIfNeeded() {
+      if (loadedAllImages || isLoading) return;
+      
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      // If we're near the bottom (within 500px), load more images
+      if (scrollPosition > documentHeight - 500) {
+        loadMoreImages();
+      }
+    }
 
-      images.forEach((src, index) => {
+    // Load additional images
+    function loadMoreImages() {
+      if (loadedAllImages || isLoading) return;
+      
+      showLoading();
+      
+      // Get a batch of additional images (10 at a time)
+      const imagesToLoad = additionalImages.splice(0, 10);
+      
+      if (imagesToLoad.length === 0) {
+        loadedAllImages = true;
+        hideLoading();
+        return;
+      }
+      
+      // Add these images to our main images array
+      allImages.push(...imagesToLoad);
+      
+      // Create and append image elements
+      const fragment = document.createDocumentFragment();
+      
+      imagesToLoad.forEach((src, index) => {
         const img = document.createElement("img");
+        img.loading = "lazy"; // Native lazy loading
         img.src = src;
-        img.alt = `Image ${index + 1}`;
-        img.dataset.index = index;
-        img.style.transitionDelay = `${index * 0.03}s`;
-
+        img.alt = `Commercial image ${allImages.length - imagesToLoad.length + index + 1}`;
+        img.dataset.index = allImages.length - imagesToLoad.length + index;
+        
         img.addEventListener("load", () => {
-          console.log(`Image ${index + 1} loaded successfully`);
-          loadedImages++;
+          requestAnimationFrame(() => {
+            img.classList.add("loaded");
+          });
+        });
+        
+        img.addEventListener("error", () => {
+          console.error(`Failed to load image: ${src}`);
+          img.style.display = "none";
+        });
+        
+        img.addEventListener("click", openModal);
+        fragment.appendChild(img);
+      });
+      
+      gallery.appendChild(fragment);
+      
+      // Hide loading after a short delay
+      setTimeout(hideLoading, 300);
+    }
+
+    // Populate gallery with initial images
+    function populateGallery() {
+      const fragment = document.createDocumentFragment();
+      let loadedCount = 0;
+      
+      initialImages.forEach((src, index) => {
+        const img = document.createElement("img");
+        img.loading = "lazy"; // Native lazy loading
+        img.src = src;
+        img.alt = `Commercial image ${index + 1}`;
+        img.dataset.index = index;
+        
+        img.addEventListener("load", () => {
+          loadedCount++;
           
           // Add a slight delay before showing each image for a staggered effect
           setTimeout(() => {
-            img.classList.add("loaded");
+            requestAnimationFrame(() => {
+              img.classList.add("loaded");
+            });
           }, index * 30);
-
-          if (loadedImages === images.length) {
+          
+          // Hide loading screen when enough images are loaded
+          if (loadedCount >= Math.min(8, initialImages.length)) {
             setTimeout(() => {
               loadingScreen.style.opacity = "0";
               setTimeout(() => {
                 loadingScreen.style.display = "none";
               }, 500);
-            }, 1000);
+            }, 500);
           }
         });
-
+        
         img.addEventListener("error", () => {
-          console.error(`Failed to load image ${index + 1}: ${src}`);
-          loadedImages++;
+          console.error(`Failed to load image: ${src}`);
+          loadedCount++;
+          img.style.display = "none";
         });
-
+        
         img.addEventListener("click", openModal);
-        gallery.appendChild(img);
+        fragment.appendChild(img);
       });
+      
+      gallery.appendChild(fragment);
     }
 
-    // Modified openModal function with animations
-    function openModal(e) {
-      const clickedImage = e.target;
-      const index = Number(clickedImage.dataset.index);
-
-      // Clear existing thumbnails
+    // Create thumbnails for modal
+    function createThumbnails() {
       thumbnailStrip.innerHTML = "";
-
-      // Create thumbnails with staggered loading
-      images.forEach((src, i) => {
+      const fragment = document.createDocumentFragment();
+      
+      allImages.forEach((src, i) => {
         const thumbnail = document.createElement("img");
+        thumbnail.loading = "lazy";
         thumbnail.src = src;
         thumbnail.alt = `Thumbnail ${i + 1}`;
         thumbnail.classList.add("thumbnail");
-        thumbnail.style.opacity = "0";
-        thumbnail.style.transform = "translateY(10px)";
-        thumbnail.style.transition = "opacity 0.3s ease, transform 0.3s ease";
-        thumbnail.style.transitionDelay = `${i * 0.01}s`;
+        thumbnail.dataset.index = i;
         
-        if (i === index) thumbnail.classList.add("active");
-
         thumbnail.addEventListener("click", () => {
-          modalImage.style.opacity = "0";
-          modalImage.style.transform = "scale(0.95)";
-          
-          setTimeout(() => {
-            modalImage.src = src;
-            modalImage.dataset.index = i;
-            
-            setTimeout(() => {
-              modalImage.style.opacity = "1";
-              modalImage.style.transform = "scale(1)";
-            }, 50);
-            
-            // Update active thumbnail
-            document.querySelectorAll(".thumbnail").forEach((thumb) => {
-              thumb.classList.remove("active");
-            });
-            thumbnail.classList.add("active");
-          }, 300);
+          updateModalImage(i);
         });
-
-        thumbnailStrip.appendChild(thumbnail);
         
-        // Trigger the animation after a small delay
-        setTimeout(() => {
-          thumbnail.style.opacity = "0.6";
-          thumbnail.style.transform = "translateY(0)";
-        }, 10 + (i * 10));
+        fragment.appendChild(thumbnail);
       });
-
-      modalImage.style.opacity = "0";
-      modalImage.style.transform = "scale(0.95)";
-      modalImage.style.transition = "opacity 0.5s ease, transform 0.5s ease";
       
-      setTimeout(() => {
-        modalImage.src = clickedImage.src;
-        modalImage.dataset.index = index;
-        
-        setTimeout(() => {
-          modalImage.style.opacity = "1";
-          modalImage.style.transform = "scale(1)";
-        }, 100);
-      }, 100);
-      
-      modal.classList.add("show");
-      document.body.style.overflow = "hidden";
+      thumbnailStrip.appendChild(fragment);
     }
 
-    // Modified close modal function with animation
+    // Open modal with clicked image
+    function openModal(e) {
+      if (modalOpen) return;
+      modalOpen = true;
+      
+      const clickedImage = e.target;
+      const index = parseInt(clickedImage.dataset.index);
+      
+      // Create thumbnails if they don't exist
+      if (thumbnailStrip.children.length === 0) {
+        createThumbnails();
+      }
+      
+      // Set initial modal image
+      modalImage.src = allImages[index];
+      modalImage.dataset.index = index;
+      modalImage.style.opacity = "0";
+      modalImage.style.transform = "scale(0.95)";
+      
+      // Show modal
+      modal.classList.add("show");
+      document.body.style.overflow = "hidden";
+      
+      // Update active thumbnail
+      updateActiveThumbnail(index);
+      
+      // Fade in modal image after a short delay
+      setTimeout(() => {
+        modalImage.style.opacity = "1";
+        modalImage.style.transform = "scale(1)";
+      }, 100);
+      
+      // Scroll active thumbnail into view
+      const activeThumb = thumbnailStrip.querySelector(".thumbnail.active");
+      if (activeThumb) {
+        activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+
+    // Update modal image
+    function updateModalImage(index, direction = null) {
+      // Add slide animation based on direction if provided
+      if (direction) {
+        const slideOut = direction === 'next' ? 'translateX(-30px)' : 'translateX(30px)';
+        const slideIn = direction === 'next' ? 'translateX(30px)' : 'translateX(-30px)';
+        
+        modalImage.style.opacity = "0";
+        modalImage.style.transform = slideOut;
+        
+        setTimeout(() => {
+          modalImage.src = allImages[index];
+          modalImage.dataset.index = index;
+          modalImage.style.transform = slideIn;
+          
+          // Ensure image is loaded before animating in
+          modalImage.onload = () => {
+            requestAnimationFrame(() => {
+              modalImage.style.opacity = "1";
+              modalImage.style.transform = "translateX(0)";
+            });
+          };
+          
+          // Fallback if onload doesn't fire
+          setTimeout(() => {
+            modalImage.style.opacity = "1";
+            modalImage.style.transform = "translateX(0)";
+          }, 50);
+          
+          updateActiveThumbnail(index);
+          
+          // Scroll the active thumbnail into view
+          const activeThumb = thumbnailStrip.querySelector(".thumbnail.active");
+          if (activeThumb) {
+            activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }
+        }, 200);
+      } else {
+        // Simple fade transition for thumbnail clicks
+        modalImage.style.opacity = "0";
+        
+        setTimeout(() => {
+          modalImage.src = allImages[index];
+          modalImage.dataset.index = index;
+          
+          modalImage.onload = () => {
+            requestAnimationFrame(() => {
+              modalImage.style.opacity = "1";
+            });
+          };
+          
+          // Fallback
+          setTimeout(() => {
+            modalImage.style.opacity = "1";
+          }, 50);
+          
+          updateActiveThumbnail(index);
+        }, 200);
+      }
+    }
+
+    // Update active thumbnail
+    function updateActiveThumbnail(index) {
+      const thumbnails = thumbnailStrip.querySelectorAll(".thumbnail");
+      thumbnails.forEach((thumb) => {
+        if (parseInt(thumb.dataset.index) === index) {
+          thumb.classList.add("active");
+        } else {
+          thumb.classList.remove("active");
+        }
+      });
+    }
+
+    // Close modal
     function closeModalFunction() {
+      if (!modalOpen) return;
+      
       modal.style.opacity = "0";
       
       setTimeout(() => {
         modal.classList.remove("show");
         modal.style.opacity = "1";
         document.body.style.overflow = "";
-        // Clear thumbnails when closing
-        thumbnailStrip.innerHTML = "";
-      }, 500);
+        modalOpen = false;
+      }, 300);
     }
 
-    // Keep your existing event listeners
+    // Show next image in modal
+    function showNextImage() {
+      const currentIndex = parseInt(modalImage.dataset.index);
+      const nextIndex = (currentIndex + 1) % allImages.length;
+      updateModalImage(nextIndex, 'next');
+    }
+
+    // Show previous image in modal
+    function showPreviousImage() {
+      const currentIndex = parseInt(modalImage.dataset.index);
+      const previousIndex = (currentIndex - 1 + allImages.length) % allImages.length;
+      updateModalImage(previousIndex, 'prev');
+    }
+
+    // Event listeners
     closeModal.addEventListener("click", closeModalFunction);
+    prevButton.addEventListener("click", showPreviousImage);
+    nextButton.addEventListener("click", showNextImage);
 
     modal.addEventListener("click", (e) => {
       if (e.target === modal) {
@@ -863,11 +1179,14 @@
       }
     });
 
+    // Keyboard navigation
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && modal.classList.contains("show")) {
-        closeModalFunction();
-      } else if (e.key === "Escape" && overlayMenu.classList.contains("active")) {
-        overlayMenu.classList.remove("active");
+      if (e.key === "Escape") {
+        if (modal.classList.contains("show")) {
+          closeModalFunction();
+        } else if (overlayMenu.classList.contains("active")) {
+          overlayMenu.classList.remove("active");
+        }
       } else if (e.key === "ArrowRight" && modal.classList.contains("show")) {
         showNextImage();
       } else if (e.key === "ArrowLeft" && modal.classList.contains("show")) {
@@ -875,18 +1194,7 @@
       }
     });
 
-    // Initialize the gallery when the page loads
-    window.addEventListener("load", () => {
-      console.log("Page loaded");
-      populateGallery();
-      
-      // Start in grid view by default
-      isGridView = true;
-      gallery.classList.remove("singular-view");
-      updateViewIcons();
-    });
-
-    // Add touch support for mobile devices with improved animations
+    // Touch support for mobile devices
     let touchStartX = 0;
     let touchEndX = 0;
 
@@ -909,58 +1217,7 @@
       handleSwipe();
     });
 
-    function showNextImage() {
-      const currentIndex = Number.parseInt(modalImage.dataset.index);
-      const nextIndex = (currentIndex + 1) % images.length;
-      updateModalImage(nextIndex, 'next');
-    }
-
-    function showPreviousImage() {
-      const currentIndex = Number.parseInt(modalImage.dataset.index);
-      const previousIndex = (currentIndex - 1 + images.length) % images.length;
-      updateModalImage(previousIndex, 'prev');
-    }
-
-    function updateModalImage(index, direction) {
-      // Add slide animation based on direction
-      const slideOut = direction === 'next' ? 'translateX(-50px)' : 'translateX(50px)';
-      const slideIn = direction === 'next' ? 'translateX(50px)' : 'translateX(-50px)';
-      
-      modalImage.style.opacity = "0";
-      modalImage.style.transform = slideOut;
-      
-      setTimeout(() => {
-        modalImage.src = images[index];
-        modalImage.dataset.index = index;
-        modalImage.style.transform = slideIn;
-        
-        setTimeout(() => {
-          modalImage.style.opacity = "1";
-          modalImage.style.transform = "translateX(0)";
-        }, 50);
-        
-        updateActiveThumbnail(index);
-        
-        // Scroll the active thumbnail into view
-        const activeThumb = document.querySelector(".thumbnail.active");
-        if (activeThumb) {
-          activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
-      }, 300);
-    }
-
-    function updateActiveThumbnail(index) {
-      const thumbnails = document.querySelectorAll(".thumbnail");
-      thumbnails.forEach((thumb, i) => {
-        if (i === index) {
-          thumb.classList.add("active");
-        } else {
-          thumb.classList.remove("active");
-        }
-      });
-    }
-
-    // Close overlay menu when clicking on a menu item with animation
+    // Close overlay menu when clicking on a menu item
     document.querySelectorAll(".menu-item a").forEach(item => {
       item.addEventListener("click", () => {
         overlayMenu.style.opacity = "0";
@@ -971,7 +1228,27 @@
       });
     });
 
-    console.log("JavaScript file loaded");
+    // Throttle function to limit how often a function can be called
+    function throttle(func, limit) {
+      let inThrottle;
+      return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+          func.apply(context, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+        }
+      };
+    }
+
+    // Initialize
+    window.addEventListener("load", () => {
+      populateGallery();
+      
+      // Add scroll event listener for infinite loading
+      window.addEventListener("scroll", throttle(loadMoreImagesIfNeeded, 200));
+    });
   </script>
 </body>
 </html>
