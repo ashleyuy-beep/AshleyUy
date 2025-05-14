@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ashley Uy</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@100;700&display=swap');
 
         * {
             margin: 0;
@@ -40,7 +40,6 @@
             height: 100%;
             opacity: 0;
             visibility: hidden;
-            /* Faster transitions for quicker animation */
             transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
             display: flex;
             justify-content: center;
@@ -58,7 +57,6 @@
             max-width: 80%;
             max-height: 80vh;
             object-fit: contain;
-            /* Faster transform for quicker animation */
             transform: scale(0.95);
             transition: transform 0.3s ease-in-out;
         }
@@ -88,13 +86,13 @@
 
         .name {
             font-family: 'Helvetica Neue', sans-serif;
-            font-weight: 700;
-            font-size: 3rem;
+            font-weight: 100; /* Changed from 700 (bold) to 100 (thin) */
+            font-size: 20px; /* Changed from 3rem to 20px */
             color: white;
             letter-spacing: 1px;
             text-transform: uppercase;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(10px); /* Reduced from 20px to 10px for subtler animation */
         }
 
         .name-container.active .name {
@@ -104,7 +102,7 @@
         @keyframes fadeUp {
             0% {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(10px);
             }
             100% {
                 opacity: 1;
@@ -113,9 +111,9 @@
         }
 
         .copyright {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-left: 5px;
+            font-size: 0.7rem; /* Reduced from 1rem to be proportional to the new name size */
+            font-weight: 100; /* Changed from 700 (bold) to 100 (thin) */
+            margin-left: 3px; /* Reduced from 5px */
             vertical-align: super;
         }
 
@@ -128,11 +126,23 @@
             color: white;
             z-index: 5;
         }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .name {
+                font-size: 18px; /* Slightly smaller on mobile */
+            }
+            
+            .copyright {
+                font-size: 0.6rem;
+                margin-left: 2px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="slideshow-container">
-        <div class="loading-message">Loading images...</div>
+        <div class="loading-message"></div>
         
         <!-- Original images -->
         <div class="slide" id="slide-1">
