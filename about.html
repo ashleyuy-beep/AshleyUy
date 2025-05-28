@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About</title>
+    <title>About | Ashley Uy</title>
     <style>
       /* Base Styles */
       * {
@@ -16,9 +16,11 @@
       body {
         width: 100%;
         height: 100%;
-        font-family: "Helvetica Neue Thin", sans-serif;
+        font-family: "Helvetica Neue", sans-serif;
+        font-weight: 300;
         background-color: #fff;
-        overflow: hidden;
+        color: #000;
+        overflow-x: hidden;
       }
       
       /* Header Navigation */
@@ -183,127 +185,105 @@
         width: 100%;
       }
       
-      /* Hero Section */
-      .hero-content {
-        position: relative;
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
+      /* Content Layout */
+      .content-container {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 1em;
+        padding: 100px 2em 2em;
+        min-height: 100vh;
+        gap: 3em;
       }
       
-      .team-img {
-        width: 40%;
-        max-width: 400px; /* Limit maximum size for larger screens */
-        height: auto;
+      .main-content {
+        flex: 2;
+      }
+      
+      .side-content {
+        flex: 1;
+        padding-top: 2em;
+      }
+      
+      .bio {
+        margin-bottom: 3em;
+        line-height: 1.6;
+        max-width: 800px;
+      }
+      
+      .section {
+        margin-bottom: 3em;
+      }
+      
+      .section-title {
+        font-weight: 300;
         margin-bottom: 1em;
-        overflow: hidden;
+        font-size: 1.1em;
+      }
+      
+      .client-list {
+        line-height: 1.6;
+      }
+      
+      .contact-info {
+        line-height: 1.8;
+      }
+      
+      .contact-info a {
+        display: block;
+        margin-bottom: 0.5em;
+        transition: opacity 0.3s ease;
+      }
+      
+      .contact-info a:hover {
+        opacity: 0.7;
+      }
+      
+      /* Profile Image */
+      .profile-image {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 2em;
         opacity: 0;
         transform: translateY(20px);
         transition: opacity 0.8s ease, transform 0.8s ease;
       }
       
-      .team-img.loaded {
+      .profile-image.loaded {
         opacity: 1;
         transform: translateY(0);
       }
       
-      .team-img img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-      }
-      
-      .hero-description {
-        max-width: 600px;
-        padding: 0 1em;
-        font-size: 1rem;
-        line-height: 1.6;
-        color: #000000;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
-      }
-      
-      .hero-description.loaded {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      
-      .hero-description p {
-        margin: 0;
-      }
-      
-      /* Images Container */
-      .images {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 1em;
-        opacity: 0; /* Initially hidden */
-        transform: translateY(20px); /* Animation offset */
-      }
-      
-      .img {
-        width: 30%;
-        opacity: 0; /* Initially hidden for animation */
-        transform: scale(0.8); /* Start smaller for animation */
-      }
-      
-      .img img {
+      .profile-image img {
         width: 100%;
         height: auto;
         object-fit: cover;
       }
       
       /* Responsive Adjustments */
-      @media (max-width: 1024px) {
-        .gallery {
-          grid-template-columns: repeat(3, 1fr);
-        }
-      }
-      
       @media (max-width: 768px) {
-        .gallery {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 0.5em;
-          padding: 1em;
+        .content-container {
+          flex-direction: column;
+          padding: 80px 1.5em 1.5em;
+          gap: 2em;
         }
-      
+        
+        .main-content {
+          order: 2;
+        }
+        
+        .side-content {
+          order: 1;
+          padding-top: 0;
+        }
+        
+        .profile-image {
+          margin: 0 auto 2em;
+        }
+        
         .header {
           padding: 1em;
         }
-      
+        
         .site-logo {
           font-size: 20px;
-        }
-        
-        .team-img {
-          width: 60%;
-        }
-      }
-      
-      @media (max-width: 480px) {
-        .gallery {
-          grid-template-columns: 1fr;
-        }
-        
-        .header {
-          padding: 0.5em 1em;
-        }
-        
-        .team-img {
-          width: 80%;
-        }
-        
-        .hero-description {
-          font-size: 0.9rem;
         }
       }
       
@@ -334,31 +314,46 @@
       <div class="menu-item"><a href="commercial.html">Commercial</a></div>
       <div class="menu-item"><a href="personal.html">Personal</a></div>
       <div class="menu-item"><a href="about.html">About</a></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-container">
+      <div class="main-content">
+        <!-- Profile image - now visible on desktop -->
+        <div class="profile-image" id="profile-image">
+          <img src="./images/PERSONAL PROJECT/IMG_4734.JPG" alt="Ashley Uy" />
+        </div>
+        
+        <!-- Bio Section -->
+        <div class="bio">
+          <p>
+            Born in Manila, Philippines, moved to Los Angeles, CA.
+            <br /><br />
+            Ashley is a multidisciplinary photographer specializing in campaigns,
+            lookbooks, portraits, and street photography. His work draws deeply from
+            his immigrant background and personal experiences, capturing a unique,
+            timeless perspective.
+          </p>
+        </div>
+        
+        <!-- Publications & Clients Section -->
+        <div class="section">
+          <h2 class="section-title">Clients:</h2>
+          <div class="client-list">
+            <p>Currently Disclosed</p>
+          </div>
+        </div>
+      </div>
       
-    </div>
-
-    <div class="hero-content">
-      <div class="team-img" id="team-img">
-        <img src="./images/PERSONAL PROJECT/IMG_4734.JPG" alt="Hero Image" />
-      </div>
-      <div class="hero-description" id="hero-description">
-        <p>
-          Born in Manila, Philippines, moved to Los Angeles, CA.
-          <br />
-          Ashley is a multidisciplinary photographer specializing in campaigns,
-          lookbooks, portraits, and street photography. His work draws deeply from
-          his immigrant background and personal experiences, capturing a unique,
-          timeless perspective.
-        </p>
-        <br/> 
-        <p><a href="mailto:ashleyuy.booking@gmail.com">ashleyuy.booking@gmail.com</a></p>
+      <div class="side-content">
+        <!-- Contact Information -->
+        <div class="contact-info">
+          <a href="mailto:ashleyuy.booking@gmail.com">ashleyuy.booking@gmail.com</a>
+          <a href="https://www.instagram.com/ash.uyyy/" target="_blank">Instagram</a>
+        </div>
       </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js"></script>
-    <script src="https://unpkg.com/split-type"></script>
     <script>
       // Menu toggle functionality
       const menuToggle = document.getElementById("menu-toggle");
@@ -393,14 +388,10 @@
         }
       });
       
-      // Add animation to content elements
+      // Add animation to profile image
       window.addEventListener('load', () => {
         setTimeout(() => {
-          document.getElementById('team-img').classList.add('loaded');
-          
-          setTimeout(() => {
-            document.getElementById('hero-description').classList.add('loaded');
-          }, 200);
+          document.getElementById('profile-image').classList.add('loaded');
         }, 300);
       });
     </script>
