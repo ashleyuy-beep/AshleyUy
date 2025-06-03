@@ -347,43 +347,73 @@
       }
 
       /* Responsive Design */
-      @media (max-width: 768px) {
-        .grid-container {
-          gap: 15px;
-        }
+@media (max-width: 768px) {
+  /* Switch to CSS Grid for mobile */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    padding: 8px;
+  }
+  
+  /* Reset any flex-based sizing for mobile grid */
+  .grid-item {
+    width: auto !important;
+  }
+  
+  .grid-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 4 / 5;
+  }
 
-        .overlay {
-          padding: 1em;
-        }
+  .overlay {
+    padding: 1em;
+  }
 
-        .site-logo {
-          font-size: 18px;
-        }
-        
-        .singular-container .grid-item {
-          width: 90% !important;
-        }
-      }
+  .site-logo {
+    font-size: 18px;
+  }
+  
+  .singular-container .grid-item {
+    width: 90% !important;
+  }
+}
 
-      @media (max-width: 480px) {
-        .grid-container {
-          gap: 10px;
-          padding: 8px;
-        }
+@media (max-width: 480px) {
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 8px;
+  }
+  
+  /* Reset any flex-based sizing for mobile grid */
+  .grid-item {
+    width: auto !important;
+  }
+  
+  .grid-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 4 / 5;
+  }
 
-        .overlay {
-          padding: 0.5em 1em;
-          height: 50px;
-        }
+  .overlay {
+    padding: 0.5em 1em;
+    height: 50px;
+  }
 
-        .nav-icons {
-          gap: 1em;
-        }
-        
-        .singular-container .grid-item {
-          width: 95% !important;
-        }
-      }
+  .nav-icons {
+    gap: 1em;
+  }
+  
+  .singular-container .grid-item {
+    width: 95% !important;
+  }
+}
 
       /* Remove default link styling */
       a {
@@ -735,34 +765,30 @@
         const gridItem = document.createElement("div");
         gridItem.className = "grid-item";
 
-        // For grid view, set random sizes - adjusted for mobile compatibility
-        if (isGridView) {
-          // Get device width to adjust sizes for mobile
-          const deviceWidth = window.innerWidth;
-          
-          // Adjust size distribution based on screen size
-          let sizeDistribution;
-          
-          if (deviceWidth <= 480) {
-            // For mobile, use smaller sizes to fit more items per row
-            sizeDistribution = Math.random() < 0.5 ? "small" : Math.random() < 0.8 ? "medium" : "large";
-          } else {
-            // For desktop, use the original distribution
-            sizeDistribution = Math.random() < 0.7 ? "small" : Math.random() < 0.9 ? "medium" : "large";
-          }
-          
-          switch (sizeDistribution) {
-            case "small":
-              gridItem.style.width = deviceWidth <= 480 ? "45%" : "30%";
-              break;
-            case "medium":
-              gridItem.style.width = deviceWidth <= 480 ? "60%" : "45%";
-              break;
-            case "large":
-              gridItem.style.width = deviceWidth <= 480 ? "90%" : "60%";
-              break;
-          }
-        }
+        // For grid view, set random sizes - only for desktop
+if (isGridView) {
+  // Get device width to adjust sizes for mobile
+  const deviceWidth = window.innerWidth;
+  
+  // Only apply random sizing on desktop (768px and above)
+  if (deviceWidth > 768) {
+    // For desktop, use the original distribution
+    const sizeDistribution = Math.random() < 0.7 ? "small" : Math.random() < 0.9 ? "medium" : "large";
+    
+    switch (sizeDistribution) {
+      case "small":
+        gridItem.style.width = "30%";
+        break;
+      case "medium":
+        gridItem.style.width = "45%";
+        break;
+      case "large":
+        gridItem.style.width = "60%";
+        break;
+    }
+  }
+  // For mobile (768px and below), don't set any width - let CSS Grid handle it
+}
 
         const anchorElement = document.createElement("a");
         anchorElement.href = img.href;

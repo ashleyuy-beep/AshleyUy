@@ -485,8 +485,8 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
@@ -496,12 +496,18 @@ body {
   z-index: 1100;
   padding: 0;
   color: white;
-  font-size: 24px;
-  font-weight: 100;
   display: flex;
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(10px);
+}
+
+.modal-nav svg {
+  width: 24px;
+  height: 24px;
+  stroke: white;
+  stroke-width: 2;
+  transition: transform 0.2s ease;
 }
 
 .modal-nav:hover {
@@ -511,17 +517,17 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
+.modal-nav:hover svg {
+  transform: scale(1.1);
+}
+
 .modal-nav:active {
   transform: translateY(-50%) scale(0.95);
   transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.modal-prev {
-  left: 20px;
-}
-
-.modal-next {
-  right: 20px;
+.modal-nav:active svg {
+  transform: scale(0.9);
 }
 
 .modal-close {
@@ -620,13 +626,13 @@ footer a:hover {
 /* Responsive Design */
 @media (max-width: 1200px) {
   .gallery {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .gallery {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 0.5em;
     padding: 1em;
   }
@@ -677,7 +683,7 @@ footer a:hover {
 
 @media (max-width: 480px) {
   .gallery {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 0.3em;
   }
 
@@ -787,8 +793,18 @@ a {
         </div>
       </div>
     </div>
-    <button class="modal-nav modal-prev" aria-label="Previous image">&lt;</button>
-    <button class="modal-nav modal-next" aria-label="Next image">&gt;</button>
+    <button class="modal-nav modal-prev" aria-label="Previous image">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 12H5"></path>
+    <path d="M12 19l-7-7 7-7"></path>
+  </svg>
+</button>
+<button class="modal-nav modal-next" aria-label="Next image">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12h14"></path>
+    <path d="M12 5l7 7-7 7"></path>
+  </svg>
+</button>
     <div class="swipe-indicator">SWIPE LEFT OR RIGHT</div>
   </div>
 

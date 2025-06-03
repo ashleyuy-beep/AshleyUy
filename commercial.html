@@ -453,8 +453,8 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 50%;
@@ -464,12 +464,18 @@
       z-index: 1100;
       padding: 0;
       color: white;
-      font-size: 24px;
-      font-weight: 100;
       display: flex;
       justify-content: center;
       align-items: center;
       backdrop-filter: blur(10px);
+    }
+
+    .modal-nav svg {
+      width: 24px;
+      height: 24px;
+      stroke: white;
+      stroke-width: 2;
+      transition: transform 0.2s ease;
     }
 
     .modal-nav:hover {
@@ -479,9 +485,17 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
 
+    .modal-nav:hover svg {
+      transform: scale(1.1);
+    }
+
     .modal-nav:active {
       transform: translateY(-50%) scale(0.95);
       transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .modal-nav:active svg {
+      transform: scale(0.9);
     }
 
     .modal-close {
@@ -578,92 +592,92 @@
     }
 
     /* Responsive Design */
-    @media (max-width: 1200px) {
-      .gallery {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
+@media (max-width: 1200px) {
+  .gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 
-    @media (max-width: 768px) {
-      .gallery {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5em;
-        padding: 1em;
-      }
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5em;
+    padding: 1em;
+  }
 
-      .header {
-        padding: 1em;
-      }
+  .header {
+    padding: 1em;
+  }
 
-      .site-logo {
-        font-size: 18px;
-      }
+  .site-logo {
+    font-size: 18px;
+  }
 
-      .loading-text {
-        font-size: 1.5rem;
-      }
+  .loading-text {
+    font-size: 1.5rem;
+  }
 
-      .modal-close {
-        top: 10px;
-        right: 10px;
-      }
+  .modal-close {
+    top: 10px;
+    right: 10px;
+  }
 
-      .modal-content-wrapper {
-        width: 95%;
-        height: 85%;
-      }
+  .modal-content-wrapper {
+    width: 95%;
+    height: 85%;
+  }
 
-      .menu-item {
-        font-size: 24px;
-      }
+  .menu-item {
+    font-size: 24px;
+  }
 
-      .thumbnail {
-        width: 60px;
-        height: 60px;
-      }
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+  }
 
-      .thumbnail-container {
-        height: 80px;
-      }
+  .thumbnail-container {
+    height: 80px;
+  }
 
-      /* Hide arrow buttons on mobile - use swipe instead */
-      .modal-nav {
-        display: none;
-      }
+  /* Hide arrow buttons on mobile - use swipe instead */
+  .modal-nav {
+    display: none;
+  }
 
-      .swipe-indicator {
-        opacity: 1;
-      }
-    }
+  .swipe-indicator {
+    opacity: 1;
+  }
+}
 
-    @media (max-width: 480px) {
-      .gallery {
-        grid-template-columns: repeat(1, 1fr);
-        gap: 0.3em;
-      }
+@media (max-width: 480px) {
+  .gallery {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.3em;
+  }
 
-      .header {
-        padding: 0.5em 1em;
-        height: 50px;
-      }
+  .header {
+    padding: 0.5em 1em;
+    height: 50px;
+  }
 
-      .loading-text {
-        font-size: 1.2rem;
-      }
+  .loading-text {
+    font-size: 1.2rem;
+  }
 
-      .nav-icons {
-        gap: 1em;
-      }
+  .nav-icons {
+    gap: 1em;
+  }
 
-      .thumbnail {
-        width: 50px;
-        height: 50px;
-      }
+  .thumbnail {
+    width: 50px;
+    height: 50px;
+  }
 
-      .thumbnail-container {
-        height: 70px;
-      }
-    }
+  .thumbnail-container {
+    height: 70px;
+  }
+}
 
     /* Remove default link styling */
     a {
@@ -749,8 +763,18 @@
         </div>
       </div>
     </div>
-    <button class="modal-nav modal-prev" aria-label="Previous image">&lt;</button>
-    <button class="modal-nav modal-next" aria-label="Next image">&gt;</button>
+    <button class="modal-nav modal-prev" aria-label="Previous image">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 12H5"></path>
+    <path d="M12 19l-7-7 7-7"></path>
+  </svg>
+</button>
+<button class="modal-nav modal-next" aria-label="Next image">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12h14"></path>
+    <path d="M12 5l7 7-7 7"></path>
+  </svg>
+</button>
     <div class="swipe-indicator">SWIPE LEFT OR RIGHT</div>
   </div>
 
