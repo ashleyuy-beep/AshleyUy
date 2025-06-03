@@ -75,7 +75,6 @@
             opacity: 0;
             visibility: hidden;
             z-index: 3;
-            cursor: pointer;
             transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
         }
 
@@ -86,13 +85,13 @@
 
         .name {
             font-family: 'Helvetica Neue', sans-serif;
-            font-weight: 100; /* Changed from 700 (bold) to 100 (thin) */
-            font-size: 20px; /* Changed from 3rem to 20px */
+            font-weight: 100;
+            font-size: 20px;
             color: white;
             letter-spacing: 1px;
             text-transform: uppercase;
             opacity: 0;
-            transform: translateY(10px); /* Reduced from 20px to 10px for subtler animation */
+            transform: translateY(10px);
         }
 
         .name-container.active .name {
@@ -111,9 +110,9 @@
         }
 
         .copyright {
-            font-size: 0.7rem; /* Reduced from 1rem to be proportional to the new name size */
-            font-weight: 100; /* Changed from 700 (bold) to 100 (thin) */
-            margin-left: 3px; /* Reduced from 5px */
+            font-size: 0.7rem;
+            font-weight: 100;
+            margin-left: 3px;
             vertical-align: super;
         }
 
@@ -130,7 +129,7 @@
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .name {
-                font-size: 18px; /* Slightly smaller on mobile */
+                font-size: 18px;
             }
             
             .copyright {
@@ -146,42 +145,39 @@
         
         <!-- Original images from previous index.html -->
         <div class="slide">
-            <img class="slide-image" src="images/Commercial/bellbags for commercial/IMG_0680.JPG" alt="Bell Bag" onload="this.parentElement.dataset.loaded = 'true'">
+            <img class="slide-image" src="images/Commercial/bellbags for commercial/IMG_0680 Large.jpeg" alt="Bell Bag" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
         <div class="slide">
-            <img class="slide-image" src="images/Commercial/bellbags for commercial/IMG_0706.JPG" alt="Bell Bag" onload="this.parentElement.dataset.loaded = 'true'">
+            <img class="slide-image" src="images/Commercial/bellbags for commercial/IMG_0706 Large.jpeg" alt="Bell Bag" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
         <div class="slide">
-            <img class="slide-image" src="images/Commercial/IMG_0300 Large.jpeg" alt="Commercial Photography" onload="this.parentElement.dataset.loaded = 'true'">
+            <img class="slide-image" src="images/PERSONAL PROJECT/Image 4 Large 3.13.20 PM Large.jpeg" alt="Personal Project" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
         <div class="slide">
-            <img class="slide-image" src="images/PERSONAL PROJECT/Image 4 Large 3.13.20 PM.jpeg" alt="Personal Project" onload="this.parentElement.dataset.loaded = 'true'">
+            <img class="slide-image" src="images/PERSONAL PROJECT/IMG_3521 Large.jpeg" alt="Personal Project" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
         <div class="slide">
-            <img class="slide-image" src="images/PERSONAL PROJECT/IMG_3521.JPG" alt="Personal Project" onload="this.parentElement.dataset.loaded = 'true'">
-        </div>
-        <div class="slide">
-            <img class="slide-image" src="images/Commercial/Bell bag final/IMG_3901.jpg" alt="Bell Bag Final" onload="this.parentElement.dataset.loaded = 'true'">
+            <img class="slide-image" src="images/Commercial/Bell bag final/IMG_3901 Large.jpeg" alt="Bell Bag Final" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
         
         <!-- Images from home.html -->
         <div class="slide">
-            <img class="slide-image" src="HOME PHOTOS/IMG1.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+            <img class="slide-image" src="HOME PHOTOS/IMG1 Large.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
         <div class="slide">
-            <img class="slide-image" src="HOME PHOTOS/IMG2.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+            <img class="slide-image" src="HOME PHOTOS/IMG2 Large.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
         <div class="slide">
-            <img class="slide-image" src="HOME PHOTOS/IMG3.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+            <img class="slide-image" src="HOME PHOTOS/IMG3 Large.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
         <div class="slide">
-            <img class="slide-image" src="HOME PHOTOS/IMG4.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+            <img class="slide-image" src="HOME PHOTOS/IMG4 Large.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
         <div class="slide">
-            <img class="slide-image" src="HOME PHOTOS/IMG5.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+            <img class="slide-image" src="HOME PHOTOS/IMG5 Large.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
         <div class="slide">
-            <img class="slide-image" src="HOME PHOTOS/IMG6.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
+            <img class="slide-image" src="HOME PHOTOS/IMG6 Large.jpeg" alt="Portfolio Image" onload="this.parentElement.dataset.loaded = 'true'">
         </div>
         <div class="name-container">
             <div class="name">ASHLEY UY <span class="copyright">©</span></div>
@@ -279,6 +275,11 @@
                     nameContainer.classList.add('active');
                     
                     console.log('Slideshow complete, showing name');
+                    
+                    // Automatically redirect to home.html after showing the name for 2 seconds
+                    setTimeout(function() {
+                        window.location.href = "home.html";
+                    }, 2000);
                 }
             }
             
@@ -299,13 +300,6 @@
                 }
             }, 4000);
             
-            // Make name clickable to go to home page
-            nameContainer.addEventListener('click', function() {
-                if (slideshowComplete) {
-                    window.location.href = "home.html";
-                }
-            });
-            
             // Manual image loading fallback
             slides.forEach((slide, index) => {
                 const img = slide.querySelector('img');
@@ -322,7 +316,7 @@
                 }
             });
             
-            // Add keyboard navigation
+            // Add keyboard navigation for manual skip
             document.addEventListener('keydown', function(e) {
                 // Skip to name on spacebar or Enter
                 if ((e.key === ' ' || e.key === 'Enter') && !slideshowComplete) {
@@ -339,6 +333,11 @@
                     // Show name
                     slideshowComplete = true;
                     nameContainer.classList.add('active');
+                    
+                    // Automatically redirect after showing name
+                    setTimeout(function() {
+                        window.location.href = "home.html";
+                    }, 2000);
                 }
             });
         });

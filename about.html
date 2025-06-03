@@ -17,7 +17,7 @@
         width: 100%;
         height: 100%;
         font-family: "Helvetica Neue", sans-serif;
-        font-weight: 300;
+        font-weight: 100;
         background-color: #fff;
         color: #000;
         overflow-x: hidden;
@@ -30,19 +30,21 @@
         left: 0;
         width: 100%;
         height: 60px;
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: rgba(255, 255, 255, 0.95);
         z-index: 10000;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 1em 2em;
         backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
         transition: all 0.3s ease;
+        will-change: transform;
       }
       
       .site-logo {
-        font-size: 25px;
-        font-weight: 300;
+        font-size: 20px;
+        font-weight: 100;
         line-height: 1;
         transition: transform 0.3s ease;
       }
@@ -144,7 +146,7 @@
         justify-content: center;
         align-items: center;
         opacity: 0;
-        transition: opacity 0.5s ease;
+        transition: opacity 0.3s ease;
       }
       
       .overlay-menu.active {
@@ -155,7 +157,7 @@
       .menu-item {
         margin: 15px 0;
         font-size: 28px;
-        font-weight: 300;
+        font-weight: 100;
         position: relative;
         overflow: hidden;
         transition: transform 0.3s ease;
@@ -213,7 +215,7 @@
       }
       
       .section-title {
-        font-weight: 300;
+        font-weight: 100;
         margin-bottom: 1em;
         font-size: 1.1em;
       }
@@ -283,7 +285,18 @@
         }
         
         .site-logo {
-          font-size: 20px;
+          font-size: 18px;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .header {
+          padding: 0.5em 1em;
+          height: 50px;
+        }
+
+        .nav-icons {
+          gap: 1em;
         }
       }
       
@@ -321,7 +334,7 @@
       <div class="main-content">
         <!-- Profile image - now visible on desktop -->
         <div class="profile-image" id="profile-image">
-          <img src="./images/PERSONAL PROJECT/IMG_4734.JPG" alt="Ashley Uy" />
+          <img src="./images/PERSONAL PROJECT/IMG_4734 Large.jpeg" alt="Ashley Uy" />
         </div>
         
         <!-- Bio Section -->

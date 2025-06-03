@@ -294,11 +294,13 @@
       height: auto;
       object-fit: cover;
       cursor: pointer;
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       opacity: 0;
       aspect-ratio: 4 / 5;
-      transform: translateY(10px);
+      transform: translateY(20px) scale(0.95);
       will-change: opacity, transform;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .gallery.singular-view img {
@@ -310,18 +312,54 @@
 
     .gallery img.loaded {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
     .gallery img:hover {
-      transform: scale(1.03);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .gallery img:active {
+      transform: translateY(0) scale(0.98);
+      transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     .gallery.singular-view img:hover {
-      transform: none;
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
     }
 
-    /* Modal - Improved for consistency */
+    .gallery.singular-view img:active {
+      transform: translateY(0) scale(0.99);
+    }
+
+    /* Enhanced loading animation */
+    .gallery img.loading {
+      opacity: 0;
+      transform: translateY(30px) scale(0.9);
+    }
+
+    .gallery img.loaded {
+      animation: slideInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes slideInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      50% {
+        opacity: 0.7;
+        transform: translateY(-5px) scale(1.02);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Enhanced modal animations */
     .modal {
       display: none;
       position: fixed;
@@ -331,10 +369,11 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: rgba(0, 0, 0, 0.9);
+      background-color: rgba(0, 0, 0, 0);
       opacity: 0;
-      transition: opacity 0.3s ease;
-      will-change: opacity;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: opacity, background-color;
+      backdrop-filter: blur(0px);
     }
 
     .modal.show {
@@ -343,6 +382,8 @@
       justify-content: center;
       align-items: center;
       opacity: 1;
+      background-color: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(10px);
     }
 
     .modal-content-wrapper {
@@ -354,118 +395,72 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      transform: scale(0.98);
+      transform: scale(0.8) translateY(50px);
       opacity: 0;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: transform, opacity;
     }
 
     .modal.show .modal-content-wrapper {
-      transform: scale(1);
+      transform: scale(1) translateY(0);
       opacity: 1;
-    }
-
-    .modal-image-container {
-      flex: 1;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      margin-bottom: 10px;
     }
 
     .modal-content {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: opacity, transform;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
 
-    .thumbnail-container {
-      width: 100%;
-      height: 100px;
-      margin-top: auto;
-      overflow: hidden; /* Hide scrollbars */
-    }
-
-    .thumbnail-strip {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 10px 0;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE and Edge */
-      height: 100%;
-      align-items: center;
-    }
-
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .thumbnail-strip::-webkit-scrollbar {
-      display: none;
-    }
-
+    /* Enhanced thumbnail animations */
     .thumbnail {
       width: 80px;
       height: 80px;
       object-fit: cover;
       cursor: pointer;
       opacity: 0.6;
-      transition: opacity 0.3s ease, transform 0.3s ease, border 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       border: 2px solid transparent;
       flex-shrink: 0;
+      border-radius: 6px;
+      transform: scale(1);
     }
 
     .thumbnail:hover {
       opacity: 0.9;
-      transform: translateY(-3px);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .thumbnail:active {
+      transform: translateY(0) scale(0.95);
+      transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     .thumbnail.active {
       opacity: 1;
       border: 2px solid white;
-    }
-
-    /* Improved minimal close button with "x" */
-    .modal-close {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      width: 24px;
-      height: 24px;
-      cursor: pointer;
-      z-index: 1100;
-      background: transparent;
-      border: none;
-      padding: 0;
-      color: white;
-      font-size: 20px;
-      font-weight: 100;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0.7;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    .modal-close:hover {
-      opacity: 1;
       transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
     }
 
-    /* Navigation arrows for modal - using < and > */
+    /* Enhanced button animations */
     .modal-nav {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       width: 40px;
       height: 40px;
-      background: transparent;
-      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
       cursor: pointer;
       opacity: 0.7;
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       z-index: 1100;
       padding: 0;
       color: white;
@@ -474,19 +469,54 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      backdrop-filter: blur(10px);
     }
 
     .modal-nav:hover {
       opacity: 1;
       transform: translateY(-50%) scale(1.1);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
 
-    .modal-prev {
-      left: 20px;
+    .modal-nav:active {
+      transform: translateY(-50%) scale(0.95);
+      transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    .modal-next {
-      right: 20px;
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      z-index: 1100;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      padding: 0;
+      color: white;
+      font-size: 18px;
+      font-weight: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0.7;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-close:hover {
+      opacity: 1;
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-close:active {
+      transform: scale(0.9);
+      transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     /* Swipe indicator for mobile */
@@ -732,85 +762,85 @@
   <script>
     // Image data - split into initial and additional batches for better performance
     const initialImages = [
-      "images/Commercial/IMG_8420.JPG",
-      "images/Commercial/IMG_8563.JPG",
-      "images/Commercial/IMG_8569.JPG",
-      "images/Commercial/IMG_8585.JPG",
-      "images/Commercial/IMG_8298 Large.jpeg",
-      "images/Commercial/IMG_9791 Large.jpeg",
-      "images/Commercial/IMG_9796 Large.jpeg",
-      'images/Commercial/IMG_0166 Large.jpeg',
-      'images/Commercial/Alyssa Hot choco (2) Large.jpeg',
-      'images/Commercial/Image 3 Large.jpeg',
-      'images/Commercial/Image 4 (3) Large.jpeg',
-      'images/Commercial/IMG_0220 Large.jpeg',
-      'images/Commercial/IMG_0167 Large.jpeg',
-      'images/Commercial/IMG_0240 Large.jpeg',
-      'images/Commercial/IMG_0246 Large.jpeg',
-      'images/Commercial/IMG_0254 Large.jpeg',
-      'images/Commercial/IMG_0255 Large.jpeg',
-      'images/Commercial/IMG_0279 Large.jpeg',
-      'images/Commercial/IMG_0288 Large.jpeg',
-      'images/Commercial/IMG_0291 Large.jpeg'
+      "images/Commercial/IMG_8420 Large.jpeg",
+      "images/Commercial/IMG_8563 Large.jpeg",
+      "images/Commercial/IMG_8569 Large.jpeg",
+      "images/Commercial/IMG_8585 Large.jpeg",
+      "images/Commercial/IMG_8298 Large Large.jpeg",
+      "images/Commercial/IMG_9791 Large Large.jpeg",
+      "images/Commercial/IMG_9796 Large Large.jpeg",
+      'images/Commercial/IMG_0166 Large Large.jpeg',
+      'images/Commercial/Alyssa Hot choco (2) Large Large.jpeg',
+      'images/Commercial/Image 3 Large Large.jpeg',
+      'images/Commercial/Image 4 (3) Large Large.jpeg',
+      'images/Commercial/IMG_0220 Large Large.jpeg',
+      'images/Commercial/IMG_0167 Large Large.jpeg',
+      'images/Commercial/IMG_0240 Large Large.jpeg',
+      'images/Commercial/IMG_0246 Large Large.jpeg',
+      'images/Commercial/IMG_0254 Large Large.jpeg',
+      'images/Commercial/IMG_0255 Large Large.jpeg',
+      'images/Commercial/IMG_0279 Large Large.jpeg',
+      'images/Commercial/IMG_0288 Large Large.jpeg',
+      'images/Commercial/IMG_0291 Large Large.jpeg'
     ];
     
     const additionalImages = [
-      'images/Commercial/IMG_0272 Large.jpeg',
-      'images/Commercial/IMG_0299 Large.jpeg',
-      'images/Commercial/IMG_0300 Large.jpeg',
-      'images/Commercial/IMG_0337 Large.jpeg',
-      'images/Commercial/IMG_0403 Large.jpeg',
-      'images/Commercial/IMG_0407 Large.jpeg',
-      'images/Commercial/IMG_0338 Large.jpeg',
-      'images/Commercial/Untitled (4) Large.jpeg',
-      'images/Commercial/IMG_0324 Large.jpeg',
-      'images/Commercial/Untitled (5) Large.jpeg',
-      'images/Commercial/Untitled (4) (2) Large.jpeg',
-      "images/Commercial/unnamed-4.jpg",
-      "images/Commercial/unnamed.jpg",
-      "images/Commercial/unnamed-3.jpg",
-      "images/Commercial/unnamed-2.jpg",
-      "images/Commercial/DSCF0232.JPG",
-      "images/Commercial/DSCF0239.JPG",
-      "images/Commercial/DSCF0241 copy.JPG",
-      "images/Commercial/DSCF0241.JPG",
-      "images/Commercial/DSCF0253.JPG",
-      "images/Commercial/FOUND.JPG",
-      "images/Commercial/IMG_0010.JPG",
-      "images/Commercial/IMG_0017.JPG",
-      "images/Commercial/IMG_0018.JPG",
-      "images/Commercial/IMG_0024.JPG",
-      "images/Commercial/IMG_0026.JPG",
-      "images/Commercial/IMG_0032.JPG",
-      "images/Commercial/test edits/000017550001 Medium.png",
-      "images/Commercial/test edits/000017550002 Medium.png",
-      "images/Commercial/test edits/000017550006 copy Medium.png",
-      "images/Commercial/test edits/000017550007 Medium.png",
-      "images/Commercial/test edits/000017550008 Medium.png",
-      "images/Commercial/test edits/000017560001 Medium.png",
-      "images/Commercial/test edits/000017560003 Medium.png",
-      "images/Commercial/test edits/000017560008 Medium.png",
-      "images/Commercial/test edits/Image 6 Medium.png",
-      "images/Commercial/passport-frontback aligned copy/black back 1 .jpg",
-      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER8.jpg",
-      "images/Commercial/passport-frontback aligned copy/dark brown back 1 .jpg",
-      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER3.jpg",
-      "images/Commercial/passport-frontback aligned copy/dark green back.jpg",
-      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER5.jpg",
-      "images/Commercial/passport-frontback aligned copy/avo green back.jpg",
-      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER9.jpg",
-      "images/Commercial/passport-frontback aligned copy/grey back.jpg",
-      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER6.jpg",
-      "images/Commercial/passport-frontback aligned copy/white back.jpg",
-      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER2.jpg",
-      "images/Commercial/passport-frontback aligned copy/yellow back .jpg",
-      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER1.jpg",
-      "images/Commercial/passport-frontback aligned copy/light blue back 1.jpg",
-      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER10.jpg",
-      "images/Commercial/passport-frontback aligned copy/light brown back.jpg",
-      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER4.jpg",
-      "images/Commercial/passport-frontback aligned copy/orange back.jpg",
-      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER7.jpg"
+      'images/Commercial/IMG_0272 Large Large.jpeg',
+      'images/Commercial/IMG_0299 Large Large.jpeg',
+      'images/Commercial/IMG_0300 Large Large.jpeg',
+      'images/Commercial/IMG_0337 Large Large.jpeg',
+      'images/Commercial/IMG_0403 Large Large.jpeg',
+      'images/Commercial/IMG_0407 Large Large.jpeg',
+      'images/Commercial/IMG_0338 Large Large.jpeg',
+      'images/Commercial/Untitled (4) Large Large.jpeg',
+      'images/Commercial/IMG_0324 Large Large.jpeg',
+      'images/Commercial/Untitled (5) Large Large.jpeg',
+      'images/Commercial/Untitled (4) (2) Large Large.jpeg',
+      "images/Commercial/unnamed-4 Large.jpeg",
+      "images/Commercial/unnamed Large.jpeg",
+      "images/Commercial/unnamed-3 Large.jpeg",
+      "images/Commercial/unnamed-2 Large.jpeg",
+      "images/Commercial/DSCF0232 Large.jpeg",
+      "images/Commercial/DSCF0239 Large.jpeg",
+      "images/Commercial/DSCF0241 copy Large.jpeg",
+      "images/Commercial/DSCF0241 Large.jpeg",
+      "images/Commercial/DSCF0253 Large.jpeg",
+      "images/Commercial/FOUND Large.jpeg",
+      "images/Commercial/IMG_0010 Large.jpeg",
+      "images/Commercial/IMG_0017 Large.jpeg",
+      "images/Commercial/IMG_0018 Large.jpeg",
+      "images/Commercial/IMG_0024 Large.jpeg",
+      "images/Commercial/IMG_0026 Large.jpeg",
+      "images/Commercial/IMG_0032 Large.jpeg",
+      "images/Commercial/test edits/000017550001 Medium Large.jpeg",
+      "images/Commercial/test edits/000017550002 Medium Large.jpeg",
+      "images/Commercial/test edits/000017550006 copy Medium Large.jpeg",
+      "images/Commercial/test edits/000017550007 Medium Large.jpeg",
+      "images/Commercial/test edits/000017550008 Medium Large.jpeg",
+      "images/Commercial/test edits/000017560001 Medium Large.jpeg",
+      "images/Commercial/test edits/000017560003 Medium Large.jpeg",
+      "images/Commercial/test edits/000017560008 Medium Large.jpeg",
+      "images/Commercial/test edits/Image 6 Medium Large.jpeg",
+      "images/Commercial/passport-frontback aligned copy/black back 1 Large.jpeg",
+      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER8 Large.jpeg",
+      "images/Commercial/passport-frontback aligned copy/dark brown back 1 Large.jpeg",
+      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER3 Large.jpeg",
+      "images/Commercial/passport-frontback aligned copy/dark green back Large.jpeg",
+      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER5 Large.jpeg",
+      "images/Commercial/passport-frontback aligned copy/avo green back Large.jpeg",
+      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER9 Large.jpeg",
+      "images/Commercial/passport-frontback aligned copy/grey back Large.jpeg",
+      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER6 Large.jpeg",
+      "images/Commercial/passport-frontback aligned copy/white back Large.jpeg",
+      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER2 Large.jpeg",
+      "images/Commercial/passport-frontback aligned copy/yellow back Large.jpeg",
+      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER1 Large.jpeg",
+      "images/Commercial/passport-frontback aligned copy/light blue back 1 Large.jpeg",
+      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER10 Large.jpeg",
+      "images/Commercial/passport-frontback aligned copy/light brown back Large.jpeg",
+      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER4 Large.jpeg",
+      "images/Commercial/passport-frontback aligned copy/orange back Large.jpeg",
+      "images/Commercial/LAYOVERPASSPORT copy/LAYOVER7 Large.jpeg"
     ];
 
     // Combine all images for modal navigation
@@ -889,23 +919,23 @@
       gallery.classList.toggle("singular-view");
       updateViewIcons();
       
-      // Apply staggered animation to images when switching views
+      // Apply enhanced staggered animation to images when switching views
       const allImages = gallery.querySelectorAll("img");
       allImages.forEach((img, index) => {
-        // Use requestAnimationFrame for smoother animations
         requestAnimationFrame(() => {
-          img.style.transitionDelay = `${index * 0.02}s`;
-          img.classList.remove("loaded");
+          img.style.transitionDelay = `${index * 0.03}s`;
+          img.style.transform = "translateY(10px) scale(0.95)";
+          img.style.opacity = "0.7";
           
-          // Re-add the loaded class after a short delay
           setTimeout(() => {
-            img.classList.add("loaded");
+            img.style.transform = "";
+            img.style.opacity = "";
             
             // Reset the transition delay after animation completes
             setTimeout(() => {
               img.style.transitionDelay = "";
-            }, 300);
-          }, 50);
+            }, 400);
+          }, 100);
         });
       });
     });
@@ -983,25 +1013,27 @@
         img.src = src;
         img.alt = `Commercial image ${index + 1}`;
         img.dataset.index = index;
+        img.classList.add('loading');
         
         img.addEventListener("load", () => {
           loadedCount++;
           
-          // Add a slight delay before showing each image for a staggered effect
+          // Enhanced staggered animation with better timing
           setTimeout(() => {
             requestAnimationFrame(() => {
+              img.classList.remove('loading');
               img.classList.add("loaded");
             });
-          }, index * 30);
+          }, index * 50 + Math.random() * 100); // Add slight randomness for more natural feel
           
           // Hide loading screen when enough images are loaded
-          if (loadedCount >= Math.min(8, initialImages.length)) {
+          if (loadedCount >= Math.min(6, initialImages.length)) {
             setTimeout(() => {
               loadingScreen.style.opacity = "0";
               setTimeout(() => {
                 loadingScreen.style.display = "none";
               }, 500);
-            }, 500);
+            }, 300);
           }
         });
         
@@ -1049,6 +1081,12 @@
       const clickedImage = e.target;
       const index = parseInt(clickedImage.dataset.index);
       
+      // Add click feedback
+      clickedImage.style.transform = "scale(0.95)";
+      setTimeout(() => {
+        clickedImage.style.transform = "";
+      }, 150);
+      
       // Create thumbnails if they don't exist
       if (thumbnailStrip.children.length === 0) {
         createThumbnails();
@@ -1058,20 +1096,20 @@
       modalImage.src = allImages[index];
       modalImage.dataset.index = index;
       modalImage.style.opacity = "0";
-      modalImage.style.transform = "scale(0.95)";
+      modalImage.style.transform = "scale(0.9)";
       
-      // Show modal
+      // Show modal with enhanced animation
       modal.classList.add("show");
       document.body.style.overflow = "hidden";
       
       // Update active thumbnail
       updateActiveThumbnail(index);
       
-      // Fade in modal image after a short delay
+      // Fade in modal image with better timing
       setTimeout(() => {
         modalImage.style.opacity = "1";
         modalImage.style.transform = "scale(1)";
-      }, 100);
+      }, 200);
       
       // Scroll active thumbnail into view
       const activeThumb = thumbnailStrip.querySelector(".thumbnail.active");
